@@ -23,6 +23,36 @@
 html{scroll-behavior:smooth;font-size:16px}
 body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;line-height:1.8}
 
+/* ===== SITE HEADER ===== */
+.site-header{
+  position:sticky;top:0;z-index:1000;background:rgba(255,248,240,.92);
+  backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.site-header .brand{
+  font-weight:900;font-size:.95rem;color:var(--green-dark);text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.site-header .brand::before{content:'☀';font-size:1.1rem}
+.site-header nav{display:flex;align-items:center;gap:8px}
+.site-header nav a{
+  font-size:.82rem;font-weight:700;color:var(--text-light);text-decoration:none;
+  padding:8px 14px;border-radius:100px;transition:all .2s;
+}
+.site-header nav a:hover{background:var(--green-light);color:var(--green-dark)}
+.site-header nav a.cta{
+  background:var(--orange);color:var(--white);
+  box-shadow:0 2px 8px rgba(232,131,74,.25);
+}
+.site-header nav a.cta:hover{background:var(--orange-dark);color:var(--white);transform:translateY(-1px)}
+@media(max-width:640px){
+  .site-header{padding:10px 16px}
+  .site-header .brand{font-size:.85rem}
+  .site-header nav a{font-size:.74rem;padding:6px 10px}
+  .site-header nav a.hide-sm{display:none}
+}
+
 /* ===== HERO ===== */
 .hero{
   min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -225,8 +255,18 @@ footer strong{color:rgba(255,255,255,.8)}
 </head>
 <body>
 
+<!-- SITE HEADER -->
+<header class="site-header">
+  <a href="#top" class="brand">見守りプラス</a>
+  <nav>
+    <a href="#features" class="hide-sm">特長</a>
+    <a href="#faq" class="hide-sm">FAQ</a>
+    <a href="report.html" class="cta">📊 AIレポートを見る</a>
+  </nav>
+</header>
+
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="hero-badge">solarich 見守りプラス</div>
   <h1>離れていても、<br><span>そばにいる安心</span>を。</h1>
   <p class="hero-sub">離れて暮らすご家族のお宅に solarich 1000 を置くだけ。<br>日々の「元気だよ」と、もしもの「助けて」が<br>あなたのスマホに届きます。</p>
@@ -305,7 +345,7 @@ footer strong{color:rgba(255,255,255,.8)}
 </section>
 
 <!-- FEATURES -->
-<section class="features">
+<section class="features" id="features">
   <div class="container reveal">
     <span class="section-label">Features</span>
     <h2 class="section-title">見守りプラスの特長</h2>
@@ -392,7 +432,7 @@ footer strong{color:rgba(255,255,255,.8)}
 </section>
 
 <!-- FAQ -->
-<section class="faq">
+<section class="faq" id="faq">
   <div class="container reveal">
     <span class="section-label">FAQ</span>
     <h2 class="section-title">よくあるご質問</h2>
