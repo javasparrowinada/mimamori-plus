@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>solarich 見守りプラス</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FFF8F0;
+  --warm:#F5E6D3;
+  --orange:#E8834A;
+  --orange-dark:#D06830;
+  --green:#5B8C5A;
+  --green-light:#E8F0E4;
+  --green-dark:#3D6B3C;
+  --text:#2D2A26;
+  --text-light:#6B6560;
+  --white:#FFFFFF;
+  --shadow:0 4px 30px rgba(45,42,38,.08);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;line-height:1.8}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;position:relative;overflow:hidden;
+  background:linear-gradient(170deg,var(--cream) 0%,var(--green-light) 40%,var(--warm) 100%);
+}
+.hero::before{
+  content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;
+  border-radius:50%;background:rgba(232,131,74,.08);filter:blur(80px);
+}
+.hero::after{
+  content:'';position:absolute;bottom:-80px;left:-80px;width:300px;height:300px;
+  border-radius:50%;background:rgba(91,140,90,.1);filter:blur(60px);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--white);border:1px solid rgba(91,140,90,.2);border-radius:100px;
+  padding:8px 20px;font-size:.8rem;color:var(--green-dark);font-weight:500;
+  letter-spacing:.05em;margin-bottom:32px;
+  animation:fadeUp .8s ease both;
+}
+.hero-badge::before{content:'☀';font-size:1rem}
+.hero h1{
+  font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.3;
+  letter-spacing:-.02em;margin-bottom:16px;
+  animation:fadeUp .8s .15s ease both;
+}
+.hero h1 span{color:var(--orange)}
+.hero-sub{
+  font-size:clamp(1rem,2.5vw,1.3rem);color:var(--text-light);font-weight:300;
+  max-width:600px;margin-bottom:48px;
+  animation:fadeUp .8s .3s ease both;
+}
+.hero-visual{
+  position:relative;width:min(90%,560px);
+  animation:fadeUp 1s .5s ease both;
+}
+.hero-card{
+  background:var(--white);border-radius:24px;padding:40px 32px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+.hero-icon-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+.hero-icon-box{
+  width:80px;height:80px;border-radius:20px;display:flex;align-items:center;justify-content:center;
+  font-size:2rem;flex-direction:column;gap:4px;
+}
+.hero-icon-box small{font-size:.6rem;font-weight:700;color:var(--text-light);letter-spacing:.03em}
+.hi-power{background:linear-gradient(135deg,var(--green-light),#c8e0c4)}
+.hi-dongle{background:linear-gradient(135deg,var(--warm),#f0d8c0)}
+.hi-phone{background:linear-gradient(135deg,#E0E8F8,#C8D8F0)}
+.hero-arrow{font-size:1.4rem;color:var(--orange);font-weight:700}
+.hero-card p{font-size:.95rem;color:var(--text-light);text-align:center;max-width:400px}
+
+/* ===== SECTIONS ===== */
+section{padding:100px 24px}
+.container{max-width:960px;margin:0 auto}
+.section-label{
+  display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.15em;
+  color:var(--orange);text-transform:uppercase;margin-bottom:12px;
+}
+.section-title{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;line-height:1.3;margin-bottom:16px}
+.section-desc{color:var(--text-light);max-width:640px;margin-bottom:48px;font-weight:300;font-size:1.05rem}
+
+/* ===== PROBLEM ===== */
+.problem{background:var(--white)}
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.problem-card{
+  background:var(--cream);border-radius:20px;padding:32px 28px;position:relative;overflow:hidden;
+}
+.problem-card::after{
+  content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--orange);border-radius:4px;
+}
+.problem-card .emoji{font-size:2rem;margin-bottom:12px;display:block}
+.problem-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.problem-card p{font-size:.9rem;color:var(--text-light);line-height:1.7}
+
+/* ===== HOW ===== */
+.how{background:linear-gradient(180deg,var(--cream),var(--green-light))}
+.steps{display:flex;flex-direction:column;gap:0;position:relative}
+.steps::before{
+  content:'';position:absolute;left:28px;top:40px;bottom:40px;width:2px;
+  background:linear-gradient(var(--green),var(--orange));opacity:.2;
+}
+.step{
+  display:flex;gap:24px;align-items:flex-start;padding:28px 0;position:relative;
+}
+.step-num{
+  width:56px;height:56px;min-width:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;font-weight:900;color:var(--white);
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  box-shadow:0 4px 16px rgba(91,140,90,.25);position:relative;z-index:1;
+}
+.step:nth-child(2) .step-num{background:linear-gradient(135deg,var(--orange),var(--orange-dark))}
+.step:nth-child(3) .step-num{background:linear-gradient(135deg,#5A7EB5,#3D5A8C)}
+.step-content h3{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.step-content p{font-size:.9rem;color:var(--text-light)}
+
+/* ===== FEATURES ===== */
+.features{background:var(--white)}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feat-card{
+  border:1px solid rgba(0,0,0,.06);border-radius:20px;padding:32px 28px;
+  transition:transform .3s,box-shadow .3s;
+}
+.feat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.feat-emoji{font-size:2.2rem;margin-bottom:16px;display:block}
+.feat-card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:.9rem;color:var(--text-light);line-height:1.7}
+
+/* ===== SPECS ===== */
+.specs{background:var(--cream)}
+.spec-table{
+  background:var(--white);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);
+}
+.spec-row{
+  display:flex;border-bottom:1px solid rgba(0,0,0,.04);
+}
+.spec-row:last-child{border-bottom:none}
+.spec-label{
+  width:200px;min-width:200px;padding:18px 24px;font-weight:700;font-size:.9rem;
+  background:rgba(91,140,90,.04);
+}
+.spec-value{padding:18px 24px;font-size:.9rem;color:var(--text-light);flex:1}
+
+/* ===== MAINTENANCE ===== */
+.maint{background:linear-gradient(180deg,var(--green-light),var(--cream))}
+.maint-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.maint-card{
+  background:var(--white);border-radius:20px;padding:28px 24px;text-align:center;
+  box-shadow:var(--shadow);
+}
+.maint-card .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;background:var(--green);
+  color:var(--white);font-weight:900;font-size:.9rem;margin-bottom:16px;
+}
+.maint-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.maint-card p{font-size:.85rem;color:var(--text-light)}
+
+/* ===== FAQ ===== */
+.faq{background:var(--white)}
+.faq-list{display:flex;flex-direction:column;gap:12px}
+.faq-item{
+  background:var(--cream);border-radius:16px;overflow:hidden;
+}
+.faq-q{
+  padding:20px 24px;font-weight:700;font-size:.95rem;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background .2s;
+}
+.faq-q:hover{background:var(--warm)}
+.faq-q::after{content:'+';font-size:1.4rem;color:var(--orange);font-weight:300;transition:transform .3s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;
+  padding:0 24px;font-size:.9rem;color:var(--text-light);line-height:1.8;
+}
+.faq-item.open .faq-a{max-height:300px;padding:0 24px 20px}
+
+/* ===== CTA ===== */
+.cta-section{
+  background:linear-gradient(135deg,var(--green-dark),var(--green));
+  text-align:center;color:var(--white);padding:80px 24px;
+}
+.cta-section h2{font-size:clamp(1.4rem,4vw,2rem);font-weight:900;margin-bottom:16px}
+.cta-section p{opacity:.85;max-width:500px;margin:0 auto 40px;font-weight:300;font-size:1.05rem}
+.cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:16px 36px;border-radius:100px;
+  font-size:.95rem;font-weight:700;text-decoration:none;transition:transform .2s,box-shadow .2s;
+  border:none;cursor:pointer;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-secondary{background:var(--white);color:var(--green-dark)}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--text);color:rgba(255,255,255,.5);text-align:center;
+  padding:40px 24px;font-size:.8rem;
+}
+footer strong{color:rgba(255,255,255,.8)}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:640px){
+  .spec-row{flex-direction:column}
+  .spec-label{width:100%;min-width:100%}
+  .steps::before{left:26px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">solarich 見守りプラス</div>
+  <h1>離れていても、<br><span>そばにいる安心</span>を。</h1>
+  <p class="hero-sub">離れて暮らすご家族のお宅に solarich 1000 を置くだけ。<br>日々の「元気だよ」と、もしもの「助けて」が<br>あなたのスマホに届きます。</p>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="hero-icon-row">
+        <div class="hero-icon-box hi-power">🔋<small>ご家族宅</small></div>
+        <span class="hero-arrow">→</span>
+        <div class="hero-icon-box hi-dongle">📡<small>自動送信</small></div>
+        <span class="hero-arrow">→</span>
+        <div class="hero-icon-box hi-phone">📱<small>あなた</small></div>
+      </div>
+      <p style="font-size:.82rem;color:var(--text-light);line-height:1.7;max-width:420px">
+        <b style="color:var(--green)">ご家族のお宅</b>に置いた solarich 1000 に<br>ドングルを挿すだけ。ご家族がライトを使ったり<br>SOSボタンを押すと、<b style="color:var(--orange)">あなたのスマホ</b>に通知が届きます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container reveal">
+    <span class="section-label">Background</span>
+    <h2 class="section-title">こんなお悩み、ありませんか？</h2>
+    <p class="section-desc" style="margin-bottom:32px">離れて暮らすご家族を見守りたい<b>あなた</b>へ。</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="emoji">😟</span>
+        <h3>離れて暮らす親が心配</h3>
+        <p>「今日も元気かな？」毎日気になるけど、毎日電話するのも気が引ける…</p>
+      </div>
+      <div class="problem-card">
+        <span class="emoji">🏠</span>
+        <h3>親の家に監視カメラは抵抗がある</h3>
+        <p>見守りたいけど「監視」はしたくない。カメラを置いたら親も窮屈に感じるだろうし…</p>
+      </div>
+      <div class="problem-card">
+        <span class="emoji">⚡</span>
+        <h3>停電したら見守りも止まる？</h3>
+        <p>監視カメラもWi-Fiセンサーも、停電したら全部止まる。一番心配な時に使えないなんて…</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="container reveal">
+    <span class="section-label">How It Works</span>
+    <h2 class="section-title">仕組みはシンプル。</h2>
+    <p class="section-desc">特別な工事も複雑な設定も不要。あなた（見守る側）が3つのステップを行うだけで、見守りが始まります。</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>ご家族のお宅に solarich 1000 を設置 <span style="font-size:.8rem;font-weight:400;color:var(--green)">― あなたが</span></h3>
+          <p>離れて暮らすご家族（見守られる側）のご自宅のリビングや寝室に設置。コンパクト＆着せ替えシートで、ご家族のお部屋にも自然に馴染みます。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>専用ドングルをUSBに挿す <span style="font-size:.8rem;font-weight:400;color:var(--orange)">― あなたが</span></h3>
+          <p>設置した solarich 1000 のUSBポートにWi-Fiドングルを接続。ランプが点滅すれば準備完了。あとはモバイル回線が自動で通知を届けます。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>あなたのスマホにアプリを入れる <span style="font-size:.8rem;font-weight:400;color:#5A7EB5">― あなたが</span></h3>
+          <p>あなた（見守る側）のスマートフォンにソラリッチアプリをインストール。ご家族がライトを使ったりSOSボタンを押すと、あなたのスマホにリアルタイムで通知が届きます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container reveal">
+    <span class="section-label">Features</span>
+    <h2 class="section-title">見守りプラスの特長</h2>
+    <p class="section-desc">ご家族（見守られる側）が日常的にポータブル電源を使うほど、あなた（見守る側）に「元気のサイン」が届く ── そんな自然な見守りです。</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <span class="feat-emoji">💡</span>
+        <h3>毎日届く「元気のサイン」</h3>
+        <p><b>ご家族</b>がライトを使うたび、<b>あなた</b>のスマホに通知。電話するほどでもない日常の「今日も元気だよ」が、自然に届きます。</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-emoji">🆘</span>
+        <h3>もしもの時はSOSボタン</h3>
+        <p>体調不良や転倒など、<b>ご家族</b>が助けを求めたい時にボタンを押すだけ。即座に<b>あなた</b>のスマートフォンに緊急通知が届きます。</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-emoji">🔒</span>
+        <h3>監視じゃない、「見守り」</h3>
+        <p>カメラもマイクもセンサーもなし。<b>ご家族</b>のプライバシーを守りながら、暮らしの気配だけをそっと届けます。見られている窮屈さを感じさせない設計です。</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-emoji">⚡</span>
+        <h3>停電しても見守りは続く</h3>
+        <p>監視カメラやWi-Fi機器は停電で止まりますが、見守りプラスはバッテリー内蔵。<b>ご家族のお宅</b>が停電しても0.01秒で自動切替し、<b>あなた</b>への通知は途切れません。</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-emoji">🔌</span>
+        <h3>毎日使うから、見守りが続く</h3>
+        <p><b>ご家族</b>がスマホ充電・電気毛布・テレビに毎日使えるポータブル電源。「しまい込まれて電池切れ」にならず、使われるほど見守りも自然に続きます。</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-emoji">✨</span>
+        <h3>工事不要、届いたその日から</h3>
+        <p>大がかりな設置工事も、業者の訪問も不要。<b>あなた</b>がドングルを挿してアプリを入れるだけ。<b>ご家族のお宅</b>への負担を最小限に、すぐに見守りを始められます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section class="specs">
+  <div class="container reveal">
+    <span class="section-label">Specifications</span>
+    <h2 class="section-title">基本仕様</h2>
+    <p class="section-desc">ご家族のお宅に設置する solarich 1000 + 専用Wi-Fiドングルの基本スペック。</p>
+    <div class="spec-table">
+      <div class="spec-row"><div class="spec-label">バッテリー容量</div><div class="spec-value">614Wh（リン酸鉄リチウム）</div></div>
+      <div class="spec-row"><div class="spec-label">定格出力</div><div class="spec-value">1,000W（瞬間最大 1,600W）</div></div>
+      <div class="spec-row"><div class="spec-label">充電時間</div><div class="spec-value">コンセント：約1.2時間 / ソーラー200W：約4時間</div></div>
+      <div class="spec-row"><div class="spec-label">充放電サイクル</div><div class="spec-value">約4,000回（毎日使って10年以上）</div></div>
+      <div class="spec-row"><div class="spec-label">ドングル通信</div><div class="spec-value">LTEモバイルデータ通信（100GB / 365日間）</div></div>
+      <div class="spec-row"><div class="spec-label">ドングル電源</div><div class="spec-value">USBポートから常時給電（自動オン）</div></div>
+      <div class="spec-row"><div class="spec-label">本体保証</div><div class="spec-value">3年間（故障時は新品交換対応）</div></div>
+      <div class="spec-row"><div class="spec-label">ドングル保証</div><div class="spec-value">1年間</div></div>
+      <div class="spec-row"><div class="spec-label">サポート</div><div class="spec-value">フリーダイヤル 0120-407-700 / 公式LINE</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAINTENANCE -->
+<section class="maint">
+  <div class="container reveal">
+    <span class="section-label">Maintenance</span>
+    <h2 class="section-title">3ヶ月に一度、「会いに行く理由」ができる。</h2>
+    <p class="section-desc">見守りプラスには、3〜6ヶ月に一度の簡単なケアがあります。<br>でもそれは、<b>ご家族に会いに行くきっかけ</b>でもあります。<br>「ちょっとソラリッチの点検に来たよ」── その一言から始まる会話が、<br>いちばんの見守りかもしれません。</p>
+    <div class="maint-cards">
+      <div class="maint-card">
+        <div class="num">1</div>
+        <h3>ドングルのランプ確認</h3>
+        <p>ランプの点滅を目で確認するだけ。<br>ご家族と一緒にお茶を飲みながら、ちらっと見るだけでOK。</p>
+      </div>
+      <div class="maint-card">
+        <div class="num">2</div>
+        <h3>バッテリーリフレッシュ</h3>
+        <p>100%→0%→100%に充放電。放電中の1〜2時間は、<br>ご家族とゆっくり過ごす時間に。</p>
+      </div>
+      <div class="maint-card">
+        <div class="num">3</div>
+        <h3>給電チェック</h3>
+        <p>スマホをつないで充電できるか確認。<br>「ついでにスマホの使い方教えて」なんて会話も生まれます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container reveal">
+    <span class="section-label">FAQ</span>
+    <h2 class="section-title">よくあるご質問</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          見守られる側の家族が機械に詳しくなくても大丈夫？
+        </div>
+        <div class="faq-a">ご家族（見守られる側）はライトボタンを押すだけ。SOSもボタンを数回押すだけです。初期設定やドングルの接続はすべてあなた（見守る側）が行うので、ご家族に難しい操作は一切ありません。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          ご家族のお宅が停電しても見守りは続く？
+        </div>
+        <div class="faq-a">はい。UPS機能により停電から0.01秒でバッテリーに自動切替。バッテリー残量がある限り、ドングルへの給電と見守り通知は継続し、あなたのスマホに届き続けます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          通信費は別途かかりますか？
+        </div>
+        <div class="faq-a">初年度はデータプラン（100GB/365日間）が付属しています。2年目以降の更新についてはサポート窓口までお問い合わせください。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          見守られる側の家族もポータブル電源として使える？
+        </div>
+        <div class="faq-a">もちろんです。ご家族（見守られる側）がスマホ充電・テレビ・電気毛布など日常の家電にそのままお使いいただけます。むしろ毎日使っていただくことで、見守りが自然に続きます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          通知が届かない場合はある？
+        </div>
+        <div class="faq-a">携帯電話と同様に、ご家族のお宅の電波状況やドングルの破損・接続不良時、災害で基地局が損壊した場合は、あなたのスマホに通知が届かない可能性があります。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+          メンテナンスは誰がやるの？
+        </div>
+        <div class="faq-a">3〜6ヶ月に一度、あなた（見守る側・購入者）がご家族のお宅で実施します。作業自体は30分もかかりません。ご家族に顔を見せに行くきっかけとして、ぜひ活用してください。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>離れて暮らすご家族の「安心」を、<br>今日からはじめませんか？</h2>
+  <p>見守りプラスは、購入したら終わりではありません。<br>あなたとご家族、そして私たちで<br>一緒に安心をつくっていくスタートです。</p>
+  <div class="cta-buttons">
+    <a href="tel:0120407700" class="btn btn-primary">📞 0120-407-700</a>
+    <a href="#" class="btn btn-secondary">詳しい資料を見る</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>ソラリッチ株式会社</strong><br>
+  〒116-0003 東京都荒川区南千住5-17-8 Crescent南千住2階<br>
+  フリーダイヤル 0120-407-700（平日10〜17時）</p>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
