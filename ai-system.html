@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>見守りプラス｜Claude AIシステムの詳細</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--coral:#D85A30;--coral-light:#FAECE7;--purple:#7F77DD;--purple-light:#EEEDFE;--amber:#C89520;--amber-light:#FFF8E8;--shadow:0 4px 24px rgba(45,42,38,.06)}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;line-height:1.85;font-size:15px}
+
+.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}
+.topbar-brand a{color:inherit;text-decoration:none}
+.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-left:auto}
+.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
+.topbar-nav a:hover{background:var(--green-light);color:var(--green-dark)}
+.topbar-nav a.cta{background:var(--orange);color:var(--white)}
+.topbar-nav a.cta:hover{background:var(--orange-dark);color:var(--white)}
+
+.header{background:linear-gradient(135deg,#993C1D,var(--coral));color:var(--white);padding:56px 24px 48px;text-align:center}
+.header h1{font-size:clamp(1.3rem,4vw,1.9rem);font-weight:900;margin-bottom:8px}
+.header p{opacity:.85;font-size:.9rem;font-weight:300;max-width:640px;margin:0 auto}
+.header-meta{margin-top:20px;font-size:.72rem;opacity:.7}
+
+.main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+
+.section{margin-bottom:48px;scroll-margin-top:70px}
+.section-badge{display:inline-flex;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px;background:var(--coral-light);color:#993C1D}
+.section h2{font-size:1.25rem;font-weight:900;margin-bottom:8px;line-height:1.4}
+.section>.desc{color:var(--text-light);font-size:.9rem;margin-bottom:24px;font-weight:300}
+
+.card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:24px;margin-bottom:16px;border:1px solid rgba(0,0,0,.04)}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card h3 .icon{font-size:1.1rem}
+.card p{font-size:.88rem;color:var(--text-light);line-height:1.85}
+.card p+p{margin-top:10px}
+
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:8px 0}
+.tbl th{text-align:left;padding:10px 14px;font-weight:700;font-size:.78rem;background:rgba(216,90,48,.06);border-bottom:2px solid rgba(216,90,48,.15);color:#712B13}
+.tbl td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top;color:var(--text-light);font-size:.84rem}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600;color:var(--text);width:36%}
+
+.pipeline{display:flex;gap:0;align-items:stretch;margin:16px 0}
+.pipe-step{flex:1;text-align:center;padding:16px 8px;border-radius:12px}
+.pipe-step h4{font-size:.82rem;font-weight:700;margin-bottom:4px}
+.pipe-step p{font-size:.75rem;color:var(--text-light);line-height:1.5}
+.pipe-1{background:#EEEDFE}.pipe-1 h4{color:#534AB7}
+.pipe-2{background:#FFF8E8}.pipe-2 h4{color:#854F0B}
+.pipe-3{background:#FAECE7}.pipe-3 h4{color:#993C1D}
+.pipe-4{background:#E8F0E4}.pipe-4 h4{color:#3D6B3C}
+.pipe-arrow{display:flex;align-items:center;font-size:.9rem;color:var(--text-light);padding:0 4px;opacity:.4}
+
+.code{background:#FAFAF7;border:1px solid rgba(0,0,0,.06);border-radius:10px;padding:16px 18px;font-family:'SFMono-Regular',Menlo,Consolas,monospace;font-size:.78rem;line-height:1.7;white-space:pre;overflow-x:auto;color:#444}
+.code-label{font-size:.68rem;font-weight:700;color:var(--coral);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;display:block}
+
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:100px;background:var(--green-light);color:var(--green-dark)}
+
+.callout{border-radius:12px;padding:18px 20px;margin:14px 0;font-size:.86rem;line-height:1.8;border-left:3px solid var(--coral);background:#FFF8F4}
+.callout strong{color:#712B13}
+
+.list{margin-top:8px;padding-left:0;list-style:none}
+.list li{position:relative;padding:6px 0 6px 22px;font-size:.86rem;color:var(--text-light);line-height:1.7}
+.list li::before{content:'●';position:absolute;left:0;top:6px;color:var(--coral);font-size:.6rem}
+
+.steps-num{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.step-item{display:flex;gap:14px;align-items:flex-start}
+.step-item .n{width:26px;height:26px;min-width:26px;border-radius:50%;background:var(--coral);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;margin-top:2px}
+.step-item .body{font-size:.86rem;color:var(--text-light);line-height:1.75}
+.step-item .body b{color:var(--text);font-weight:700}
+
+@media(max-width:640px){
+  .pipeline{flex-direction:column;gap:8px}
+  .pipe-arrow{justify-content:center;transform:rotate(90deg);padding:4px 0}
+  .tbl td:first-child{width:42%}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス</a></div>
+  <nav class="topbar-nav">
+    <a href="index.html">トップ</a>
+    <a href="system.html">システム構成</a>
+    <a href="report.html">AIレポート設計</a>
+    <a href="system.html" class="cta">← システム構成へ戻る</a>
+  </nav>
+</div>
+
+<div class="header">
+  <h1>Claude AIシステムの詳細</h1>
+  <p>CSVを読み取ってから、レポートを送信するまで。<br>AIが何をどう判断しているのかを分解します。</p>
+  <div class="header-meta">2026年4月30日</div>
+</div>
+
+<div class="main">
+
+<!-- ========== 1. 概要 ========== -->
+<div class="section">
+  <div class="section-badge">概要</div>
+  <h2>このシステムが担う役割</h2>
+  <p class="desc">Tuyaから取得したCSVを「家族が読みたい言葉」に変換するのが、Claude AIシステムの仕事です。</p>
+
+  <div class="card">
+    <h3><span class="icon">🎯</span> 一言でいうと</h3>
+    <p>「数字の羅列」を「暮らしの気配」に翻訳する仕組み。<br>ユーザーごとに使用パターンが違うため、固定テンプレートではなく <b>AIが文脈を読んで文面を切り替えます</b>。</p>
+
+    <div class="tags">
+      <span class="tag">月次バッチ</span>
+      <span class="tag">週次バッチ</span>
+      <span class="tag">ユーザーごとに個別生成</span>
+      <span class="tag">パターン自動分類</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 2. 処理フロー ========== -->
+<div class="section">
+  <div class="section-badge">処理フロー</div>
+  <h2>4ステップで動く</h2>
+
+  <div class="card">
+    <div class="pipeline">
+      <div class="pipe-step pipe-1"><h4>① CSV読込</h4><p>Drive APIで2つのCSVを取得</p></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-2"><h4>② パターン分析</h4><p>ユーザーごとに統計処理</p></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-3"><h4>③ 文面生成</h4><p>Claude APIでレポート文を作成</p></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-4"><h4>④ 送信</h4><p>メール / LINE / アプリへ配信</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">⚙️</span> 各ステップの実装イメージ</h3>
+    <div class="steps-num">
+      <div class="step-item"><div class="n">1</div><div class="body"><b>CSV読込</b>：Google Drive APIで「お客様情報.csv」「使用データ.csv」を取得。利用中ステータスのユーザーのみフィルタ。</div></div>
+      <div class="step-item"><div class="n">2</div><div class="body"><b>パターン分析</b>：Pythonで前処理（イベント数集計、曜日別集計、過去3ヶ月との差分計算）。AIに渡す前に「事実」を構造化。</div></div>
+      <div class="step-item"><div class="n">3</div><div class="body"><b>文面生成</b>：Claude APIに <code style="font-size:.8rem;background:#F1EFE8;padding:1px 6px;border-radius:4px">構造化データ + プロンプトテンプレート</code> を渡し、レポート文面を生成。</div></div>
+      <div class="step-item"><div class="n">4</div><div class="body"><b>送信</b>：SendGrid（メール）/ LINE Messaging API（LINE）/ Firebase（アプリ）へ振り分けて配信。</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 3. AIに渡すデータ ========== -->
+<div class="section">
+  <div class="section-badge">入力データ</div>
+  <h2>AIに何を渡しているか</h2>
+  <p class="desc">AIにCSVをそのまま投げるのではなく、Pythonで集計した「サマリーJSON」を渡します。<br>これによりトークン消費を抑え、出力の精度を上げます。</p>
+
+  <div class="card">
+    <span class="code-label">📥 AIに渡すJSON（例）</span>
+    <div class="code">{
+  "user_id": "U-0012",
+  "nickname": "お母さん",
+  "month": "2026-04",
+  "summary": {
+    "active_days": 28,
+    "total_days": 30,
+    "light_days": 26,
+    "usb_days": 22,
+    "ac_days": 18,
+    "sos_responses": "4/4",
+    "outlet_connected_days": 30
+  },
+  "weekday_pattern": {
+    "weekend_inactive_count": 2,
+    "weekday_inactive_count": 0
+  },
+  "comparison": {
+    "vs_last_month": {"active_days_diff": -1},
+    "trend_3months": [26, 29, 28]
+  },
+  "pattern_type": "A"
+}</div>
+    <p style="margin-top:10px;font-size:.82rem">→ AIはこのJSONだけを見て、<b>そのユーザー専用のレポート文</b>を生成します。</p>
+  </div>
+</div>
+
+<!-- ========== 4. 分析ロジック ========== -->
+<div class="section">
+  <div class="section-badge">分析ロジック</div>
+  <h2>分析でやっていること</h2>
+
+  <div class="card">
+    <h3><span class="icon">📊</span> 5つの分析軸</h3>
+    <table class="tbl">
+      <tr><td>ベースライン比較</td><td>利用開始から最初の2週間で「そのユーザーの普通」を学習。以降の月次データと差分を取る。</td></tr>
+      <tr><td>曜日パターン</td><td>「土曜は使用なし」など、繰り返される傾向を検出。突発的な無使用と区別する。</td></tr>
+      <tr><td>3ヶ月推移</td><td>先月・先々月との比較で「安定している」「変化が見える」を判定。</td></tr>
+      <tr><td>パターン判定</td><td>月間ライト点灯日数とイベント総数で <b>A（よく使う）</b> / <b>B（あまり使わない）</b> を自動分類。</td></tr>
+      <tr><td>文面バリエーション</td><td>同じ内容でも毎月言い回しを変え、季節の話題を織り込む。マンネリ化を防ぐ。</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🔀</span> パターン判定ルール</h3>
+    <table class="tbl">
+      <tr><th>条件</th><th>判定</th></tr>
+      <tr><td>月間ライト点灯日数 ≥ 20日<br>かつイベント総数 ≥ 50件</td><td><b style="color:#3D6B3C">パターンA（よく使う）</b></td></tr>
+      <tr><td>月間ライト点灯日数 &lt; 20日<br>またはイベント総数 &lt; 50件</td><td><b style="color:#534AB7">パターンB（あまり使わない）</b></td></tr>
+      <tr><td>コンセント未接続が48時間以上</td><td><b style="color:#C24343">アラート対象</b>（パターン判定の前に検知）</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:.82rem;color:var(--text-light)">※ 閾値は運用しながらチューニング予定。</p>
+  </div>
+</div>
+
+<!-- ========== 5. プロンプト設計 ========== -->
+<div class="section">
+  <div class="section-badge">プロンプト設計</div>
+  <h2>AIへの指示の組み立て方</h2>
+  <p class="desc">Claude APIに渡すプロンプトは「役割定義 + ルール + データ + 出力形式」の4ブロック構成。</p>
+
+  <div class="card">
+    <span class="code-label">📝 プロンプト構造（抜粋）</span>
+    <div class="code"># 役割
+あなたは「見守りプラス」の月次レポート担当者です。
+離れて暮らすご家族（見守る側）に、ご年配の親御さんの暮らしの気配を
+伝える文面を書きます。
+
+# 守るべきルール
+- 推定は推定として伝える（「〜かもしれません」）
+- ポジティブな解釈を先に置く
+- W数や専門用語は使わない
+- 「使っていない」を否定的に書かない
+- 季節の話題を1つ織り込む
+
+# 入力データ
+{summary_json}
+
+# 出力形式
+- AIからのひとこと（120字以内）
+- 今月のトピック（3件まで）
+- 3ヶ月の推移コメント（60字以内）</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🎨</span> 文面生成の品質を保つ工夫</h3>
+    <ul class="list">
+      <li><b>固定テンプレート禁止</b>：同じデータでも毎月違う表現になるよう温度パラメータを調整</li>
+      <li><b>ネガティブ語のブラックリスト</b>：「使われていない」「異常」「心配」などは出力後にチェック</li>
+      <li><b>長さ制限</b>：トークン上限ではなく、文字数で制御してメール／アプリのレイアウトを崩さない</li>
+      <li><b>フォールバック文面</b>：AI生成が失敗した場合に備え、テンプレ版を必ず用意</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ========== 6. 配信タイミング ========== -->
+<div class="section">
+  <div class="section-badge">スケジュール</div>
+  <h2>いつ動いているか</h2>
+
+  <div class="card">
+    <table class="tbl">
+      <tr><th>処理</th><th>頻度</th><th>実行時刻</th></tr>
+      <tr><td>月次レポート（メール / アプリ）</td><td>月1回</td><td>毎月1日 08:00 JST</td></tr>
+      <tr><td>週次ヘルスチェック（LINE）</td><td>週1回</td><td>毎週月曜 09:00 JST</td></tr>
+      <tr><td>アラート（SOS未応答 / 48h無使用 / 通信切断）</td><td>発生時</td><td>即時（夜間は翌朝7時に集約）</td></tr>
+      <tr><td>Tuya APIからのCSV更新</td><td>1日数回</td><td>4時間ごと（予定）</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ========== 7. 失敗時の備え ========== -->
+<div class="section">
+  <div class="section-badge">堅牢性</div>
+  <h2>失敗したらどうするか</h2>
+  <p class="desc">AI生成は確率的な処理なので、必ず「失敗しても止まらない」設計が必要です。</p>
+
+  <div class="card">
+    <table class="tbl">
+      <tr><th>失敗ケース</th><th>対応</th></tr>
+      <tr><td>Claude APIエラー / タイムアウト</td><td>3回までリトライ。それでも失敗したらテンプレ版を送信し、運用者にSlack通知</td></tr>
+      <tr><td>Tuya API障害でCSV更新が止まる</td><td>前回データを使って配信を継続。停止が24時間続いたら運用者に通知</td></tr>
+      <tr><td>AIが不適切な文面を生成（ネガティブ語含むなど）</td><td>後段のフィルタで検知 → テンプレ版にフォールバック</td></tr>
+      <tr><td>メール / LINE 送信失敗</td><td>キューに戻して翌時間に再試行。3回失敗で停止し通知</td></tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>原則：</strong>「AIレポートが届かない」は絶対に避ける。<br>
+    凝った文面が出せなくても、テンプレ版で「異常なし」を伝えるほうが見守りサービスとしては正しい。
+  </div>
+</div>
+
+<!-- ========== 8. プライバシー ========== -->
+<div class="section">
+  <div class="section-badge">プライバシー</div>
+  <h2>AIに渡している情報</h2>
+
+  <div class="card">
+    <h3><span class="icon">🔒</span> AIに渡す情報</h3>
+    <ul class="list">
+      <li>ニックネーム（本名は渡さない）</li>
+      <li>イベント発生日時と種類</li>
+      <li>集計値（月間使用日数、ライト点灯日数 等）</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🚫</span> AIに渡さない情報</h3>
+    <ul class="list">
+      <li>本名・住所・電話番号</li>
+      <li>メールアドレス・LINE ID（送信処理側でのみ使用）</li>
+      <li>映像・音声（そもそも取得していない）</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <strong>方針：</strong>AIに渡すのは「暮らしの気配」を表現するために最低限必要な集計値のみ。<br>
+    個人を特定できる情報は分離して扱います。
+  </div>
+</div>
+
+<!-- ========== 9. 今後の拡張 ========== -->
+<div class="section">
+  <div class="section-badge">ロードマップ</div>
+  <h2>今後の検討事項</h2>
+
+  <div class="card">
+    <table class="tbl">
+      <tr><td>季節イベントの差し込み</td><td>母の日・父の日・お盆など、レポートに合わせた一言を自動挿入</td></tr>
+      <tr><td>長期トレンド検出</td><td>3ヶ月以上にわたるゆるやかな変化（使用時間が徐々に短くなる等）の検知</td></tr>
+      <tr><td>家族間共有レポート</td><td>兄弟姉妹で同じレポートを見られる仕組み</td></tr>
+      <tr><td>音声読み上げ</td><td>アプリのレポートを音声で聞ける機能（運転中・家事中向け）</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="callout">
+  <strong>関連ドキュメント：</strong>
+  <a href="system.html" style="color:var(--coral);font-weight:700;text-decoration:none">⚙️ システム構成</a> ／
+  <a href="report.html" style="color:var(--coral);font-weight:700;text-decoration:none">📊 AIレポート設計</a>
+</div>
+
+</div>
+</body>
+</html>

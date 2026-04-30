@@ -73,6 +73,10 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
 .confirm h4{font-size:.85rem;font-weight:700;margin-bottom:4px;color:#C89520}
 .target{background:var(--cream);border-radius:12px;padding:16px;text-align:center;margin:16px 0;font-size:.88rem;font-weight:700;color:var(--text-light)}
 
+.detail-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 20px;background:#D85A30;color:#fff;border-radius:100px;font-size:.85rem;font-weight:700;text-decoration:none;transition:all .2s;box-shadow:0 2px 8px rgba(216,90,48,.25)}
+.detail-btn:hover{background:#993C1D;transform:translateY(-1px);box-shadow:0 4px 12px rgba(216,90,48,.35)}
+.detail-btn::after{content:'→';font-size:1rem}
+
 @media(max-width:640px){
   .pipeline{flex-direction:column;gap:8px}
   .pipe-arrow{justify-content:center;transform:rotate(90deg);padding:4px 0}
@@ -301,6 +305,7 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
     <div class="csv-row"><span class="csv-col">3ヶ月推移</span><span class="csv-val">先月・先々月との比較</span></div>
     <div class="csv-row"><span class="csv-col">パターン判定</span><span class="csv-val">A（よく使う）/ B（あまり使わない）を自動分類</span></div>
     <div class="csv-row"><span class="csv-col">文面バリエーション</span><span class="csv-val">毎月・毎週の表現を変え、季節の話題を織り込む</span></div>
+    <a href="ai-system.html" class="detail-btn">Claude AIシステムをもっと詳しく</a>
   </div>
 </div>
 
