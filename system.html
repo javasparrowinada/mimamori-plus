@@ -77,6 +77,16 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
 .detail-btn:hover{background:#993C1D;transform:translateY(-1px);box-shadow:0 4px 12px rgba(216,90,48,.35)}
 .detail-btn::after{content:'→';font-size:1rem}
 
+/* Featured CTA box for AI detail */
+.cta-box{background:linear-gradient(135deg,#FAECE7,#FFF8F4);border:1.5px solid rgba(216,90,48,.2);border-radius:16px;padding:24px 28px;margin:16px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 4px 16px rgba(216,90,48,.08)}
+.cta-box-text{flex:1}
+.cta-box-text h4{font-size:1rem;font-weight:900;margin-bottom:4px;color:#712B13;display:flex;align-items:center;gap:8px}
+.cta-box-text p{font-size:.85rem;color:#993C1D;line-height:1.7;margin:0!important}
+.cta-box-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;background:#D85A30;color:#fff;border-radius:100px;font-size:.9rem;font-weight:900;text-decoration:none;transition:all .2s;box-shadow:0 4px 12px rgba(216,90,48,.3);white-space:nowrap}
+.cta-box-btn:hover{background:#993C1D;transform:translateY(-1px);box-shadow:0 6px 16px rgba(216,90,48,.4)}
+.cta-box-btn::after{content:'→';font-size:1.1rem}
+@media(max-width:640px){.cta-box{flex-direction:column;align-items:stretch;text-align:center}.cta-box-btn{justify-content:center}}
+
 @media(max-width:640px){
   .pipeline{flex-direction:column;gap:8px}
   .pipe-arrow{justify-content:center;transform:rotate(90deg);padding:4px 0}
@@ -92,6 +102,7 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
   <nav class="topbar-nav">
     <a href="index.html">トップ</a>
     <a href="report.html">AIレポート設計</a>
+    <a href="ai-system.html">Claude AI詳細</a>
     <a href="index.html" class="cta">← トップへ戻る</a>
   </nav>
 </div>
@@ -297,6 +308,14 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
       <div class="pipe-arrow">→</div>
       <div class="pipe-step pipe-4"><h4>送信</h4><p>CSVのメール・LINE IDへ自動配信</p></div>
     </div>
+  </div>
+
+  <div class="cta-box">
+    <div class="cta-box-text">
+      <h4>🤖 Claude AIシステムの中身</h4>
+      <p>プロンプト設計・分析ロジック・失敗時の対応・プライバシー方針など、AIまわりの詳細を別ページにまとめています。</p>
+    </div>
+    <a href="ai-system.html" class="cta-box-btn">詳細を見る</a>
   </div>
   <div class="card">
     <h3>分析でやること</h3>
