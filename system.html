@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>見守りプラス｜システム構成</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--shadow:0 4px 24px rgba(45,42,38,.06)}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;line-height:1.85;font-size:15px}
+
+/* ===== TOPBAR ===== */
+.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}
+.topbar-brand a{color:inherit;text-decoration:none}
+.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-left:auto}
+.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
+.topbar-nav a:hover{background:var(--green-light);color:var(--green-dark)}
+.topbar-nav a.cta{background:var(--orange);color:var(--white)}
+.topbar-nav a.cta:hover{background:var(--orange-dark);color:var(--white)}
+
+.header{background:linear-gradient(135deg,var(--green-dark),var(--green));color:var(--white);padding:56px 24px 48px;text-align:center}
+.header h1{font-size:clamp(1.3rem,4vw,1.9rem);font-weight:900;margin-bottom:8px}
+.header p{opacity:.8;font-size:.9rem;font-weight:300;max-width:640px;margin:0 auto}
+.header-meta{margin-top:20px;font-size:.72rem;opacity:.65}
+.main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+.diagram-wrap{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:32px 24px;margin-bottom:48px;border:1px solid rgba(0,0,0,.04)}
+.diagram-wrap h2{font-size:1.1rem;font-weight:900;margin-bottom:20px;text-align:center}
+
+.step{margin-bottom:48px}
+.step-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.step-num{width:32px;height:32px;min-width:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:var(--white)}
+.sn-1{background:#7F77DD}.sn-2{background:#5A7EB5}.sn-3{background:#D85A30}.sn-4{background:#5B8C5A}
+.step-meta{font-size:.72rem;font-weight:700;color:var(--text-light);letter-spacing:.08em}
+.step-title{font-size:1.1rem;font-weight:900}
+
+.card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:24px;margin-bottom:16px;border:1px solid rgba(0,0,0,.04)}
+.card h3{font-size:.95rem;font-weight:700;margin-bottom:8px}
+.card p{font-size:.88rem;color:var(--text-light);line-height:1.8}
+
+.flow-arrow{text-align:center;color:var(--text-light);font-size:1.2rem;margin:8px 0 24px;opacity:.4}
+
+.csv-box{border-radius:12px;padding:20px;margin:12px 0}
+.csv-teal{background:#E1F5EE;border:1px solid rgba(29,158,117,.15)}
+.csv-amber{background:#FFF8E8;border:1px solid rgba(200,149,32,.15)}
+.csv-box h4{font-size:.85rem;font-weight:700;margin-bottom:10px}
+.csv-row{display:flex;gap:8px;margin-bottom:4px;font-size:.82rem}
+.csv-col{font-weight:600;color:var(--text);min-width:160px}
+.csv-val{color:var(--text-light)}
+
+.pipeline{display:flex;gap:0;align-items:stretch;margin:16px 0}
+.pipe-step{flex:1;text-align:center;padding:16px 8px;border-radius:12px}
+.pipe-step h4{font-size:.82rem;font-weight:700;margin-bottom:4px}
+.pipe-step p{font-size:.75rem;color:var(--text-light);line-height:1.5}
+.pipe-1{background:#EEEDFE}.pipe-1 h4{color:#534AB7}
+.pipe-2{background:#FFF8E8}.pipe-2 h4{color:#854F0B}
+.pipe-3{background:#FAECE7}.pipe-3 h4{color:#993C1D}
+.pipe-4{background:#E8F0E4}.pipe-4 h4{color:#3D6B3C}
+.pipe-arrow{display:flex;align-items:center;font-size:.9rem;color:var(--text-light);padding:0 4px;opacity:.4}
+
+.delivery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.delivery-card{border-radius:12px;padding:20px 16px;text-align:center}
+.delivery-card h4{font-size:.9rem;font-weight:700;margin-bottom:4px}
+.delivery-card .freq{font-size:.75rem;font-weight:700;margin-bottom:8px}
+.delivery-card p{font-size:.78rem;color:var(--text-light);line-height:1.5}
+.dc-green{background:#E8F0E4;border:1px solid rgba(91,140,90,.15)}.dc-green h4{color:#3D6B3C}.dc-green .freq{color:#5B8C5A}
+.dc-teal{background:#E1F5EE;border:1px solid rgba(29,158,117,.15)}.dc-teal h4{color:#085041}.dc-teal .freq{color:#1D9E75}
+.dc-purple{background:#EEEDFE;border:1px solid rgba(127,119,221,.15)}.dc-purple h4{color:#3C3489}.dc-purple .freq{color:#7F77DD}
+
+.confirm{border-radius:12px;padding:20px 24px;margin:16px 0;font-size:.85rem;line-height:1.8;border:1.5px dashed rgba(0,0,0,.12);background:var(--white)}
+.confirm h4{font-size:.85rem;font-weight:700;margin-bottom:4px;color:#C89520}
+.target{background:var(--cream);border-radius:12px;padding:16px;text-align:center;margin:16px 0;font-size:.88rem;font-weight:700;color:var(--text-light)}
+
+@media(max-width:640px){
+  .pipeline{flex-direction:column;gap:8px}
+  .pipe-arrow{justify-content:center;transform:rotate(90deg);padding:4px 0}
+  .delivery-grid{grid-template-columns:1fr}
+  .csv-col{min-width:120px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス</a></div>
+  <nav class="topbar-nav">
+    <a href="index.html">トップ</a>
+    <a href="report.html">AIレポート設計</a>
+    <a href="index.html" class="cta">← トップへ戻る</a>
+  </nav>
+</div>
+
+<div class="header">
+  <h1>見守りプラス｜システム構成</h1>
+  <p>データの流れと自動化の全体像</p>
+  <div class="header-meta">2026年4月30日</div>
+</div>
+
+<div class="main">
+
+<!-- ===== 全体図 ===== -->
+<div class="diagram-wrap">
+  <h2>システム全体図</h2>
+  <svg width="100%" viewBox="0 0 680 860" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="#6B6560" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <style>
+        .st{font-family:'Noto Sans JP',sans-serif;font-size:12px;fill:#6B6560}
+        .sh{font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;fill:#2D2A26}
+        .sth{font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:500}
+        .sts{font-family:'Noto Sans JP',sans-serif;font-size:12px}
+      </style>
+    </defs>
+
+    <!-- STEP 1 -->
+    <text class="st" x="40" y="24">STEP 1｜常時</text>
+    <text class="sh" x="40" y="44">イベントデータの蓄積</text>
+    <rect x="40" y="56" width="260" height="44" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+    <text class="sth" x="170" y="78" text-anchor="middle" dominant-baseline="central" fill="#3C3489">Tuyaサーバー</text>
+    <line x1="300" y1="78" x2="340" y2="78" stroke="#6B6560" stroke-width="0.5" stroke-dasharray="4 4"/>
+    <text class="sts" x="346" y="68" fill="#6B6560">USB / AC / ライト / SOS /</text>
+    <text class="sts" x="346" y="84" fill="#6B6560">充電完了 / コンセント接続</text>
+    <text class="sts" x="346" y="100" fill="#6B6560">→ イベント発生のたびに自動蓄積</text>
+    <line x1="170" y1="100" x2="170" y2="140" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- STEP 2 -->
+    <text class="st" x="40" y="128">STEP 2｜定期・自動</text>
+    <text class="sh" x="40" y="148">データ取得 → CSV化 → Google Driveへ保存</text>
+    <rect x="40" y="160" width="600" height="200" rx="12" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+    <text class="sth" x="60" y="184" fill="#0C447C">Google Drive</text>
+
+    <rect x="60" y="200" width="240" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+    <text class="sth" x="180" y="220" text-anchor="middle" dominant-baseline="central" fill="#444441">定期取得スクリプト</text>
+    <text class="sts" x="316" y="214" fill="#6B6560">Tuya API → CSV変換</text>
+    <text class="sts" x="316" y="230" fill="#6B6560">→ Driveに自動保存</text>
+
+    <rect x="60" y="254" width="270" height="92" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+    <text class="sth" x="195" y="276" text-anchor="middle" dominant-baseline="central" fill="#085041">お客様情報.csv</text>
+    <text class="sts" x="76" y="298" fill="#085041">ユーザーID / ニックネーム</text>
+    <text class="sts" x="76" y="314" fill="#085041">メールアドレス / LINE ID</text>
+
+    <rect x="350" y="254" width="270" height="92" rx="8" fill="#FFF8E8" stroke="#854F0B" stroke-width="0.5"/>
+    <text class="sth" x="485" y="276" text-anchor="middle" dominant-baseline="central" fill="#633806">使用データ.csv</text>
+    <text class="sts" x="366" y="298" fill="#633806">ユーザーID / 日付 / イベント種類</text>
+    <text class="sts" x="366" y="314" fill="#633806">イベント時刻 / コンセント状態</text>
+
+    <line x1="340" y1="360" x2="340" y2="400" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- STEP 3 -->
+    <text class="st" x="40" y="390">STEP 3｜毎月1日 / 毎週月曜（自動実行）</text>
+    <text class="sh" x="40" y="410">AI分析 → レポート生成</text>
+    <rect x="40" y="422" width="600" height="170" rx="12" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+    <text class="sth" x="60" y="446" fill="#712B13">Claude AIシステム</text>
+
+    <rect x="60" y="462" width="120" height="50" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+    <text class="sth" x="120" y="480" text-anchor="middle" dominant-baseline="central" fill="#444441">CSV読込</text>
+    <text class="sts" x="120" y="498" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">全ユーザー</text>
+    <line x1="180" y1="487" x2="203" y2="487" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="205" y="462" width="130" height="50" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+    <text class="sth" x="270" y="480" text-anchor="middle" dominant-baseline="central" fill="#444441">パターン分析</text>
+    <text class="sts" x="270" y="498" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">ユーザーごと</text>
+    <line x1="335" y1="487" x2="358" y2="487" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="360" y="462" width="120" height="50" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+    <text class="sth" x="420" y="480" text-anchor="middle" dominant-baseline="central" fill="#444441">文面生成</text>
+    <text class="sts" x="420" y="498" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">ユーザーごと</text>
+    <line x1="480" y1="487" x2="518" y2="487" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="520" y="462" width="100" height="50" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+    <text class="sth" x="570" y="487" text-anchor="middle" dominant-baseline="central" fill="#444441">送信</text>
+
+    <text class="sts" x="60" y="536" fill="#712B13">ベースライン比較 / 曜日パターン / 3ヶ月推移</text>
+    <text class="sts" x="60" y="552" fill="#712B13">パターンA/Bを自動判定 → 文面切り替え</text>
+    <text class="sts" x="60" y="568" fill="#712B13">送信先はCSVのメール / LINE IDから自動取得</text>
+
+    <line x1="170" y1="592" x2="130" y2="640" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="340" y1="592" x2="340" y2="640" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="510" y1="592" x2="550" y2="640" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <!-- STEP 4 -->
+    <text class="st" x="40" y="630">STEP 4｜自動配信</text>
+    <text class="sh" x="40" y="650">レポート配信</text>
+
+    <rect x="40" y="662" width="180" height="72" rx="8" fill="#E8F0E4" stroke="#3D6B3C" stroke-width="0.5"/>
+    <text class="sth" x="130" y="686" text-anchor="middle" dominant-baseline="central" fill="#27500A">メール</text>
+    <text class="sts" x="130" y="704" text-anchor="middle" dominant-baseline="central" fill="#3B6D11">月次レポート</text>
+    <text class="sts" x="130" y="720" text-anchor="middle" dominant-baseline="central" fill="#3B6D11">毎月1日 自動送信</text>
+
+    <rect x="250" y="662" width="180" height="72" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+    <text class="sth" x="340" y="686" text-anchor="middle" dominant-baseline="central" fill="#085041">LINE</text>
+    <text class="sts" x="340" y="704" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">週次1行＋アラート</text>
+    <text class="sts" x="340" y="720" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">毎週月曜 自動送信</text>
+
+    <rect x="460" y="662" width="180" height="72" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+    <text class="sth" x="550" y="686" text-anchor="middle" dominant-baseline="central" fill="#3C3489">アプリ</text>
+    <text class="sts" x="550" y="704" text-anchor="middle" dominant-baseline="central" fill="#534AB7">AIレポート表示</text>
+    <text class="sts" x="550" y="720" text-anchor="middle" dominant-baseline="central" fill="#534AB7">毎月1日 自動更新</text>
+
+    <line x1="130" y1="734" x2="130" y2="770" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="340" y1="734" x2="340" y2="770" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+    <line x1="550" y1="734" x2="550" y2="770" stroke="#6B6560" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="40" y="772" width="600" height="40" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+    <text class="sth" x="340" y="792" text-anchor="middle" dominant-baseline="central" fill="#444441">見守る側（子）のスマホ</text>
+
+    <rect x="40" y="828" width="600" height="28" rx="8" fill="none" stroke="#6B6560" stroke-width="0.5" stroke-dasharray="4 4"/>
+    <text class="sts" x="340" y="846" text-anchor="middle" fill="#6B6560">要確認：Tuya APIでの自動取得が可能か → 開発チームに確認</text>
+  </svg>
+</div>
+
+<!-- ===== 各STEPの詳細 ===== -->
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num sn-1">1</div>
+    <div>
+      <div class="step-meta">常時・自動</div>
+      <div class="step-title">イベントデータの蓄積</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Tuyaサーバーに記録されるイベント</h3>
+    <div class="csv-row"><span class="csv-col">USB給電の開始</span><span class="csv-val">スマホ充電を始めた等</span></div>
+    <div class="csv-row"><span class="csv-col">AC出力の開始・終了</span><span class="csv-val">家電を使った・止めた</span></div>
+    <div class="csv-row"><span class="csv-col">ライト点灯・消灯</span><span class="csv-val">ライトを使った時刻</span></div>
+    <div class="csv-row"><span class="csv-col">SOSライト点灯</span><span class="csv-val">見守る側がボタンを押した</span></div>
+    <div class="csv-row"><span class="csv-col">「無事です」応答</span><span class="csv-val">見守られる側がライトを消した</span></div>
+    <div class="csv-row"><span class="csv-col">充電完了</span><span class="csv-val">バッテリーが98%以上に到達</span></div>
+    <div class="csv-row"><span class="csv-col">コンセント接続状態</span><span class="csv-val">接続中 / 外れた</span></div>
+  </div>
+</div>
+
+<div class="flow-arrow">↓</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num sn-2">2</div>
+    <div>
+      <div class="step-meta">定期・自動</div>
+      <div class="step-title">データ取得 → CSV化 → Google Driveへ保存</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>定期取得スクリプト</h3>
+    <p>Tuya APIからイベントデータを定期的に取得し、CSV形式に変換してGoogle Driveへ自動保存する。</p>
+  </div>
+  <div class="card">
+    <h3>Google Driveに保存される2つのCSV</h3>
+    <div class="csv-box csv-teal">
+      <h4>お客様情報.csv</h4>
+      <div class="csv-row"><span class="csv-col">ユーザーID</span><span class="csv-val">U-0012</span></div>
+      <div class="csv-row"><span class="csv-col">ニックネーム</span><span class="csv-val">お母さん</span></div>
+      <div class="csv-row"><span class="csv-col">見守る側メールアドレス</span><span class="csv-val">taro@example.com</span></div>
+      <div class="csv-row"><span class="csv-col">見守る側LINE ID</span><span class="csv-val">@xxx</span></div>
+      <div class="csv-row"><span class="csv-col">利用開始日</span><span class="csv-val">2026-03-01</span></div>
+      <div class="csv-row"><span class="csv-col">ステータス</span><span class="csv-val">利用中 / 解約済み</span></div>
+    </div>
+    <div class="csv-box csv-amber">
+      <h4>使用データ.csv</h4>
+      <div class="csv-row"><span class="csv-col">ユーザーID</span><span class="csv-val">U-0012</span></div>
+      <div class="csv-row"><span class="csv-col">日付</span><span class="csv-val">2026-04-28</span></div>
+      <div class="csv-row"><span class="csv-col">イベント種類</span><span class="csv-val">ライト点灯</span></div>
+      <div class="csv-row"><span class="csv-col">イベント時刻</span><span class="csv-val">18:32</span></div>
+      <div class="csv-row"><span class="csv-col">コンセント接続</span><span class="csv-val">接続中</span></div>
+    </div>
+    <p style="font-size:.8rem;margin-top:12px">※ 使用データは1行＝1イベント。お客様情報とユーザーIDで紐付け。</p>
+  </div>
+</div>
+
+<div class="flow-arrow">↓</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num sn-3">3</div>
+    <div>
+      <div class="step-meta">月次 / 週次・自動実行</div>
+      <div class="step-title">Claude AIがCSVを読み取り → 分析 → レポート生成</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>処理の流れ</h3>
+    <div class="pipeline">
+      <div class="pipe-step pipe-1"><h4>CSV読み込み</h4><p>Google Driveから2つのCSVを取得</p></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-2"><h4>パターン分析</h4><p>ユーザーごとにベースライン比較</p></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-3"><h4>文面生成</h4><p>パターンA/Bを自動判定して文面作成</p></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step pipe-4"><h4>送信</h4><p>CSVのメール・LINE IDへ自動配信</p></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>分析でやること</h3>
+    <div class="csv-row"><span class="csv-col">ベースライン比較</span><span class="csv-val">最初の2週間で学習した「普通」との差分</span></div>
+    <div class="csv-row"><span class="csv-col">曜日パターン</span><span class="csv-val">「土曜は使用なしが多い」などの傾向</span></div>
+    <div class="csv-row"><span class="csv-col">3ヶ月推移</span><span class="csv-val">先月・先々月との比較</span></div>
+    <div class="csv-row"><span class="csv-col">パターン判定</span><span class="csv-val">A（よく使う）/ B（あまり使わない）を自動分類</span></div>
+    <div class="csv-row"><span class="csv-col">文面バリエーション</span><span class="csv-val">毎月・毎週の表現を変え、季節の話題を織り込む</span></div>
+  </div>
+</div>
+
+<div class="flow-arrow">↓</div>
+
+<div class="step">
+  <div class="step-header">
+    <div class="step-num sn-4">4</div>
+    <div>
+      <div class="step-meta">自動配信</div>
+      <div class="step-title">レポート配信</div>
+    </div>
+  </div>
+  <div class="delivery-grid">
+    <div class="delivery-card dc-green"><h4>メール</h4><div class="freq">毎月1日 自動送信</div><p>月次レポート</p></div>
+    <div class="delivery-card dc-teal"><h4>LINE</h4><div class="freq">毎週月曜 自動送信</div><p>週次1行＋アラート</p></div>
+    <div class="delivery-card dc-purple"><h4>アプリ</h4><div class="freq">毎月1日 自動更新</div><p>AIレポート（詳細版）</p></div>
+  </div>
+  <div class="target">↓ すべて見守る側（子）のスマホに届く</div>
+</div>
+
+<div class="confirm">
+  <h4>要確認事項</h4>
+  <p>Tuya APIでイベントデータの自動取得が可能か → 開発チームに確認が必要。可能であればSTEP 1→2は完全自動化。不可の場合はエクスポートの仕組みを開発。</p>
+</div>
+
+</div>
+</body>
+</html>
