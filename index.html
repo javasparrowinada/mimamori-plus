@@ -25,9 +25,13 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 .sample-label{font-size:.68rem;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block}
 .pattern-label{display:inline-block;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:8px;margin-bottom:12px}
 .pattern-a{background:var(--green-light);color:var(--green-dark)}.pattern-b{background:var(--blue-light);color:var(--blue)}
-.line-msgs{display:flex;flex-direction:column;gap:10px;margin:16px 0}
-.line-msg{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:18px 18px 18px 4px;padding:12px 18px;font-size:.86rem;max-width:85%;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.line-msg.a-red{border-left:3px solid var(--red);background:var(--red-light)}.line-msg.a-yellow{border-left:3px solid var(--orange);background:#FFF8F0}.line-msg.a-green{border-left:3px solid var(--green);background:var(--green-light)}
+.line-msgs{display:flex;flex-direction:column;gap:14px;margin:16px 0}
+.line-msg{display:flex;gap:10px;align-items:flex-start;max-width:90%}
+.line-msg-avatar{width:36px;height:36px;min-width:36px;border-radius:50%;object-fit:cover;border:1.5px solid var(--warm)}
+.line-msg-body{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:4px 16px 16px 16px;padding:12px 16px;font-size:.84rem;line-height:1.85;white-space:pre-line;box-shadow:0 1px 3px rgba(0,0,0,.04);flex:1}
+.line-msg.a-red .line-msg-body{border-left:3px solid var(--red);background:var(--red-light)}
+.line-msg.a-yellow .line-msg-body{border-left:3px solid var(--orange);background:#FFF8F0}
+.line-msg.a-green .line-msg-body{border-left:3px solid var(--green);background:var(--green-light)}
 .rule-tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin:12px 0}.rule-tbl td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}.rule-tbl td:first-child{font-weight:600;width:45%;color:var(--text)}.rule-tbl td:last-child{color:var(--text-light)}
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.compare-item{border-radius:12px;padding:16px 20px;font-size:.82rem;line-height:1.7}.compare-ng{background:var(--red-light);border:1px solid rgba(214,80,80,.12)}.compare-ng::before{content:'✕ ';font-weight:700;color:var(--red)}.compare-ok{background:var(--green-light);border:1px solid rgba(91,140,90,.12)}.compare-ok::before{content:'○ ';font-weight:700;color:var(--green-dark)}
 .ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.ch-card{border-radius:14px;padding:24px 20px;text-align:center}.ch-card h4{font-size:.95rem;font-weight:700;margin-bottom:4px}.ch-card .ch-freq{font-size:.78rem;font-weight:700;margin-bottom:10px}.ch-card p{font-size:.78rem;color:var(--text-light);line-height:1.6;text-align:left}
@@ -77,7 +81,9 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 .line-header-title{font-size:13px;font-weight:700;color:var(--white)}
 .line-header-back{font-size:16px;color:var(--white)}
 .line-body{background:#8CABD9;background:linear-gradient(180deg,#7BA4CE 0%,#6B95C0 100%);padding:16px 12px;min-height:440px}
-.line-bubble{background:var(--white);border-radius:4px 16px 16px 16px;padding:10px 14px;font-size:11px;line-height:1.7;max-width:220px;margin-bottom:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);color:var(--text)}
+.line-bubble-row{display:flex;gap:6px;align-items:flex-start;margin-bottom:6px}
+.line-bubble-avatar{width:28px;height:28px;min-width:28px;border-radius:50%;object-fit:cover;border:1px solid #fff}
+.line-bubble{background:var(--white);border-radius:4px 12px 12px 12px;padding:8px 12px;font-size:10.5px;line-height:1.7;max-width:200px;box-shadow:0 1px 2px rgba(0,0,0,.08);color:var(--text);white-space:pre-line}
 .line-bubble-alert{background:#FFF0F0;border-left:2px solid var(--red)}
 .line-bubble-warn{background:#FFF8F0;border-left:2px solid var(--orange)}
 .line-bubble-ok{background:#E8F8E8;border-left:2px solid var(--green)}
@@ -160,6 +166,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <tr><td>「ご安心ください」を明示的に書く</td><td>安心していいと言葉にすることで、心理的な負荷を下げる。</td></tr>
 <tr><td>冒頭に季節のひと言を添える</td><td>嫌味にならない程度に。「連絡してみようかな」のきっかけになる温度感で。</td></tr>
 <tr><td>メール冒頭で「森川あかりです」と名乗る</td><td>受け取るのは見守る側のご家族（子）。誰からの便りなのか冒頭で示し、システム通知ではなく「あかりからの手紙」だと最初に伝える。</td></tr>
+<tr><td>LINE冒頭は「[お客様名]さん、あかりです😊」</td><td>あかりの公式LINEで既に確立されているトーン。短い行で改行を多めに、絵文字を添えて「お便り感」を出す。バナー通知でも誰からか一目で分かる。</td></tr>
 <tr><td>署名は「森川あかり」</td><td>メールの末尾に署名を入れ、人が見守っている温度感を出す。</td></tr>
 </table>
 </div>
@@ -358,45 +365,110 @@ solarichを使った日　：28 / 30日
 <p class="desc">LINEには2種類だけ届く。隔週の「1行」と、必要な時だけの「お知らせ」。</p>
 
 <div class="card">
-<h3><span class="icon">💚</span> 隔週ヘルスチェック（隔週月曜）</h3>
-<p style="margin:8px 0 16px">2週に1回、通知バナーに1行見えるだけで「大丈夫なんだな」と感じられればそれでいい。</p>
+<h3><span class="icon">💚</span> あかりからのお便り（隔週月曜）</h3>
+<p style="margin:8px 0 6px"><strong>あかりの公式LINEで既に確立されているトーン</strong>を、見守りメッセージでもそのまま踏襲する。</p>
+<p style="margin:0 0 16px;font-size:.82rem;color:var(--text-light)">必ず「[お客様の苗字]さん、あかりです😊」で始まり、短い行で改行を多めに、絵文字でやさしさを添える。<br>「✅システム通知」ではなく「💛あかりからのお便り」の温度感で。</p>
+
 <div class="dual">
 <div class="dual-doc">
-<p style="font-weight:700;margin:16px 0 8px;font-size:.82rem;color:var(--green-dark)">✅ 安定時</p>
+
+<p style="font-weight:700;margin:16px 0 8px;font-size:.82rem;color:var(--green-dark)">💚 安定時</p>
 <div class="line-msgs">
-<div class="line-msg">✅ お母さん、この2週間も穏やかにお過ごしです（ライト5回）</div>
-<div class="line-msg">✅ お母さん、いつも通りです。ご安心ください</div>
-<div class="line-msg">✅ お母さん、変わりなくお元気そうです</div>
-<div class="line-msg">✅ お母さん、穏やかな2週間でした</div>
+<div class="line-msg"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+お母さんの2週間のようすを
+お届けしますね🌸
+
+この2週間も
+穏やかにお過ごしでした✨
+
+ライトを5回点けていらして
+お元気な気配です
+
+また2週間後、お便りしますね😊</div></div>
+
+<div class="line-msg"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+お母さん、いつも通りの
+穏やかな2週間でした🌸
+
+solarichもずっと
+コンセントに繋がっていて
+いつでも使える状態です
+
+ご安心くださいね💛</div></div>
 </div>
+
 <p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--orange)">ℹ️ 少し気になること</p>
 <div class="line-msgs">
-<div class="line-msg a-yellow">ℹ️ お母さん、この2週間はライトの使用がありませんでした</div>
-<div class="line-msg a-yellow">ℹ️ お母さんのsolarich、バッテリーが少なめです（32%）</div>
+<div class="line-msg a-yellow"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+少しだけ気になることが
+あったのでお知らせします🙏
+
+この2週間
+お母さんがライトを
+お使いになっていません
+
+お変わりないとは思いますが
+よかったらお電話で
+お声を聞いてみてくださいね💛</div></div>
+
+<div class="line-msg a-yellow"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+お母さんのsolarich
+バッテリーが少なめになっています（32%）🔋
+
+次に訪問されるときに
+コンセントを差し直して
+いただけると安心です🙏</div></div>
 </div>
+
 <p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--red)">⚠ 確認をおすすめします</p>
 <div class="line-msgs">
-<div class="line-msg a-red">⚠ お母さんのsolarich、ここ2日ほど使用がないようです。詳しくはアプリで</div>
+<div class="line-msg a-red"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです🙏
+
+お母さんのsolarich
+ここ2日ほど
+使われていないようです
+
+お電話で
+ご様子を伺ってみてください
+
+詳しくはアプリでも
+ご確認いただけます📱</div></div>
 </div>
+
 </div>
+
 <div class="dual-phone">
 <div class="phone"><div class="phone-notch"></div><div class="phone-screen">
 <div class="phone-status"><span>9:41</span><div class="phone-status-r">📶 📡 🔋</div></div>
 <div class="phone-content">
-<div class="line-header"><span class="line-header-back">‹</span><span class="line-header-title">見守りプラス</span></div>
+<div class="line-header"><span class="line-header-back">‹</span><span class="line-header-title">見守りプラス｜あかり</span></div>
 <div class="line-body">
+
 <div class="line-date"><span>4月14日（月）</span></div>
-<div class="line-bubble">✅ お母さん、この2週間も穏やかにお過ごしです（ライト5回）</div>
+<div class="line-bubble-row"><img src="akari.png" alt="あかり" class="line-bubble-avatar"><div class="line-bubble">田中さん、あかりです😊
+
+お母さんの2週間
+穏やかにお過ごしでした🌸
+
+ライトを5回点けていらして
+お元気な気配です✨
+
+また2週間後、お便りしますね😊</div></div>
 <div class="line-time">9:00</div>
+
 <div class="line-date"><span>4月28日（月）</span></div>
-<div class="line-bubble">✅ お母さん、いつも通りです。ご安心ください</div>
+<div class="line-bubble-row"><img src="akari.png" alt="あかり" class="line-bubble-avatar"><div class="line-bubble">田中さん、あかりです😊
+
+お母さん、いつも通りの
+穏やかな2週間でした🌸
+
+ご安心くださいね💛</div></div>
 <div class="line-time">9:00</div>
-<div style="height:40px"></div>
-<div class="line-date"><span>アラートの例</span></div>
-<div class="line-bubble line-bubble-alert">🔴 お母さんにライトの確認をお送りしましたが、お返事がありません。ご確認をお願いします。</div>
-<div class="line-time">15:32</div>
-<div class="line-bubble line-bubble-ok">✅ お母さんからお返事がありました。お元気な様子です。</div>
-<div class="line-time">16:05</div>
+
 </div>
 </div>
 </div></div>
@@ -405,25 +477,119 @@ solarichを使った日　：28 / 30日
 
 <div class="card">
 <h3><span class="icon">🔔</span> お知らせ（必要な時だけ）</h3>
-<p style="margin:8px 0 16px">鳴らない月がほとんど。それが理想です。</p>
+<p style="margin:8px 0 16px">鳴らない月がほとんど。それが理想です。<br>緊急度が高いほど、より行動を促す言葉に。</p>
+
+<div class="dual">
+<div class="dual-doc">
 
 <p style="font-weight:700;margin:16px 0 8px;font-size:.82rem;color:var(--red)">🔴 すぐにご確認ください</p>
 <div class="line-msgs">
-<div class="line-msg a-red">🔴 お母さんにライトの確認をお送りしましたが、お返事がありません。ご確認をお願いします。</div>
-<div class="line-msg a-red">🔴 お母さんのsolarich、ここ2日ほど使用がないようです。お電話してみてくださいね。</div>
+<div class="line-msg a-red"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです🙏
+
+お母さんに
+ライトの確認をお送りしましたが
+お返事がいただけていません
+
+お電話で
+ご様子を伺ってください
+
+何かあればすぐに
+ご連絡くださいね🙏</div></div>
+
+<div class="line-msg a-red"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです🙏
+
+お母さんのsolarich
+ここ2日ほど
+使われていないようです
+
+お電話してみてくださいね
+
+何かあれば
+すぐにご連絡ください🙏</div></div>
 </div>
 
 <p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--orange)">🟠 念のためお知らせ（夜間は朝7時にお届け）</p>
 <div class="line-msgs">
-<div class="line-msg a-yellow">ℹ️ お母さんのsolarichとの通信が途切れているようです。ドングルをご確認ください。</div>
-<div class="line-msg a-yellow">ℹ️ お母さんのsolarich、コンセントが外れているようです。次回の訪問時にご確認ください。</div>
+<div class="line-msg a-yellow"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+お母さんのsolarichと
+通信が途切れているようです📡
+
+ドングルが抜けていないか
+次のご訪問時に
+ご確認いただけると安心です🙏</div></div>
+
+<div class="line-msg a-yellow"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+お母さんのsolarich
+コンセントが外れているようです🔌
+
+次のご訪問時に
+差し直していただけると
+安心です🙏</div></div>
 </div>
 
 <p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--green-dark)">✅ 安心のお知らせ</p>
 <div class="line-msgs">
-<div class="line-msg a-green">✅ お母さんからお返事がありました。お元気な様子です。</div>
-<div class="line-msg a-green">✅ お母さんのsolarich、使用が再開されました。</div>
-<div class="line-msg a-green">✅ 通信が復旧しました。ご安心ください。</div>
+<div class="line-msg a-green"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+お母さんから
+お返事がありました🌸
+
+ご心配おかけしました
+今日もお元気な様子です✨</div></div>
+
+<div class="line-msg a-green"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+お母さんのsolarich
+使用が再開されました🌸
+
+お変わりなさそうです
+ご安心ください💛</div></div>
+
+<div class="line-msg a-green"><img src="akari.png" alt="あかり" class="line-msg-avatar"><div class="line-msg-body">田中さん、あかりです😊
+
+通信が復旧しました📡
+
+これでまた
+お母さんのようすを
+お届けできます
+
+ご安心くださいね💛</div></div>
+</div>
+
+</div>
+
+<div class="dual-phone">
+<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
+<div class="phone-status"><span>15:32</span><div class="phone-status-r">📶 📡 🔋</div></div>
+<div class="phone-content">
+<div class="line-header"><span class="line-header-back">‹</span><span class="line-header-title">見守りプラス｜あかり</span></div>
+<div class="line-body">
+
+<div class="line-date"><span>本日</span></div>
+<div class="line-bubble-row"><img src="akari.png" alt="あかり" class="line-bubble-avatar"><div class="line-bubble line-bubble-alert">田中さん、あかりです🙏
+
+お母さんに
+ライトの確認をお送りしましたが
+お返事がいただけていません
+
+お電話で
+ご様子を伺ってください🙏</div></div>
+<div class="line-time">15:32</div>
+
+<div class="line-bubble-row"><img src="akari.png" alt="あかり" class="line-bubble-avatar"><div class="line-bubble line-bubble-ok">田中さん、あかりです😊
+
+お母さんから
+お返事がありました🌸
+
+ご心配おかけしました
+今日もお元気な様子です✨</div></div>
+<div class="line-time">16:05</div>
+
+</div>
+</div>
+</div></div>
 </div>
 </div>
 </div>
