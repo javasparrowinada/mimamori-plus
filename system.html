@@ -73,6 +73,22 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
 .confirm h4{font-size:.85rem;font-weight:700;margin-bottom:4px;color:#C89520}
 .target{background:var(--cream);border-radius:12px;padding:16px;text-align:center;margin:16px 0;font-size:.88rem;font-weight:700;color:var(--text-light)}
 
+/* 技術参考セクション */
+.divider{height:1px;background:rgba(0,0,0,.06);margin:48px 0}
+.ref-section{margin-top:8px}
+.ref-badge{display:inline-flex;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px;background:#F5E6D3;color:#D06830}
+.ref-section h2{font-size:1.25rem;font-weight:900;margin-bottom:8px;line-height:1.4}
+.ref-section .desc{color:var(--text-light);font-size:.9rem;margin-bottom:24px;font-weight:300}
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:8px 0}
+.tbl th{text-align:left;padding:10px 14px;font-weight:700;font-size:.78rem;background:rgba(91,140,90,.06);border-bottom:2px solid rgba(91,140,90,.15);color:var(--green-dark)}
+.tbl td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.status{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:6px}
+.s-done{background:#E8F8E8;color:#2D7B2D}
+.s-pending{background:#FFF8E8;color:#C89520}
+.s-stopped{background:#FFF0F0;color:#D65050}
+.card .icon{font-size:1.1rem;margin-right:6px}
+
 .detail-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 20px;background:#D85A30;color:#fff;border-radius:100px;font-size:.85rem;font-weight:700;text-decoration:none;transition:all .2s;box-shadow:0 2px 8px rgba(216,90,48,.25)}
 .detail-btn:hover{background:#993C1D;transform:translateY(-1px);box-shadow:0 4px 12px rgba(216,90,48,.35)}
 .detail-btn::after{content:'→';font-size:1rem}
@@ -102,6 +118,7 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
   <nav class="topbar-nav">
     <a href="index.html">AIレポート設計（メイン）</a>
     <a href="ai-system.html">Claude AI詳細</a>
+    <a href="#ref">技術参考</a>
     <a href="product.html">商品紹介</a>
     <a href="index.html" class="cta">← AIレポート設計へ</a>
   </nav>
@@ -349,6 +366,74 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;
 <div class="confirm">
   <h4>要確認事項</h4>
   <p>Tuya APIでイベントデータの自動取得が可能か → 開発チームに確認が必要。可能であればSTEP 1→2は完全自動化。不可の場合はエクスポートの仕組みを開発。</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- 技術参考 -->
+<!-- ============================================================ -->
+<div class="ref-section" id="ref">
+  <div class="ref-badge">技術参考</div>
+  <h2>データ取得と通知の現状</h2>
+  <p class="desc">現状、アプリのホームタブが表示されている時のみデータがサーバーに送信される。バックグラウンド取得は検討中。</p>
+
+  <div class="card">
+    <h3><span class="icon">🔋</span> イベントベースデータ（本番取得可能）</h3>
+    <table class="tbl">
+      <tr><th>データ項目</th><th>ステータス</th></tr>
+      <tr><td>USB給電の開始</td><td><span class="status s-done">デモ実装済み</span></td></tr>
+      <tr><td>AC出力の開始・終了</td><td><span class="status s-done">本番取得可能</span></td></tr>
+      <tr><td>ライト点灯・消灯</td><td><span class="status s-done">本番取得可能</span></td></tr>
+      <tr><td>SOSライト点灯</td><td><span class="status s-done">TestFlight 3.2.2</span></td></tr>
+      <tr><td>充電完了</td><td><span class="status s-done">TestFlight 3.2.11</span></td></tr>
+      <tr><td>コンセント接続/未接続</td><td><span class="status s-done">判定可能（実機確認済み）</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📊</span> 状態データ（バックグラウンド取得次第）</h3>
+    <table class="tbl">
+      <tr><th>データ項目</th><th>ステータス</th></tr>
+      <tr><td>バッテリー残量（%）</td><td><span class="status s-pending">判断待ち</span></td></tr>
+      <tr><td>入力電力（W）</td><td><span class="status s-pending">判断待ち</span></td></tr>
+      <tr><td>出力電力（W）</td><td><span class="status s-pending">判断待ち</span></td></tr>
+    </table>
+    <p style="margin-top:12px;font-size:.82rem;color:var(--text-light)">通信量計測中（139,000円で専用機器購入済み）。Wi-Fiドングルの年間5GB制限との兼ね合い。</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">📋</span> 通知タイプ一覧</h3>
+    <table class="tbl">
+      <tr><th>通知名</th><th>ステータス</th></tr>
+      <tr><td>USB給電通知</td><td><span class="status s-done">デモ実装済み</span></td></tr>
+      <tr><td>SOS通知 / 「無事です」通知</td><td><span class="status s-done">TestFlight 3.2.2</span></td></tr>
+      <tr><td>充電完了通知</td><td><span class="status s-done">TestFlight 3.2.11</span></td></tr>
+      <tr><td>コンセント未接続通知</td><td><span class="status s-pending">デモでは非表示</span></td></tr>
+      <tr><td>バッテリー残量低下通知（20%）</td><td><span class="status s-stopped">一時停止</span></td></tr>
+      <tr><td>電圧低下通知</td><td><span class="status s-pending">岩井検討中</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">🆘</span> SOS / 無事通知のフロー</h3>
+    <table class="tbl">
+      <tr><th>ステップ</th><th>誰が</th><th>何をする</th></tr>
+      <tr><td>1</td><td>見守る側（子）</td><td>アプリの「ライト光らせるボタン」を押す</td></tr>
+      <tr><td>2</td><td>solarich本体</td><td>SOSライトが光る</td></tr>
+      <tr><td>3</td><td>見守られる側（祖母）</td><td>ライトボタンを1回押して消す</td></tr>
+      <tr><td>4</td><td>サーバー</td><td>「無事です」通知を見守る側に送信</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon">⏳</span> 別途判断が必要な事項</h3>
+    <table class="tbl">
+      <tr><td>バックグラウンド取得の最終判断</td><td>通信量計測の結果待ち</td></tr>
+      <tr><td>電圧低下通知の採否</td><td>岩井検討中</td></tr>
+      <tr><td>各通知条件の最終仕様</td><td>Figma UIでの見積もり・スケジュール作成予定</td></tr>
+    </table>
+  </div>
 </div>
 
 </div>
