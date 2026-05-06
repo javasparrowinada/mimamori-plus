@@ -11,68 +11,81 @@
 html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;line-height:1.85;font-size:15px}
 .topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}.topbar-brand a{color:inherit;text-decoration:none}.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}.topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}.topbar-back{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:var(--orange);padding:6px 14px!important;border-radius:100px;text-decoration:none}.topbar-back:hover{background:var(--orange-dark)!important}
 .header{background:linear-gradient(135deg,var(--green-dark),var(--green));color:var(--white);padding:56px 24px 48px;text-align:center}.header h1{font-size:clamp(1.3rem,4vw,1.9rem);font-weight:900;margin-bottom:8px}.header p{opacity:.8;font-size:.9rem;font-weight:300;max-width:640px;margin:0 auto}.header-meta{margin-top:20px;font-size:.72rem;opacity:.65}
-.main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
+.main{max-width:1100px;margin:0 auto;padding:40px 20px 80px}
 .section{margin-bottom:56px;scroll-margin-top:70px}
 .section-badge{display:inline-flex;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:16px}
-.badge-channel{background:var(--green-light);color:var(--green-dark)}
-.badge-tone{background:var(--warm);color:var(--orange-dark)}
-.badge-report{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:var(--white)}
-.badge-mail{background:var(--blue-light);color:var(--blue)}
-.badge-line{background:#E8F8E8;color:#06A844}
+.badge-channel{background:var(--green-light);color:var(--green-dark)}.badge-tone{background:var(--warm);color:var(--orange-dark)}.badge-report{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:var(--white)}.badge-mail{background:var(--blue-light);color:var(--blue)}.badge-line{background:#E8F8E8;color:#06A844}
 .section h2{font-size:1.3rem;font-weight:900;margin-bottom:8px;line-height:1.4}
 .section>.desc{color:var(--text-light);font-size:.9rem;margin-bottom:28px;font-weight:300}
 .card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:28px;margin-bottom:20px;border:1px solid rgba(0,0,0,.04)}
 .card h3{font-size:1rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
 .card h3 .icon{font-size:1.2rem}
 .card p,.card li{font-size:.88rem;color:var(--text-light);line-height:1.8}
-.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:16px 0}
-.tbl th{text-align:left;padding:10px 14px;font-weight:700;font-size:.78rem;background:rgba(91,140,90,.06);border-bottom:2px solid rgba(91,140,90,.15);color:var(--green-dark)}
-.tbl td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}
-.tbl tr:last-child td{border-bottom:none}
 .sample{background:#FAFAF7;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:20px 24px;margin:16px 0;font-size:.84rem;line-height:1.9;white-space:pre-line}
 .sample-label{font-size:.68rem;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block}
 .pattern-label{display:inline-block;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:8px;margin-bottom:12px}
-.pattern-a{background:var(--green-light);color:var(--green-dark)}
-.pattern-b{background:var(--blue-light);color:var(--blue)}
+.pattern-a{background:var(--green-light);color:var(--green-dark)}.pattern-b{background:var(--blue-light);color:var(--blue)}
 .line-msgs{display:flex;flex-direction:column;gap:10px;margin:16px 0}
 .line-msg{background:var(--white);border:1px solid rgba(0,0,0,.06);border-radius:18px 18px 18px 4px;padding:12px 18px;font-size:.86rem;max-width:85%;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.line-msg.a-red{border-left:3px solid var(--red);background:var(--red-light)}
-.line-msg.a-yellow{border-left:3px solid var(--orange);background:#FFF8F0}
-.line-msg.a-green{border-left:3px solid var(--green);background:var(--green-light)}
-.rule-tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin:12px 0}
-.rule-tbl td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}
-.rule-tbl td:first-child{font-weight:600;width:45%;color:var(--text)}
-.rule-tbl td:last-child{color:var(--text-light)}
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
-.compare-item{border-radius:12px;padding:16px 20px;font-size:.82rem;line-height:1.7}
-.compare-ng{background:var(--red-light);border:1px solid rgba(214,80,80,.12)}.compare-ng::before{content:'✕ ';font-weight:700;color:var(--red)}
-.compare-ok{background:var(--green-light);border:1px solid rgba(91,140,90,.12)}.compare-ok::before{content:'○ ';font-weight:700;color:var(--green-dark)}
-.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}
-.ch-card{border-radius:14px;padding:24px 20px;text-align:center}
-.ch-card h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
-.ch-card .ch-freq{font-size:.78rem;font-weight:700;margin-bottom:10px}
-.ch-card p{font-size:.78rem;color:var(--text-light);line-height:1.6;text-align:left}
-.ch-green{background:var(--green-light);border:1px solid rgba(91,140,90,.15)}.ch-green h4{color:var(--green-dark)}.ch-green .ch-freq{color:var(--green)}
-.ch-blue{background:var(--blue-light);border:1px solid rgba(90,126,181,.15)}.ch-blue h4{color:#2D5A8C}.ch-blue .ch-freq{color:var(--blue)}
-.ch-teal{background:#E1F5EE;border:1px solid rgba(29,158,117,.15)}.ch-teal h4{color:#085041}.ch-teal .ch-freq{color:#1D9E75}
+.line-msg.a-red{border-left:3px solid var(--red);background:var(--red-light)}.line-msg.a-yellow{border-left:3px solid var(--orange);background:#FFF8F0}.line-msg.a-green{border-left:3px solid var(--green);background:var(--green-light)}
+.rule-tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin:12px 0}.rule-tbl td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}.rule-tbl td:first-child{font-weight:600;width:45%;color:var(--text)}.rule-tbl td:last-child{color:var(--text-light)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.compare-item{border-radius:12px;padding:16px 20px;font-size:.82rem;line-height:1.7}.compare-ng{background:var(--red-light);border:1px solid rgba(214,80,80,.12)}.compare-ng::before{content:'✕ ';font-weight:700;color:var(--red)}.compare-ok{background:var(--green-light);border:1px solid rgba(91,140,90,.12)}.compare-ok::before{content:'○ ';font-weight:700;color:var(--green-dark)}
+.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.ch-card{border-radius:14px;padding:24px 20px;text-align:center}.ch-card h4{font-size:.95rem;font-weight:700;margin-bottom:4px}.ch-card .ch-freq{font-size:.78rem;font-weight:700;margin-bottom:10px}.ch-card p{font-size:.78rem;color:var(--text-light);line-height:1.6;text-align:left}
+.ch-green{background:var(--green-light);border:1px solid rgba(91,140,90,.15)}.ch-green h4{color:var(--green-dark)}.ch-green .ch-freq{color:var(--green)}.ch-blue{background:var(--blue-light);border:1px solid rgba(90,126,181,.15)}.ch-blue h4{color:#2D5A8C}.ch-blue .ch-freq{color:var(--blue)}.ch-teal{background:#E1F5EE;border:1px solid rgba(29,158,117,.15)}.ch-teal h4{color:#085041}.ch-teal .ch-freq{color:#1D9E75}
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:16px 0}.tbl th{text-align:left;padding:10px 14px;font-weight:700;font-size:.78rem;background:rgba(91,140,90,.06);border-bottom:2px solid rgba(91,140,90,.15);color:var(--green-dark)}.tbl td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}.tbl tr:last-child td{border-bottom:none}
 .divider{height:1px;background:rgba(0,0,0,.06);margin:56px 0}
+.akari-intro{display:flex;gap:24px;align-items:center;margin:20px 0}.akari-img{width:100px;height:100px;min-width:100px;border-radius:50%;object-fit:cover;border:3px solid var(--warm);box-shadow:0 4px 16px rgba(232,131,74,.12)}.akari-intro-text{font-size:.9rem;color:var(--text-light);line-height:1.8}.akari-intro-text strong{color:var(--orange-dark)}
+.akari-bubble{display:flex;gap:16px;align-items:flex-start;margin:16px 0}.akari-bubble-img{width:44px;height:44px;min-width:44px;border-radius:50%;object-fit:cover;border:2px solid var(--warm)}.akari-bubble-body{background:#FAFAF7;border:1px solid rgba(0,0,0,.06);border-radius:4px 16px 16px 16px;padding:18px 22px;font-size:.84rem;line-height:1.9;white-space:pre-line;flex:1}.akari-bubble-body .sample-label{margin-bottom:8px}
 
-/* Akari */
-.akari-intro{display:flex;gap:24px;align-items:center;margin:20px 0}
-.akari-img{width:100px;height:100px;min-width:100px;border-radius:50%;object-fit:cover;border:3px solid var(--warm);box-shadow:0 4px 16px rgba(232,131,74,.12)}
-.akari-intro-text{font-size:.9rem;color:var(--text-light);line-height:1.8}
-.akari-intro-text strong{color:var(--orange-dark)}
+/* ===== Phone Mockup ===== */
+.dual{display:flex;gap:32px;align-items:flex-start}
+.dual-doc{flex:1;min-width:0}
+.dual-phone{position:sticky;top:80px}
+.phone{width:280px;border-radius:36px;border:3px solid #1a1a1a;background:#1a1a1a;padding:12px;box-shadow:0 12px 48px rgba(0,0,0,.15)}
+.phone-notch{width:100px;height:24px;background:#1a1a1a;border-radius:0 0 16px 16px;margin:0 auto -12px;position:relative;z-index:2}
+.phone-screen{background:var(--white);border-radius:24px;overflow:hidden;position:relative}
+.phone-status{display:flex;justify-content:space-between;align-items:center;padding:6px 20px 4px;font-size:10px;font-weight:600;color:#1a1a1a;background:var(--white)}
+.phone-status-r{display:flex;gap:4px;align-items:center}
+.phone-content{height:520px;overflow-y:auto;padding:0;scrollbar-width:none;-ms-overflow-style:none}.phone-content::-webkit-scrollbar{display:none}
 
-.akari-bubble{display:flex;gap:16px;align-items:flex-start;margin:16px 0}
-.akari-bubble-img{width:44px;height:44px;min-width:44px;border-radius:50%;object-fit:cover;border:2px solid var(--warm)}
-.akari-bubble-body{background:#FAFAF7;border:1px solid rgba(0,0,0,.06);border-radius:4px 16px 16px 16px;padding:18px 22px;font-size:.84rem;line-height:1.9;white-space:pre-line;flex:1}
-.akari-bubble-body .sample-label{margin-bottom:8px}
+/* App mockup */
+.app-header{background:var(--white);padding:8px 16px 10px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between}
+.app-header-title{font-size:13px;font-weight:700}
+.app-avatar{display:flex;align-items:center;gap:10px;padding:16px 16px 12px}
+.app-avatar img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.app-avatar-name{font-size:18px;font-weight:900;color:var(--text)}
+.app-body{padding:0 16px 20px}
+.app-section-title{font-size:10px;font-weight:700;color:var(--orange);letter-spacing:.08em;margin:16px 0 8px}
+.app-text{font-size:11px;color:var(--text);line-height:1.8;margin-bottom:12px}
+.app-memo{background:#F8F7F4;border-radius:10px;padding:12px 14px;font-size:10.5px;line-height:1.8;color:var(--text);margin-bottom:12px}
+.app-memo-row{display:flex;justify-content:space-between;padding:2px 0}
+.app-memo-label{color:var(--text-light)}
 
-.akari-sig{display:flex;gap:12px;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06)}
-.akari-sig img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--warm)}
-.akari-sig-text{font-size:.78rem;color:var(--text-light);line-height:1.5}
-.akari-sig-text strong{color:var(--text);font-size:.82rem}
+/* Email mockup */
+.mail-header{background:#F2F2F7;padding:12px 16px;border-bottom:1px solid #ddd}
+.mail-from{font-size:10px;color:#8E8E93;margin-bottom:2px}
+.mail-subject{font-size:12px;font-weight:700;color:var(--text)}
+.mail-body{padding:16px;font-size:11px;color:var(--text);line-height:1.9}
+.mail-divider{border:none;border-top:1px solid #eee;margin:12px 0}
+.mail-section-title{font-size:10px;font-weight:700;color:var(--orange);margin:12px 0 6px}
+.mail-memo{background:#F8F7F4;border-radius:8px;padding:10px 12px;font-size:10px;line-height:1.8;margin:8px 0}
+.mail-footer{font-size:9px;color:#8E8E93;margin-top:16px;padding-top:12px;border-top:1px solid #eee;display:flex;align-items:center;gap:8px}
+.mail-footer img{width:24px;height:24px;border-radius:50%}
 
+/* LINE mockup */
+.line-header{background:#06C755;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.line-header-title{font-size:13px;font-weight:700;color:var(--white)}
+.line-header-back{font-size:16px;color:var(--white)}
+.line-body{background:#8CABD9;background:linear-gradient(180deg,#7BA4CE 0%,#6B95C0 100%);padding:16px 12px;min-height:440px}
+.line-bubble{background:var(--white);border-radius:4px 16px 16px 16px;padding:10px 14px;font-size:11px;line-height:1.7;max-width:220px;margin-bottom:8px;box-shadow:0 1px 2px rgba(0,0,0,.08);color:var(--text)}
+.line-bubble-alert{background:#FFF0F0;border-left:2px solid var(--red)}
+.line-bubble-warn{background:#FFF8F0;border-left:2px solid var(--orange)}
+.line-bubble-ok{background:#E8F8E8;border-left:2px solid var(--green)}
+.line-time{font-size:9px;color:rgba(255,255,255,.7);margin-bottom:12px;margin-left:4px}
+.line-date{text-align:center;margin-bottom:12px}
+.line-date span{background:rgba(0,0,0,.15);color:var(--white);font-size:9px;padding:3px 10px;border-radius:10px}
+
+@media(max-width:900px){.dual{flex-direction:column;align-items:center}.dual-phone{position:static}.phone{width:260px}}
 @media(max-width:640px){.ch-grid{grid-template-columns:1fr}.compare{grid-template-columns:1fr}.topbar-nav{display:none}.akari-intro{flex-direction:column;text-align:center}}
 </style>
 </head>
@@ -81,7 +94,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
   <div class="topbar-brand"><a href="index.html">☀ 見守りプラス｜レポート設計</a></div>
   <nav class="topbar-nav">
     <a href="#channel">チャネル</a>
-    <a href="#tone">コミュニケーション方針</a>
+    <a href="#tone">方針</a>
     <a href="#s-app">アプリ</a>
     <a href="#s-mail">メール</a>
     <a href="#s-line">LINE</a>
@@ -92,48 +105,19 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <div class="header"><h1>見守りプラス｜レポート設計</h1><p>ご家族の暮らしの気配を、<br>どんな手段で、どんな言葉で、どう届けるか</p><div class="header-meta">2026年4月30日</div></div>
 <div class="main">
 
-<!-- ============================================================ -->
-<!-- チャネルと頻度 -->
-<!-- ============================================================ -->
+<!-- ===== チャネルと頻度 ===== -->
 <div class="section" id="channel">
 <div class="section-badge badge-channel">チャネルと頻度</div>
 <h2>何で、いつ届けるか</h2>
 <p class="desc">3つのチャネルで、それぞれ役割の違う「安心」を届ける。</p>
-
 <div class="ch-grid">
-  <div class="ch-card ch-teal">
-    <h4>LINE</h4>
-    <div class="ch-freq">隔週月曜 ＋ 必要時</div>
-    <p>2週に1回、1行だけ。通知バナーでチラ見するだけで「大丈夫」とわかる。アラートは必要な時だけ届く。</p>
-  </div>
-  <div class="ch-card ch-blue">
-    <h4>メール</h4>
-    <div class="ch-freq">毎月1日</div>
-    <p>月に1回の「手紙」。1ヶ月のようすをまとめてお届け。開封しなくても、届いたこと自体が安心。</p>
-  </div>
-  <div class="ch-card ch-green">
-    <h4>アプリ</h4>
-    <div class="ch-freq">毎月1日更新</div>
-    <p>一番詳しいレポート。気になった時にいつでも開ける「安心の引き出し」。</p>
-  </div>
-</div>
-
-<div class="card">
-<h3><span class="icon">📋</span> 配信の全体像</h3>
-<table class="tbl">
-<tr><th>チャネル</th><th>内容</th><th>頻度</th><th>役割</th></tr>
-<tr><td>LINE</td><td>隔週ヘルスチェック（1行）</td><td>隔週月曜</td><td>見た瞬間に安心</td></tr>
-<tr><td>LINE</td><td>アラート</td><td>必要時のみ</td><td>本当に必要な時だけ鳴る</td></tr>
-<tr><td>LINE</td><td>安心のお知らせ（復旧通知）</td><td>アラート後</td><td>不安を閉じる</td></tr>
-<tr><td>メール</td><td>月次レポート</td><td>毎月1日</td><td>1ヶ月のようすをまとめる</td></tr>
-<tr><td>アプリ</td><td>月次レポート（詳細版）</td><td>毎月1日更新</td><td>気になった時に深掘り</td></tr>
-</table>
+  <div class="ch-card ch-teal"><h4>LINE</h4><div class="ch-freq">隔週月曜 ＋ 必要時</div><p>2週に1回、1行だけ。通知バナーでチラ見するだけで「大丈夫」とわかる。アラートは必要な時だけ届く。</p></div>
+  <div class="ch-card ch-blue"><h4>メール</h4><div class="ch-freq">毎月1日</div><p>月に1回の「手紙」。1ヶ月のようすをまとめてお届け。開封しなくても、届いたこと自体が安心。</p></div>
+  <div class="ch-card ch-green"><h4>アプリ</h4><div class="ch-freq">毎月1日更新</div><p>一番詳しいレポート。気になった時にいつでも開ける「安心の引き出し」。</p></div>
 </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- コミュニケーション方針 -->
-<!-- ============================================================ -->
+<!-- ===== コミュニケーション方針 ===== -->
 <div class="section" id="tone">
 <div class="section-badge badge-tone">コミュニケーション方針</div>
 <h2>どんな「声」で届けるか</h2>
@@ -141,7 +125,6 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 
 <div class="card">
 <h3><span class="icon">🗣️</span> レポートの語り手</h3>
-
 <div class="akari-intro">
   <img src="akari.png" alt="森川あかり" class="akari-img">
   <div class="akari-intro-text">
@@ -151,7 +134,6 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
     レポートは「システムからの通知」ではなく、<strong>「あかりからの手紙」</strong>の温度感で届けます。
   </div>
 </div>
-
 <div class="compare">
 <div class="compare-item compare-ng">AIからのひとこと<br>4月も安定した日々が続いていました。</div>
 <div class="compare-item compare-ok">今月のようす<br>お母さん、4月も穏やかにお過ごしの様子です。</div>
@@ -159,10 +141,6 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <div class="compare">
 <div class="compare-item compare-ng">SOS確認応答：4回 / 4回（すべて応答あり）</div>
 <div class="compare-item compare-ok">ライトの確認を4回お送りしました。すべてお返事をいただけています。お元気な証ですね。</div>
-</div>
-<div class="compare">
-<div class="compare-item compare-ng">48時間以上、solarichの使用がありません。確認をおすすめします。</div>
-<div class="compare-item compare-ok">お母さんのsolarich、ここ2日ほど使用がないようです。お出かけ中かもしれませんが、気になる場合はお電話してみてくださいね。</div>
 </div>
 </div>
 
@@ -174,6 +152,9 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <tr><td>「です・ます」の親しみやすい丁寧さ</td><td>取説と同じトーン。過度に畏まらず、過度にカジュアルにもしない。</td></tr>
 <tr><td>推定は推定として伝える</td><td>「〜かもしれません」「〜の様子です」。断定しない。</td></tr>
 <tr><td>ポジティブな解釈を先に</td><td>使用なし→「お出かけ」、少ない→「穏やかに」。不安を煽らない。</td></tr>
+<tr><td>「コンセント接続中」が最大の安心</td><td>繋がっている＝そこに暮らしがある。一番安定した信号。</td></tr>
+<tr><td>ライトが週1回でも「気配あり」</td><td>毎日使わなくても、使った事実を暮らしの気配として伝える。</td></tr>
+<tr><td>ライトの確認への応答が重要指標</td><td>使用が少ないユーザーほど、お返事があったことの価値が高い。</td></tr>
 <tr><td>ゼロの項目は載せない</td><td>あるものだけ書く。ないものを書くと寂しくなる。</td></tr>
 <tr><td>毎月表現を変える</td><td>季節の話題を織り込む。同じ文面が続くと読まなくなる。</td></tr>
 <tr><td>「ご安心ください」を明示的に書く</td><td>安心していいと言葉にすることで、心理的な負荷を下げる。</td></tr>
@@ -183,27 +164,21 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 </div>
 
 <div class="card">
-<h3><span class="icon">🌸</span> 季節のひと言（月別の例）</h3>
+<h3><span class="icon">🌸</span> 季節のひと言（例）</h3>
 <p>レポート冒頭やメール冒頭に添える。押しつけがましくなく、「そういえば連絡しようかな」と思わせる温度感で。</p>
 <table class="tbl">
 <tr><th>月</th><th>ひと言の例</th></tr>
 <tr><td>1月</td><td>新しい年が始まりましたね。今年もお母さんの暮らしを一緒に見守っていきます。</td></tr>
-<tr><td>2月</td><td>まだまだ寒い日が続きますね。お母さんのところは暖かくしていらっしゃるでしょうか。</td></tr>
-<tr><td>3月</td><td>少しずつ暖かくなってきましたね。お母さんのところにも春の気配が届いているといいですね。</td></tr>
 <tr><td>4月</td><td>桜の季節ですね。お花見がてら、お母さんに会いに行くのもいいかもしれません。</td></tr>
-<tr><td>5月</td><td>新緑がまぶしい季節になりましたね。気持ちのいい風が届いているといいですね。</td></tr>
-<tr><td>6月</td><td>梅雨の季節ですね。お母さんのところ、洗濯物は大丈夫でしょうか。</td></tr>
 <tr><td>7月</td><td>暑い日が増えてきましたね。お母さんの水分補給、気にかけてあげてくださいね。</td></tr>
-<tr><td>8月</td><td>暑さも本番ですね。お盆にお母さんに会える方も多いのではないでしょうか。</td></tr>
-<tr><td>9月</td><td>少しずつ涼しくなってきましたね。季節の変わり目、お母さんの体調も気にかけてあげてください。</td></tr>
-<tr><td>10月</td><td>秋が深まってきましたね。お母さんのところは、もう衣替えはお済みでしょうか。</td></tr>
-<tr><td>11月</td><td>朝晩が冷え込む季節になりましたね。お母さん、暖かくしていらっしゃるでしょうか。</td></tr>
 <tr><td>12月</td><td>今年も残りわずかですね。年末年始、お母さんに会えるといいですね。</td></tr>
 </table>
 </div>
 </div>
 
 <div class="divider"></div>
+
+<!-- ===== 1. アプリレポート ===== -->
 <div class="section" id="s-app">
 <div class="section-badge badge-report">1. アプリレポート</div>
 <h2>アプリ内レポート（月次）</h2>
@@ -213,182 +188,111 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <div class="card">
 <div class="pattern-label pattern-a">パターンA ─ よく使うユーザー</div>
 <p>ライトを毎日使い、スマホ充電やテレビなどにも日常的に利用しているケース。</p>
-
+<div class="dual">
+<div class="dual-doc">
 <div class="akari-bubble">
   <img src="akari.png" alt="あかり" class="akari-bubble-img">
   <div class="akari-bubble-body">
     <span class="sample-label">☀ 今月のようす</span>
-新緑がまぶしい季節になりましたね。
-お母さんのところにも、気持ちのいい風が届いているといいですね。
+新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。
 
-4月も穏やかにお過ごしの様子です。
-
-30日中28日、solarichをお使いになっていました。
-2日だけ使用のない日がありましたが、いずれも土曜日でしたので、お出かけされていたのかもしれませんね。
-
-3月と比べて、ライトを点ける時間が約30分遅くなっています。
-日が長くなってきた季節の変化ですね。</div>
+4月も穏やかにお過ごしの様子です。30日中28日お使いになっていました。
+平日は毎日、日曜も毎週お使いで、土曜は月に2回ほどお出かけの様子です。
+ライトはほぼ毎日、夕方18時半頃〜夜22時頃のリズムで点けていらっしゃいます。
+3月より30分ほど遅くなりました。日が長くなりましたね。
+4/23はいつもより長めにコンセントをお使いでした。
+ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
 </div>
-
 <div class="sample"><span class="sample-label">📊 今月の見守りメモ</span>
 solarichを使った日　：28 / 30日
 ライトを点けた日　　：26日
 スマホを充電した日　：22日
 ライトの確認　　　　：4回お送りして、すべてお返事がありました ✅</div>
+</div>
 
-<div class="sample"><span class="sample-label">📅 曜日のパターン</span>
-平日　：毎日お使いです
-土曜日：月に2回ほどお出かけの様子
-日曜日：毎週お使いです</div>
-
-<div class="sample"><span class="sample-label">💡 ライトのようす</span>
-26日間、ほぼ毎日ライトを点けていらっしゃいます。
-夕方18時半頃に点けて、夜22時頃に消されるリズムです。
-3月より点灯が30分ほど遅くなりました。日が長くなりましたね。</div>
-
-<div class="sample"><span class="sample-label">💬 今月のトピック</span>
-・4/12（土）と4/19（土）にお使いになっていませんでした。
-  週末のお出かけが習慣になっているのかもしれませんね。
-
-・4/23はいつもより長めにコンセントをお使いでした。
-  テレビなどをゆっくり楽しまれていたのかもしれません。
-
-・ライトの確認4回すべてにお返事がありました。
-  お元気な証ですね。</div>
-
-<div class="sample"><span class="sample-label">📈 3ヶ月のうごき</span>
-2月  28日中 26日
-3月  31日中 29日
-4月  30日中 28日
-安定してお使いいただいています。ご安心ください。</div>
+<div class="dual-phone">
+<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
+<div class="phone-status"><span>9:41</span><div class="phone-status-r">📶 📡 🔋</div></div>
+<div class="phone-content">
+<div class="app-header"><span style="font-size:16px">‹</span><span class="app-header-title">見守りレポート</span><span style="font-size:14px">⚙</span></div>
+<div class="app-avatar"><img src="akari.png" alt="あかり"><div class="app-avatar-name">お母さん</div></div>
+<div class="app-body">
+<div style="font-size:10px;color:#999;margin-bottom:12px">2026年4月のレポート</div>
+<div class="app-section-title">☀ 今月のようす</div>
+<div class="app-text">新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。<br><br>4月も穏やかにお過ごしの様子です。30日中28日お使いになっていました。平日は毎日、日曜も毎週お使いで、土曜は月に2回ほどお出かけの様子です。<br><br>ライトはほぼ毎日、夕方18時半頃〜夜22時頃のリズムです。3月より30分ほど遅くなりました。日が長くなりましたね。<br><br>ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
+<div class="app-section-title">📊 今月の見守りメモ</div>
+<div class="app-memo">
+<div class="app-memo-row"><span class="app-memo-label">solarichを使った日</span><span>28 / 30日</span></div>
+<div class="app-memo-row"><span class="app-memo-label">ライトを点けた日</span><span>26日</span></div>
+<div class="app-memo-row"><span class="app-memo-label">スマホを充電した日</span><span>22日</span></div>
+<div class="app-memo-row"><span class="app-memo-label">ライトの確認</span><span>4回すべて応答 ✅</span></div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
 </div>
 
 <!-- パターンB -->
 <div class="card">
 <div class="pattern-label pattern-b">パターンB ─ あまり使わないユーザー（多数派の想定）</div>
 <p>コンセントに繋ぎっぱなしで、たまにライトを使う程度。<br><strong>このパターンでもレポートが温かく、読む価値があるように。</strong></p>
-
+<div class="dual">
+<div class="dual-doc">
 <div class="akari-bubble">
   <img src="akari.png" alt="あかり" class="akari-bubble-img">
   <div class="akari-bubble-body">
     <span class="sample-label">☀ 今月のようす</span>
-新緑がまぶしい季節になりましたね。
-お母さんのところにも、気持ちのいい風が届いているといいですね。
+新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。
 
 4月もsolarichは元気に稼働しています。
-
-コンセントに繋がった状態が1ヶ月通して続いており、
-いつでもお使いいただける状態です。ご安心ください。
-
-ライトは週に2〜3回、夕方以降に使われていました。
-夜の時間帯にライトをお使いになっている様子から、
-穏やかにお過ごしの気配が感じられます。</div>
+コンセント接続が1ヶ月途切れておらず、いつでもお使いいただける状態です。ご安心ください。
+ライトは週に2〜3回、夕方以降に点けていらっしゃいます。穏やかにお過ごしの気配ですね。
+4/15と4/22にはスマホを充電されていました。
+ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
 </div>
-
 <div class="sample"><span class="sample-label">📊 今月の見守りメモ</span>
 コンセント接続　　　：30日 / 30日 ✅
 ライトを点けた日　　：10日
 スマホを充電した日　：3日
 ライトの確認　　　　：4回お送りして、すべてお返事がありました ✅</div>
-
-<div class="sample"><span class="sample-label">💬 今月のトピック</span>
-・4/15と4/22に、スマホを充電されていました。
-
-・ライトの確認4回すべてにお返事がありました。
-  お元気な証ですね。
-
-・コンセント接続が1ヶ月途切れていません。
-  solarichがご自宅で元気に動き続けている証です。</div>
-
-<div class="sample"><span class="sample-label">📈 3ヶ月のうごき</span>
-2月  ライト  8日 / スマホ充電 2日
-3月  ライト 11日 / スマホ充電 4日
-4月  ライト 10日 / スマホ充電 3日
-いつものペースが続いています。ご安心ください。</div>
 </div>
 
-<!-- 設計ポイント -->
-<div class="card">
-<h3><span class="icon">📐</span> 動きが少ないユーザーへの設計ポイント</h3>
-<table class="rule-tbl">
-<tr><td>「コンセント接続中」が最大の安心</td><td>繋がっている＝そこに暮らしがある。一番安定した信号。</td></tr>
-<tr><td>ライトが週1回でも「気配あり」</td><td>毎日使わなくても、使った事実を「暮らしの気配」として伝える。</td></tr>
-<tr><td>ライトの確認への応答が重要指標</td><td>使用が少ないユーザーほど、お返事があったことの価値が高い。</td></tr>
-<tr><td>ゼロの項目は載せない</td><td>あるものだけ書く。ないものを書くと寂しくなる。</td></tr>
-<tr><td>「ご安心ください」を明示的に書く</td><td>安心していいと言葉にすることで、心理的な負荷を下げる。</td></tr>
-</table>
+<div class="dual-phone">
+<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
+<div class="phone-status"><span>9:41</span><div class="phone-status-r">📶 📡 🔋</div></div>
+<div class="phone-content">
+<div class="app-header"><span style="font-size:16px">‹</span><span class="app-header-title">見守りレポート</span><span style="font-size:14px">⚙</span></div>
+<div class="app-avatar"><img src="akari.png" alt="あかり"><div class="app-avatar-name">お母さん</div></div>
+<div class="app-body">
+<div style="font-size:10px;color:#999;margin-bottom:12px">2026年4月のレポート</div>
+<div class="app-section-title">☀ 今月のようす</div>
+<div class="app-text">新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。<br><br>4月もsolarichは元気に稼働しています。コンセント接続が1ヶ月途切れておらず、いつでもお使いいただける状態です。ご安心ください。<br><br>ライトは週に2〜3回、夕方以降に点けていらっしゃいます。穏やかにお過ごしの気配ですね。<br><br>ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
+<div class="app-section-title">📊 今月の見守りメモ</div>
+<div class="app-memo">
+<div class="app-memo-row"><span class="app-memo-label">コンセント接続</span><span>30 / 30日 ✅</span></div>
+<div class="app-memo-row"><span class="app-memo-label">ライトを点けた日</span><span>10日</span></div>
+<div class="app-memo-row"><span class="app-memo-label">スマホを充電した日</span><span>3日</span></div>
+<div class="app-memo-row"><span class="app-memo-label">ライトの確認</span><span>4回すべて応答 ✅</span></div>
 </div>
-
-<div class="card">
-<h3><span class="icon">🔧</span> メンテナンスのお知らせ（時期が近い場合のみ）</h3>
-<div class="sample"><span class="sample-label">🔧 メンテナンスのお知らせ</span>
-前回のバッテリーリフレッシュ：2026年2月15日
-
-次のリフレッシュは5月〜8月の間がおすすめです。
-ご家族に会いに行くついでに、30分ほどで完了します。
-手順はアプリの「メンテナンスガイド」をご覧ください。
-
-「ちょっとソラリッチの点検に来たよ」── 
-その一言から始まる会話が、いちばんの見守りかもしれません。</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
 </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- 2. メール -->
-<!-- ============================================================ -->
+<!-- ===== 2. メール ===== -->
 <div class="section" id="s-mail">
 <div class="section-badge badge-mail">2. メール</div>
 <h2>メールレポート（月次・HTML形式）</h2>
 <p class="desc">アプリレポートの要約版。毎月1日配信。<br>開封しなくても「来たな」と思えるだけで安心になる、月に一度の手紙。</p>
 
 <div class="card">
-<div class="pattern-label pattern-a">パターンA ─ よく使うユーザー</div>
-<div style="background:var(--blue-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--blue)">件名：</span>【見守りプラス】4月のお母さんのようす ─ 今月も穏やかにお過ごしです</div>
-<div class="sample">
-[ユーザー名] 様
-
-4月のお母さんの見守りレポートをお届けします。
-ゴールデンウィークも近づいてきましたね。
-このレポートが、お母さんに連絡するきっかけになればうれしいです。
-
-━━━━━━━━━━━━━━━
-☀ 今月のようす
-━━━━━━━━━━━━━━━
-
-4月も穏やかにお過ごしの様子です。
-30日中28日、solarichをお使いになっていました。
-週末にお出かけされていた様子で、
-2日だけ使用のない日がありました。
-
-━━━━━━━━━━━━━━━
-📊 見守りメモ
-━━━━━━━━━━━━━━━
-
-お使いの日　　｜ 28 / 30日
-ライト　　　　｜ 26日
-ライトの確認　｜ 4回すべてお返事あり ✅
-
-━━━━━━━━━━━━━━━
-💬 今月のトピック
-━━━━━━━━━━━━━━━
-
-・4/12と4/19（土曜）に使用なし。
-  週末のお出かけが習慣かもしれませんね。
-
-━━━━━━━━━━━━━━━
-
-📱 もっと詳しく → アプリの「見守りタブ」
-
-いつでもご相談ください。
-💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
-<div class="akari-sig">
-  <img src="akari.png" alt="あかり">
-  <div class="akari-sig-text"><strong>森川あかり</strong><br>見守りプラス サポート担当</div>
-</div>
-</div>
-
-<div class="card">
-<div class="pattern-label pattern-b">パターンB ─ あまり使わないユーザー</div>
+<div class="dual">
+<div class="dual-doc">
 <div style="background:var(--blue-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--blue)">件名：</span>【見守りプラス】4月のお母さんのようす ─ solarichは元気に稼働中です</div>
 <div class="sample">
 [ユーザー名] 様
@@ -402,9 +306,9 @@ solarichを使った日　：28 / 30日
 ━━━━━━━━━━━━━━━
 
 4月もsolarichは元気に稼働しています。
-コンセント接続が1ヶ月を通じて途切れておらず、
-いつでもお使いいただける状態です。ご安心ください。
+コンセント接続が1ヶ月途切れておらず、いつでもお使いいただける状態です。ご安心ください。
 週に2〜3回、夕方以降にライトをお使いの様子です。
+ライトの確認4回すべてにお返事がありました。お元気な証ですね。
 
 ━━━━━━━━━━━━━━━
 📊 見守りメモ
@@ -412,31 +316,39 @@ solarichを使った日　：28 / 30日
 
 コンセント接続　｜ 30 / 30日 ✅
 ライト　　　　　｜ 10日
+ライトの確認　　｜ 4回すべてお返事あり ✅</div>
+<p style="font-size:.78rem;color:var(--text-light);margin-top:12px">※ 実際のメールにはアプリ誘導リンク・サポート連絡先・森川あかりの署名がフッターに入ります。</p>
+</div>
+
+<div class="dual-phone">
+<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
+<div class="phone-status"><span>9:41</span><div class="phone-status-r">📶 📡 🔋</div></div>
+<div class="phone-content">
+<div class="mail-header">
+<div class="mail-from">solarich見守りプラス &lt;mimamori@solarich.co.jp&gt;</div>
+<div class="mail-subject">【見守りプラス】4月のお母さんのようす ─ solarichは元気に稼働中です</div>
+</div>
+<div class="mail-body">
+<div style="margin-bottom:12px">田中 様<br><br>4月のお母さんの見守りレポートをお届けします。<br>ゴールデンウィークも近づいてきましたね。<br>このレポートが、お母さんに連絡するきっかけになればうれしいです。</div>
+<hr class="mail-divider">
+<div class="mail-section-title">☀ 今月のようす</div>
+<div style="font-size:11px;line-height:1.8;margin-bottom:12px">4月もsolarichは元気に稼働しています。コンセント接続が1ヶ月途切れておらず、いつでもお使いいただける状態です。ご安心ください。<br><br>週に2〜3回、夕方以降にライトをお使いの様子です。<br>ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
+<div class="mail-section-title">📊 見守りメモ</div>
+<div class="mail-memo">
+コンセント接続　｜ 30 / 30日 ✅<br>
+ライト　　　　　｜ 10日<br>
 ライトの確認　　｜ 4回すべてお返事あり ✅
-
-━━━━━━━━━━━━━━━
-💬 今月のトピック
-━━━━━━━━━━━━━━━
-
-・ライトの確認4回すべてにお返事がありました。
-  お元気な証ですね。
-
-━━━━━━━━━━━━━━━
-
-📱 もっと詳しく → アプリの「見守りタブ」
-
-いつでもご相談ください。
-💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
-<div class="akari-sig">
-  <img src="akari.png" alt="あかり">
-  <div class="akari-sig-text"><strong>森川あかり</strong><br>見守りプラス サポート担当</div>
+</div>
+<div style="font-size:10px;color:#8E8E93;margin-top:16px">📱 もっと詳しく → アプリの「見守りタブ」<br>💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
+<div class="mail-footer"><img src="akari.png" alt="あかり"><div><strong style="font-size:10px;color:var(--text)">森川あかり</strong><br>見守りプラス サポート担当</div></div>
+</div>
+</div>
+</div></div>
 </div>
 </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- 3. LINE -->
-<!-- ============================================================ -->
+<!-- ===== 3. LINE ===== -->
 <div class="section" id="s-line">
 <div class="section-badge badge-line">3. LINE通知</div>
 <h2>LINE通知（隔週＋アラート）</h2>
@@ -445,7 +357,8 @@ solarichを使った日　：28 / 30日
 <div class="card">
 <h3><span class="icon">💚</span> 隔週ヘルスチェック（隔週月曜）</h3>
 <p style="margin:8px 0 16px">2週に1回、通知バナーに1行見えるだけで「大丈夫なんだな」と感じられればそれでいい。</p>
-
+<div class="dual">
+<div class="dual-doc">
 <p style="font-weight:700;margin:16px 0 8px;font-size:.82rem;color:var(--green-dark)">✅ 安定時</p>
 <div class="line-msgs">
 <div class="line-msg">✅ お母さん、この2週間も穏やかにお過ごしです（ライト5回）</div>
@@ -453,16 +366,37 @@ solarichを使った日　：28 / 30日
 <div class="line-msg">✅ お母さん、変わりなくお元気そうです</div>
 <div class="line-msg">✅ お母さん、穏やかな2週間でした</div>
 </div>
-
 <p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--orange)">ℹ️ 少し気になること</p>
 <div class="line-msgs">
 <div class="line-msg a-yellow">ℹ️ お母さん、この2週間はライトの使用がありませんでした</div>
 <div class="line-msg a-yellow">ℹ️ お母さんのsolarich、バッテリーが少なめです（32%）</div>
 </div>
-
 <p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--red)">⚠ 確認をおすすめします</p>
 <div class="line-msgs">
 <div class="line-msg a-red">⚠ お母さんのsolarich、ここ2日ほど使用がないようです。詳しくはアプリで</div>
+</div>
+</div>
+<div class="dual-phone">
+<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
+<div class="phone-status"><span>9:41</span><div class="phone-status-r">📶 📡 🔋</div></div>
+<div class="phone-content">
+<div class="line-header"><span class="line-header-back">‹</span><span class="line-header-title">見守りプラス</span></div>
+<div class="line-body">
+<div class="line-date"><span>4月14日（月）</span></div>
+<div class="line-bubble">✅ お母さん、この2週間も穏やかにお過ごしです（ライト5回）</div>
+<div class="line-time">9:00</div>
+<div class="line-date"><span>4月28日（月）</span></div>
+<div class="line-bubble">✅ お母さん、いつも通りです。ご安心ください</div>
+<div class="line-time">9:00</div>
+<div style="height:40px"></div>
+<div class="line-date"><span>アラートの例</span></div>
+<div class="line-bubble line-bubble-alert">🔴 お母さんにライトの確認をお送りしましたが、お返事がありません。ご確認をお願いします。</div>
+<div class="line-time">15:32</div>
+<div class="line-bubble line-bubble-ok">✅ お母さんからお返事がありました。お元気な様子です。</div>
+<div class="line-time">16:05</div>
+</div>
+</div>
+</div></div>
 </div>
 </div>
 
