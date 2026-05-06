@@ -3,35 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>見守りプラス｜AIレポート設計</title>
+<title>見守りプラス｜レポート設計</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--red:#D65050;--red-light:#FFF0F0;--blue:#5A7EB5;--blue-light:#EDF2F8;--yellow:#C89520;--yellow-light:#FFF8E8;--shadow:0 4px 24px rgba(45,42,38,.06)}
+:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--red:#D65050;--red-light:#FFF0F0;--blue:#5A7EB5;--blue-light:#EDF2F8;--shadow:0 4px 24px rgba(45,42,38,.06)}
 html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;line-height:1.85;font-size:15px}
-.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}.topbar-brand a{color:inherit;text-decoration:none}.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}.topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}.topbar-back{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:var(--orange);padding:6px 14px!important;border-radius:100px;text-decoration:none;transition:all .2s}.topbar-back:hover{background:var(--orange-dark)!important;color:var(--white)!important}
+.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}.topbar-brand a{color:inherit;text-decoration:none}.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}.topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}.topbar-back{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:var(--orange);padding:6px 14px!important;border-radius:100px;text-decoration:none}.topbar-back:hover{background:var(--orange-dark)!important}
 .header{background:linear-gradient(135deg,var(--green-dark),var(--green));color:var(--white);padding:56px 24px 48px;text-align:center}.header h1{font-size:clamp(1.3rem,4vw,1.9rem);font-weight:900;margin-bottom:8px}.header p{opacity:.8;font-size:.9rem;font-weight:300;max-width:640px;margin:0 auto}.header-meta{margin-top:20px;font-size:.72rem;opacity:.65}
 .main{max-width:820px;margin:0 auto;padding:40px 20px 80px}
 .section{margin-bottom:56px;scroll-margin-top:70px}
 .section-badge{display:inline-flex;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:16px}
+.badge-channel{background:var(--green-light);color:var(--green-dark)}
+.badge-tone{background:var(--warm);color:var(--orange-dark)}
 .badge-report{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:var(--white)}
 .badge-mail{background:var(--blue-light);color:var(--blue)}
 .badge-line{background:#E8F8E8;color:#06A844}
-.badge-ref{background:var(--warm);color:var(--orange-dark)}
-.badge-constraint{background:var(--red-light);color:var(--red)}
 .section h2{font-size:1.3rem;font-weight:900;margin-bottom:8px;line-height:1.4}
 .section>.desc{color:var(--text-light);font-size:.9rem;margin-bottom:28px;font-weight:300}
 .card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:28px;margin-bottom:20px;border:1px solid rgba(0,0,0,.04)}
 .card h3{font-size:1rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
 .card h3 .icon{font-size:1.2rem}
 .card p,.card li{font-size:.88rem;color:var(--text-light);line-height:1.8}
-.callout{border-radius:14px;padding:24px;margin:20px 0;font-size:.88rem;line-height:1.8}
-.callout-blue{background:var(--blue-light);border:1px solid rgba(90,126,181,.15);color:#3D5A8C}
 .tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:16px 0}
 .tbl th{text-align:left;padding:10px 14px;font-weight:700;font-size:.78rem;background:rgba(91,140,90,.06);border-bottom:2px solid rgba(91,140,90,.15);color:var(--green-dark)}
 .tbl td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}
 .tbl tr:last-child td{border-bottom:none}
-.status{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:6px}.s-done{background:#E8F8E8;color:#2D7B2D}.s-pending{background:var(--yellow-light);color:var(--yellow)}.s-stopped{background:var(--red-light);color:var(--red)}
 .sample{background:#FAFAF7;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:20px 24px;margin:16px 0;font-size:.84rem;line-height:1.9;white-space:pre-line}
 .sample-label{font-size:.68rem;font-weight:700;color:var(--orange);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block}
 .pattern-label{display:inline-block;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:8px;margin-bottom:12px}
@@ -46,289 +43,450 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 .rule-tbl td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}
 .rule-tbl td:first-child{font-weight:600;width:45%;color:var(--text)}
 .rule-tbl td:last-child{color:var(--text-light)}
-.relation{background:linear-gradient(135deg,var(--green-dark),var(--green));border-radius:16px;padding:32px 28px;color:var(--white);margin:32px 0}
-.relation h3{font-size:1rem;font-weight:900;margin-bottom:20px;text-align:center;opacity:.9}
-.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.rel-item{background:rgba(255,255,255,.1);border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,.1)}
-.rel-item .rel-label{font-size:.68rem;font-weight:700;opacity:.6;margin-bottom:4px}
-.rel-item .rel-name{font-size:.88rem;font-weight:700;margin-bottom:4px}
-.rel-item .rel-desc{font-size:.76rem;opacity:.75;line-height:1.6}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.compare-item{border-radius:12px;padding:16px 20px;font-size:.82rem;line-height:1.7}
+.compare-ng{background:var(--red-light);border:1px solid rgba(214,80,80,.12)}.compare-ng::before{content:'✕ ';font-weight:700;color:var(--red)}
+.compare-ok{background:var(--green-light);border:1px solid rgba(91,140,90,.12)}.compare-ok::before{content:'○ ';font-weight:700;color:var(--green-dark)}
+.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}
+.ch-card{border-radius:14px;padding:24px 20px;text-align:center}
+.ch-card h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.ch-card .ch-freq{font-size:.78rem;font-weight:700;margin-bottom:10px}
+.ch-card p{font-size:.78rem;color:var(--text-light);line-height:1.6;text-align:left}
+.ch-green{background:var(--green-light);border:1px solid rgba(91,140,90,.15)}.ch-green h4{color:var(--green-dark)}.ch-green .ch-freq{color:var(--green)}
+.ch-blue{background:var(--blue-light);border:1px solid rgba(90,126,181,.15)}.ch-blue h4{color:#2D5A8C}.ch-blue .ch-freq{color:var(--blue)}
+.ch-teal{background:#E1F5EE;border:1px solid rgba(29,158,117,.15)}.ch-teal h4{color:#085041}.ch-teal .ch-freq{color:#1D9E75}
 .divider{height:1px;background:rgba(0,0,0,.06);margin:56px 0}
-@media(max-width:640px){.rel-grid{grid-template-columns:1fr}.topbar-nav{display:none}.topbar-back{margin-left:auto;display:inline-block!important}}
+
+/* Akari */
+.akari-intro{display:flex;gap:24px;align-items:center;margin:20px 0}
+.akari-img{width:100px;height:100px;min-width:100px;border-radius:50%;object-fit:cover;border:3px solid var(--warm);box-shadow:0 4px 16px rgba(232,131,74,.12)}
+.akari-intro-text{font-size:.9rem;color:var(--text-light);line-height:1.8}
+.akari-intro-text strong{color:var(--orange-dark)}
+
+.akari-bubble{display:flex;gap:16px;align-items:flex-start;margin:16px 0}
+.akari-bubble-img{width:44px;height:44px;min-width:44px;border-radius:50%;object-fit:cover;border:2px solid var(--warm)}
+.akari-bubble-body{background:#FAFAF7;border:1px solid rgba(0,0,0,.06);border-radius:4px 16px 16px 16px;padding:18px 22px;font-size:.84rem;line-height:1.9;white-space:pre-line;flex:1}
+.akari-bubble-body .sample-label{margin-bottom:8px}
+
+.akari-sig{display:flex;gap:12px;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06)}
+.akari-sig img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--warm)}
+.akari-sig-text{font-size:.78rem;color:var(--text-light);line-height:1.5}
+.akari-sig-text strong{color:var(--text);font-size:.82rem}
+
+@media(max-width:640px){.ch-grid{grid-template-columns:1fr}.compare{grid-template-columns:1fr}.topbar-nav{display:none}.akari-intro{flex-direction:column;text-align:center}}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス｜AIレポート設計</a></div>
+  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス｜レポート設計</a></div>
   <nav class="topbar-nav">
-    <a href="#s-ai">AIレポート</a>
+    <a href="#channel">チャネル</a>
+    <a href="#tone">コミュニケーション方針</a>
+    <a href="#s-app">アプリ</a>
     <a href="#s-mail">メール</a>
     <a href="#s-line">LINE</a>
     <a href="system.html">システム構成</a>
-    <a href="ai-system.html">Claude AI詳細</a>
     <a href="product.html" class="topbar-back">商品紹介</a>
   </nav>
 </div>
-<div class="header"><h1>見守りプラス｜AIレポート設計</h1><p>何のデータを → どう分析して → どう届ければ<br>月額980円の「安心」になるか</p><div class="header-meta">2026年4月30日 ─ メイン設計ドキュメント</div></div>
+<div class="header"><h1>見守りプラス｜レポート設計</h1><p>ご家族の暮らしの気配を、<br>どんな手段で、どんな言葉で、どう届けるか</p><div class="header-meta">2026年4月30日</div></div>
 <div class="main">
 
 <!-- ============================================================ -->
-<!-- 1. AIレポート -->
+<!-- チャネルと頻度 -->
 <!-- ============================================================ -->
-<div class="section" id="s-ai">
-<div class="section-badge badge-report">1. AIレポート</div>
-<h2>AIレポート（月次・アプリ内表示）</h2>
-<p class="desc">毎月1日更新。イベントデータからAIが暮らしの気配を読み取り、アプリ内に蓄積する。<br>実際には「あまり使わない」ユーザーが多数を占める想定のため、2パターンを用意。</p>
+<div class="section" id="channel">
+<div class="section-badge badge-channel">チャネルと頻度</div>
+<h2>何で、いつ届けるか</h2>
+<p class="desc">3つのチャネルで、それぞれ役割の違う「安心」を届ける。</p>
+
+<div class="ch-grid">
+  <div class="ch-card ch-teal">
+    <h4>LINE</h4>
+    <div class="ch-freq">隔週月曜 ＋ 必要時</div>
+    <p>2週に1回、1行だけ。通知バナーでチラ見するだけで「大丈夫」とわかる。アラートは必要な時だけ届く。</p>
+  </div>
+  <div class="ch-card ch-blue">
+    <h4>メール</h4>
+    <div class="ch-freq">毎月1日</div>
+    <p>月に1回の「手紙」。1ヶ月のようすをまとめてお届け。開封しなくても、届いたこと自体が安心。</p>
+  </div>
+  <div class="ch-card ch-green">
+    <h4>アプリ</h4>
+    <div class="ch-freq">毎月1日更新</div>
+    <p>一番詳しいレポート。気になった時にいつでも開ける「安心の引き出し」。</p>
+  </div>
+</div>
+
+<div class="card">
+<h3><span class="icon">📋</span> 配信の全体像</h3>
+<table class="tbl">
+<tr><th>チャネル</th><th>内容</th><th>頻度</th><th>役割</th></tr>
+<tr><td>LINE</td><td>隔週ヘルスチェック（1行）</td><td>隔週月曜</td><td>見た瞬間に安心</td></tr>
+<tr><td>LINE</td><td>アラート</td><td>必要時のみ</td><td>本当に必要な時だけ鳴る</td></tr>
+<tr><td>LINE</td><td>安心のお知らせ（復旧通知）</td><td>アラート後</td><td>不安を閉じる</td></tr>
+<tr><td>メール</td><td>月次レポート</td><td>毎月1日</td><td>1ヶ月のようすをまとめる</td></tr>
+<tr><td>アプリ</td><td>月次レポート（詳細版）</td><td>毎月1日更新</td><td>気になった時に深掘り</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- コミュニケーション方針 -->
+<!-- ============================================================ -->
+<div class="section" id="tone">
+<div class="section-badge badge-tone">コミュニケーション方針</div>
+<h2>どんな「声」で届けるか</h2>
+<p class="desc">取扱説明書で確立されたsolarichの語り口を、見守りレポートでもそのまま踏襲する。</p>
+
+<div class="card">
+<h3><span class="icon">🗣️</span> レポートの語り手</h3>
+
+<div class="akari-intro">
+  <img src="akari.png" alt="森川あかり" class="akari-img">
+  <div class="akari-intro-text">
+    <strong>森川あかり（サポート担当店長）</strong><br>
+    取説でおなじみの店長が、見守りレポートでもそのまま語り手を務めます。<br>
+    「心がほっと温まる想いやりの気持ちで精一杯サポートいたします！」<br>
+    レポートは「システムからの通知」ではなく、<strong>「あかりからの手紙」</strong>の温度感で届けます。
+  </div>
+</div>
+
+<div class="compare">
+<div class="compare-item compare-ng">AIからのひとこと<br>4月も安定した日々が続いていました。</div>
+<div class="compare-item compare-ok">今月のようす<br>お母さん、4月も穏やかにお過ごしの様子です。</div>
+</div>
+<div class="compare">
+<div class="compare-item compare-ng">SOS確認応答：4回 / 4回（すべて応答あり）</div>
+<div class="compare-item compare-ok">ライトの確認を4回お送りしました。すべてお返事をいただけています。お元気な証ですね。</div>
+</div>
+<div class="compare">
+<div class="compare-item compare-ng">48時間以上、solarichの使用がありません。確認をおすすめします。</div>
+<div class="compare-item compare-ok">お母さんのsolarich、ここ2日ほど使用がないようです。お出かけ中かもしれませんが、気になる場合はお電話してみてくださいね。</div>
+</div>
+</div>
+
+<div class="card">
+<h3><span class="icon">📐</span> 言葉選びのルール</h3>
+<table class="rule-tbl">
+<tr><td>「AI」「分析」「イベント」「データ」は使わない</td><td>お客様に見える場所にシステム用語を出さない。</td></tr>
+<tr><td>ニックネームで呼びかける</td><td>「お母さん」「おばあちゃん」など、ユーザーが設定した呼び名で語りかける。</td></tr>
+<tr><td>「です・ます」の親しみやすい丁寧さ</td><td>取説と同じトーン。過度に畏まらず、過度にカジュアルにもしない。</td></tr>
+<tr><td>推定は推定として伝える</td><td>「〜かもしれません」「〜の様子です」。断定しない。</td></tr>
+<tr><td>ポジティブな解釈を先に</td><td>使用なし→「お出かけ」、少ない→「穏やかに」。不安を煽らない。</td></tr>
+<tr><td>ゼロの項目は載せない</td><td>あるものだけ書く。ないものを書くと寂しくなる。</td></tr>
+<tr><td>毎月表現を変える</td><td>季節の話題を織り込む。同じ文面が続くと読まなくなる。</td></tr>
+<tr><td>「ご安心ください」を明示的に書く</td><td>安心していいと言葉にすることで、心理的な負荷を下げる。</td></tr>
+<tr><td>冒頭に季節のひと言を添える</td><td>嫌味にならない程度に。「連絡してみようかな」のきっかけになる温度感で。</td></tr>
+<tr><td>署名は「森川あかり」</td><td>メールの末尾に署名を入れ、人が見守っている温度感を出す。</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3><span class="icon">🌸</span> 季節のひと言（月別の例）</h3>
+<p>レポート冒頭やメール冒頭に添える。押しつけがましくなく、「そういえば連絡しようかな」と思わせる温度感で。</p>
+<table class="tbl">
+<tr><th>月</th><th>ひと言の例</th></tr>
+<tr><td>1月</td><td>新しい年が始まりましたね。今年もお母さんの暮らしを一緒に見守っていきます。</td></tr>
+<tr><td>2月</td><td>まだまだ寒い日が続きますね。お母さんのところは暖かくしていらっしゃるでしょうか。</td></tr>
+<tr><td>3月</td><td>少しずつ暖かくなってきましたね。お母さんのところにも春の気配が届いているといいですね。</td></tr>
+<tr><td>4月</td><td>桜の季節ですね。お花見がてら、お母さんに会いに行くのもいいかもしれません。</td></tr>
+<tr><td>5月</td><td>新緑がまぶしい季節になりましたね。気持ちのいい風が届いているといいですね。</td></tr>
+<tr><td>6月</td><td>梅雨の季節ですね。お母さんのところ、洗濯物は大丈夫でしょうか。</td></tr>
+<tr><td>7月</td><td>暑い日が増えてきましたね。お母さんの水分補給、気にかけてあげてくださいね。</td></tr>
+<tr><td>8月</td><td>暑さも本番ですね。お盆にお母さんに会える方も多いのではないでしょうか。</td></tr>
+<tr><td>9月</td><td>少しずつ涼しくなってきましたね。季節の変わり目、お母さんの体調も気にかけてあげてください。</td></tr>
+<tr><td>10月</td><td>秋が深まってきましたね。お母さんのところは、もう衣替えはお済みでしょうか。</td></tr>
+<tr><td>11月</td><td>朝晩が冷え込む季節になりましたね。お母さん、暖かくしていらっしゃるでしょうか。</td></tr>
+<tr><td>12月</td><td>今年も残りわずかですね。年末年始、お母さんに会えるといいですね。</td></tr>
+</table>
+</div>
+</div>
+
+<div class="divider"></div>
+<div class="section" id="s-app">
+<div class="section-badge badge-report">1. アプリレポート</div>
+<h2>アプリ内レポート（月次）</h2>
+<p class="desc">毎月1日更新。アプリの「見守りタブ」に蓄積される、一番詳しいレポート。<br>「あまり使わない」ユーザーが多数派の想定。どちらでもスカスカにならない設計。</p>
 
 <!-- パターンA -->
 <div class="card">
 <div class="pattern-label pattern-a">パターンA ─ よく使うユーザー</div>
-<p>ライトを毎日使い、スマホ充電やAC出力も日常的に利用しているケース。</p>
+<p>ライトを毎日使い、スマホ充電やテレビなどにも日常的に利用しているケース。</p>
 
-<div class="sample"><span class="sample-label">💬 AIからのひとこと</span>
-4月も安定した日々が続いていました。
-使用があった日は30日中28日。
-2日だけ使用がなかった日がありましたが、いずれも土曜日で、お出かけされていた可能性があります。
+<div class="akari-bubble">
+  <img src="akari.png" alt="あかり" class="akari-bubble-img">
+  <div class="akari-bubble-body">
+    <span class="sample-label">☀ 今月のようす</span>
+新緑がまぶしい季節になりましたね。
+お母さんのところにも、気持ちのいい風が届いているといいですね。
 
-3月と比べてライトの点灯時間が約30分遅くなっています。日が長くなった季節の変化ですね。</div>
+4月も穏やかにお過ごしの様子です。
 
-<div class="sample"><span class="sample-label">📊 月間データ</span>
-使用日数　　　：28 / 30日
-ライト点灯日数：26日
-USB使用日数　 ：22日
-AC使用日数　  ：18日
-充電完了通知　：5回
-SOS確認応答　 ：4回 / 4回（すべて応答あり）</div>
+30日中28日、solarichをお使いになっていました。
+2日だけ使用のない日がありましたが、いずれも土曜日でしたので、お出かけされていたのかもしれませんね。
 
-<div class="sample"><span class="sample-label">📅 曜日パターン</span>
-月〜金 ：毎日使用あり
-土曜日 ：4週中2週が使用なし（外出パターンの可能性）
-日曜日 ：毎週使用あり</div>
+3月と比べて、ライトを点ける時間が約30分遅くなっています。
+日が長くなってきた季節の変化ですね。</div>
+</div>
 
-<div class="sample"><span class="sample-label">💡 ライト</span>
-点灯日数　　：26日
-平均点灯時刻：18:32（3月は18:05）
-平均消灯時刻：22:15</div>
+<div class="sample"><span class="sample-label">📊 今月の見守りメモ</span>
+solarichを使った日　：28 / 30日
+ライトを点けた日　　：26日
+スマホを充電した日　：22日
+ライトの確認　　　　：4回お送りして、すべてお返事がありました ✅</div>
+
+<div class="sample"><span class="sample-label">📅 曜日のパターン</span>
+平日　：毎日お使いです
+土曜日：月に2回ほどお出かけの様子
+日曜日：毎週お使いです</div>
+
+<div class="sample"><span class="sample-label">💡 ライトのようす</span>
+26日間、ほぼ毎日ライトを点けていらっしゃいます。
+夕方18時半頃に点けて、夜22時頃に消されるリズムです。
+3月より点灯が30分ほど遅くなりました。日が長くなりましたね。</div>
 
 <div class="sample"><span class="sample-label">💬 今月のトピック</span>
-・4/12（土）と4/19（土）に使用なし。
-  週末にお出かけのパターンかもしれません。
+・4/12（土）と4/19（土）にお使いになっていませんでした。
+  週末のお出かけが習慣になっているのかもしれませんね。
 
-・4/23にACの使用時間がいつもより長めでした。
+・4/23はいつもより長めにコンセントをお使いでした。
+  テレビなどをゆっくり楽しまれていたのかもしれません。
 
-・4回のSOS確認すべてに応答がありました。</div>
+・ライトの確認4回すべてにお返事がありました。
+  お元気な証ですね。</div>
 
-<div class="sample"><span class="sample-label">📈 3ヶ月の推移</span>
-2月  使用 26/28日
-3月  使用 29/31日
-4月  使用 28/30日
-→ 安定した利用が続いています。</div>
+<div class="sample"><span class="sample-label">📈 3ヶ月のうごき</span>
+2月  28日中 26日
+3月  31日中 29日
+4月  30日中 28日
+安定してお使いいただいています。ご安心ください。</div>
 </div>
 
 <!-- パターンB -->
 <div class="card">
 <div class="pattern-label pattern-b">パターンB ─ あまり使わないユーザー（多数派の想定）</div>
-<p>コンセントに繋ぎっぱなしで、たまにライトを使う程度。USB/AC出力はほとんどなし。<br><strong>このパターンでもレポートが「スカスカ」にならない設計が重要。</strong></p>
+<p>コンセントに繋ぎっぱなしで、たまにライトを使う程度。<br><strong>このパターンでもレポートが温かく、読む価値があるように。</strong></p>
 
-<div class="sample"><span class="sample-label">💬 AIからのひとこと</span>
-4月もsolarichは正常に稼働しています。
-コンセントに接続された状態が維持されており、いつでも使える状態です。
+<div class="akari-bubble">
+  <img src="akari.png" alt="あかり" class="akari-bubble-img">
+  <div class="akari-bubble-body">
+    <span class="sample-label">☀ 今月のようす</span>
+新緑がまぶしい季節になりましたね。
+お母さんのところにも、気持ちのいい風が届いているといいですね。
 
-ライトは週に2〜3回、夕方以降に点灯されていました。
-夜の時間帯にライトをお使いになっている様子から、穏やかにお過ごしの気配が感じられます。</div>
+4月もsolarichは元気に稼働しています。
 
-<div class="sample"><span class="sample-label">📊 月間データ</span>
-コンセント接続：30 / 30日（常時接続）
-ライト点灯日数：10日
-USB使用日数　 ：3日
-AC使用日数　  ：0日
-SOS確認応答　 ：4回 / 4回（すべて応答あり）</div>
+コンセントに繋がった状態が1ヶ月通して続いており、
+いつでもお使いいただける状態です。ご安心ください。
 
-<div class="sample"><span class="sample-label">💡 ライト</span>
-点灯日数　　：10日（週2〜3回ペース）
-点灯時間帯　：18:00〜22:00頃が中心</div>
+ライトは週に2〜3回、夕方以降に使われていました。
+夜の時間帯にライトをお使いになっている様子から、
+穏やかにお過ごしの気配が感じられます。</div>
+</div>
+
+<div class="sample"><span class="sample-label">📊 今月の見守りメモ</span>
+コンセント接続　　　：30日 / 30日 ✅
+ライトを点けた日　　：10日
+スマホを充電した日　：3日
+ライトの確認　　　　：4回お送りして、すべてお返事がありました ✅</div>
 
 <div class="sample"><span class="sample-label">💬 今月のトピック</span>
-・4/15と4/22にUSBでスマホを充電されていました。
+・4/15と4/22に、スマホを充電されていました。
 
-・4回のSOS確認すべてに応答がありました。
+・ライトの確認4回すべてにお返事がありました。
+  お元気な証ですね。
 
-・コンセント接続は1ヶ月を通じて途切れていません。
-  solarichがご自宅で正常に稼働し続けている証です。</div>
+・コンセント接続が1ヶ月途切れていません。
+  solarichがご自宅で元気に動き続けている証です。</div>
 
-<div class="sample"><span class="sample-label">📈 3ヶ月の推移</span>
-2月  ライト  8日 / USB 2日
-3月  ライト 11日 / USB 4日
-4月  ライト 10日 / USB 3日
-→ 安定した利用ペースが続いています。</div>
+<div class="sample"><span class="sample-label">📈 3ヶ月のうごき</span>
+2月  ライト  8日 / スマホ充電 2日
+3月  ライト 11日 / スマホ充電 4日
+4月  ライト 10日 / スマホ充電 3日
+いつものペースが続いています。ご安心ください。</div>
 </div>
 
 <!-- 設計ポイント -->
 <div class="card">
 <h3><span class="icon">📐</span> 動きが少ないユーザーへの設計ポイント</h3>
 <table class="rule-tbl">
-<tr><td>「コンセント接続中」を最大の安心シグナルにする</td><td>使用イベントが少なくても「繋がっている＝そこに暮らしがある」。これが一番安定した信号。</td></tr>
-<tr><td>ライトが週1回でも点いていれば「気配あり」</td><td>毎日使わなくても、使った事実を「暮らしの気配」として伝える。</td></tr>
-<tr><td>SOS確認への応答を重要指標にする</td><td>使用イベントが少ないユーザーほど、SOS確認が「生存確認」の役割を果たす。応答があった＝元気。</td></tr>
-<tr><td>「使っていない」を否定的に書かない</td><td>AC使用0日を「使用なし」ではなく、そもそも項目に載せない。あるものだけ書く。</td></tr>
-<tr><td>推移グラフで「安定」を見せる</td><td>数字が小さくても、3ヶ月並べて「変わらない＝安定」と伝えることに価値がある。</td></tr>
+<tr><td>「コンセント接続中」が最大の安心</td><td>繋がっている＝そこに暮らしがある。一番安定した信号。</td></tr>
+<tr><td>ライトが週1回でも「気配あり」</td><td>毎日使わなくても、使った事実を「暮らしの気配」として伝える。</td></tr>
+<tr><td>ライトの確認への応答が重要指標</td><td>使用が少ないユーザーほど、お返事があったことの価値が高い。</td></tr>
+<tr><td>ゼロの項目は載せない</td><td>あるものだけ書く。ないものを書くと寂しくなる。</td></tr>
+<tr><td>「ご安心ください」を明示的に書く</td><td>安心していいと言葉にすることで、心理的な負荷を下げる。</td></tr>
 </table>
 </div>
 
 <div class="card">
-<h3><span class="icon">📐</span> AI要約の生成ルール（共通）</h3>
-<table class="rule-tbl">
-<tr><td>推定は推定として伝える</td><td>「〜かもしれません」「〜の可能性があります」。断定しない。</td></tr>
-<tr><td>ポジティブな解釈を先に</td><td>イベントなし→「お出かけ」、少ない→「穏やかに」</td></tr>
-<tr><td>毎月表現を変える</td><td>季節の話題を織り込む。同じ文面が続くと読まなくなる。</td></tr>
-<tr><td>専門用語は使わない</td><td>W数には触れない。「充電されていました」で十分。</td></tr>
-</table>
-</div>
-
-<div class="card">
-<h3><span class="icon">🔧</span> メンテナンスのお知らせ（時期が近い場合のみ表示）</h3>
+<h3><span class="icon">🔧</span> メンテナンスのお知らせ（時期が近い場合のみ）</h3>
 <div class="sample"><span class="sample-label">🔧 メンテナンスのお知らせ</span>
 前回のバッテリーリフレッシュ：2026年2月15日
-次回推奨時期：2026年5月〜8月
-→ 次回ご家族を訪問される際に実施をおすすめします。</div>
+
+次のリフレッシュは5月〜8月の間がおすすめです。
+ご家族に会いに行くついでに、30分ほどで完了します。
+手順はアプリの「メンテナンスガイド」をご覧ください。
+
+「ちょっとソラリッチの点検に来たよ」── 
+その一言から始まる会話が、いちばんの見守りかもしれません。</div>
 </div>
 </div>
 
 <!-- ============================================================ -->
-<!-- 2. メールレポート -->
+<!-- 2. メール -->
 <!-- ============================================================ -->
 <div class="section" id="s-mail">
-<div class="section-badge badge-mail">2. メールレポート</div>
+<div class="section-badge badge-mail">2. メール</div>
 <h2>メールレポート（月次・HTML形式）</h2>
-<p class="desc">AIレポートの要約版。毎月1日配信。400〜600字。<br>動きが少ないユーザーでも「届いた」こと自体が安心になる設計。</p>
+<p class="desc">アプリレポートの要約版。毎月1日配信。<br>開封しなくても「来たな」と思えるだけで安心になる、月に一度の手紙。</p>
 
-<!-- パターンA -->
 <div class="card">
 <div class="pattern-label pattern-a">パターンA ─ よく使うユーザー</div>
-<div style="background:var(--blue-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--blue)">件名：</span>【見守りレポート】4月｜今月も穏やかにお過ごしです</div>
+<div style="background:var(--blue-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--blue)">件名：</span>【見守りプラス】4月のお母さんのようす ─ 今月も穏やかにお過ごしです</div>
 <div class="sample">
-[ニックネーム] の見守りレポート ─ 4月
+[ユーザー名] 様
+
+4月のお母さんの見守りレポートをお届けします。
+ゴールデンウィークも近づいてきましたね。
+このレポートが、お母さんに連絡するきっかけになればうれしいです。
 
 ━━━━━━━━━━━━━━━
-💬 AIからのひとこと
+☀ 今月のようす
 ━━━━━━━━━━━━━━━
 
-4月も安定した日々が続いていました。
-使用があった日は30日中28日。
-週末にお出かけされていた様子で、2日だけ使用のない日がありました。
+4月も穏やかにお過ごしの様子です。
+30日中28日、solarichをお使いになっていました。
+週末にお出かけされていた様子で、
+2日だけ使用のない日がありました。
 
 ━━━━━━━━━━━━━━━
-📊 今月のデータ
+📊 見守りメモ
 ━━━━━━━━━━━━━━━
 
-使用日数　　｜ 28 / 30日
-ライト点灯　｜ 26日
-SOS確認応答　｜ 4回 / 4回 ✅
+お使いの日　　｜ 28 / 30日
+ライト　　　　｜ 26日
+ライトの確認　｜ 4回すべてお返事あり ✅
 
 ━━━━━━━━━━━━━━━
-💡 今月のトピック
+💬 今月のトピック
 ━━━━━━━━━━━━━━━
 
 ・4/12と4/19（土曜）に使用なし。
-  週末にお出かけのパターンかもしれません。
+  週末のお出かけが習慣かもしれませんね。
 
 ━━━━━━━━━━━━━━━
 
 📱 もっと詳しく → アプリの「見守りタブ」
+
+いつでもご相談ください。
 💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
+<div class="akari-sig">
+  <img src="akari.png" alt="あかり">
+  <div class="akari-sig-text"><strong>森川あかり</strong><br>見守りプラス サポート担当</div>
+</div>
 </div>
 
-<!-- パターンB -->
 <div class="card">
 <div class="pattern-label pattern-b">パターンB ─ あまり使わないユーザー</div>
-<div style="background:var(--blue-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--blue)">件名：</span>【見守りレポート】4月｜solarichは正常に稼働中です</div>
+<div style="background:var(--blue-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--blue)">件名：</span>【見守りプラス】4月のお母さんのようす ─ solarichは元気に稼働中です</div>
 <div class="sample">
-[ニックネーム] の見守りレポート ─ 4月
+[ユーザー名] 様
+
+4月のお母さんの見守りレポートをお届けします。
+ゴールデンウィークも近づいてきましたね。
+このレポートが、お母さんに連絡するきっかけになればうれしいです。
 
 ━━━━━━━━━━━━━━━
-💬 AIからのひとこと
+☀ 今月のようす
 ━━━━━━━━━━━━━━━
 
-4月もsolarichは正常に稼働しています。
+4月もsolarichは元気に稼働しています。
 コンセント接続が1ヶ月を通じて途切れておらず、
-いつでも使える状態が保たれています。
+いつでもお使いいただける状態です。ご安心ください。
 週に2〜3回、夕方以降にライトをお使いの様子です。
 
 ━━━━━━━━━━━━━━━
-📊 今月のデータ
+📊 見守りメモ
 ━━━━━━━━━━━━━━━
 
-コンセント接続｜ 30 / 30日 ✅
-ライト点灯　　｜ 10日
-SOS確認応答　 ｜ 4回 / 4回 ✅
+コンセント接続　｜ 30 / 30日 ✅
+ライト　　　　　｜ 10日
+ライトの確認　　｜ 4回すべてお返事あり ✅
 
 ━━━━━━━━━━━━━━━
-💡 今月のトピック
+💬 今月のトピック
 ━━━━━━━━━━━━━━━
 
-・4回のSOS確認すべてに応答がありました。
-  お元気な様子です。
+・ライトの確認4回すべてにお返事がありました。
+  お元気な証ですね。
 
 ━━━━━━━━━━━━━━━
 
 📱 もっと詳しく → アプリの「見守りタブ」
+
+いつでもご相談ください。
 💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
+<div class="akari-sig">
+  <img src="akari.png" alt="あかり">
+  <div class="akari-sig-text"><strong>森川あかり</strong><br>見守りプラス サポート担当</div>
+</div>
 </div>
 </div>
 
 <!-- ============================================================ -->
-<!-- 3. LINE通知 -->
+<!-- 3. LINE -->
 <!-- ============================================================ -->
 <div class="section" id="s-line">
 <div class="section-badge badge-line">3. LINE通知</div>
-<h2>LINE通知（週次ヘルスチェック＋アラート）</h2>
-<p class="desc">LINEには2種類だけ届く。毎週の「1行」と、必要な時だけの「アラート」。<br>※ LINE実装にはMessagingAPI連携が必要（月額15,000円＋超過分）。</p>
+<h2>LINE通知（隔週＋アラート）</h2>
+<p class="desc">LINEには2種類だけ届く。隔週の「1行」と、必要な時だけの「お知らせ」。</p>
 
 <div class="card">
-<h3><span class="icon">💚</span> 週次ヘルスチェック（毎週月曜）</h3>
-<p style="margin:8px 0 4px"><strong>通知バナーに1行見えるだけで「今週も大丈夫」と感じられればそれでいい。</strong></p>
-<p style="margin:0 0 16px;font-size:.82rem;color:var(--text-light)">動きが少ないユーザーでも「コンセント接続中」があれば ✅ を出す。</p>
+<h3><span class="icon">💚</span> 隔週ヘルスチェック（隔週月曜）</h3>
+<p style="margin:8px 0 16px">2週に1回、通知バナーに1行見えるだけで「大丈夫なんだな」と感じられればそれでいい。</p>
 
 <p style="font-weight:700;margin:16px 0 8px;font-size:.82rem;color:var(--green-dark)">✅ 安定時</p>
 <div class="line-msgs">
-<div class="line-msg">✅ 今週も安定しています（接続中・ライト3回）</div>
-<div class="line-msg">✅ いつも通りです（接続中・ライト2回）</div>
-<div class="line-msg">✅ 変わりなくお元気そうです（接続中）</div>
-<div class="line-msg">✅ 穏やかな1週間でした（接続中・ライト4回）</div>
+<div class="line-msg">✅ お母さん、この2週間も穏やかにお過ごしです（ライト5回）</div>
+<div class="line-msg">✅ お母さん、いつも通りです。ご安心ください</div>
+<div class="line-msg">✅ お母さん、変わりなくお元気そうです</div>
+<div class="line-msg">✅ お母さん、穏やかな2週間でした</div>
 </div>
 
-<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--orange)">ℹ️ 軽微な変化</p>
+<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--orange)">ℹ️ 少し気になること</p>
 <div class="line-msgs">
-<div class="line-msg a-yellow">ℹ️ 今週はライトの使用がありませんでした</div>
-<div class="line-msg a-yellow">ℹ️ バッテリーが少なめです（32%）</div>
+<div class="line-msg a-yellow">ℹ️ お母さん、この2週間はライトの使用がありませんでした</div>
+<div class="line-msg a-yellow">ℹ️ お母さんのsolarich、バッテリーが少なめです（32%）</div>
 </div>
 
-<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--red)">⚠ 要確認</p>
+<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--red)">⚠ 確認をおすすめします</p>
 <div class="line-msgs">
-<div class="line-msg a-red">⚠ 48時間以上使用がありません。詳しくはアプリで</div>
+<div class="line-msg a-red">⚠ お母さんのsolarich、ここ2日ほど使用がないようです。詳しくはアプリで</div>
 </div>
 </div>
 
 <div class="card">
-<h3><span class="icon">🔔</span> アラート（発生時のみ）</h3>
+<h3><span class="icon">🔔</span> お知らせ（必要な時だけ）</h3>
+<p style="margin:8px 0 16px">鳴らない月がほとんど。それが理想です。</p>
 
-<p style="font-weight:700;margin:16px 0 8px;font-size:.82rem;color:var(--red)">🔴 緊急（即時）</p>
+<p style="font-weight:700;margin:16px 0 8px;font-size:.82rem;color:var(--red)">🔴 すぐにご確認ください</p>
 <div class="line-msgs">
-<div class="line-msg a-red">🔴 SOSの応答がありません。すぐにご確認ください。</div>
-<div class="line-msg a-red">🔴 48時間以上、使用がありません。確認をおすすめします。</div>
+<div class="line-msg a-red">🔴 お母さんにライトの確認をお送りしましたが、お返事がありません。ご確認をお願いします。</div>
+<div class="line-msg a-red">🔴 お母さんのsolarich、ここ2日ほど使用がないようです。お電話してみてくださいね。</div>
 </div>
 
-<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--orange)">🟠 注意（夜間は朝7時に送信）</p>
+<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--orange)">🟠 念のためお知らせ（夜間は朝7時にお届け）</p>
 <div class="line-msgs">
-<div class="line-msg a-yellow">⚠ solarichとの通信が途切れています。ドングルの確認が必要かもしれません。</div>
-<div class="line-msg a-yellow">⚠ コンセントが外れているようです。確認をおすすめします。</div>
+<div class="line-msg a-yellow">ℹ️ お母さんのsolarichとの通信が途切れているようです。ドングルをご確認ください。</div>
+<div class="line-msg a-yellow">ℹ️ お母さんのsolarich、コンセントが外れているようです。次回の訪問時にご確認ください。</div>
 </div>
 
-<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--green-dark)">✅ 復旧・応答</p>
+<p style="font-weight:700;margin:20px 0 8px;font-size:.82rem;color:var(--green-dark)">✅ 安心のお知らせ</p>
 <div class="line-msgs">
-<div class="line-msg a-green">✅ 無事の応答がありました。</div>
-<div class="line-msg a-green">✅ 使用が再開されました。</div>
-<div class="line-msg a-green">✅ 通信が復旧しました。</div>
+<div class="line-msg a-green">✅ お母さんからお返事がありました。お元気な様子です。</div>
+<div class="line-msg a-green">✅ お母さんのsolarich、使用が再開されました。</div>
+<div class="line-msg a-green">✅ 通信が復旧しました。ご安心ください。</div>
 </div>
 </div>
 </div>
