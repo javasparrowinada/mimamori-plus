@@ -34,7 +34,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 .line-msg.a-green .line-msg-body{border-left:3px solid var(--green);background:var(--green-light)}
 .rule-tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin:12px 0}.rule-tbl td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}.rule-tbl td:first-child{font-weight:600;width:45%;color:var(--text)}.rule-tbl td:last-child{color:var(--text-light)}
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.compare-item{border-radius:12px;padding:16px 20px;font-size:.82rem;line-height:1.7}.compare-ng{background:var(--red-light);border:1px solid rgba(214,80,80,.12)}.compare-ng::before{content:'✕ ';font-weight:700;color:var(--red)}.compare-ok{background:var(--green-light);border:1px solid rgba(91,140,90,.12)}.compare-ok::before{content:'○ ';font-weight:700;color:var(--green-dark)}
-.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.ch-card{border-radius:14px;padding:24px 20px;text-align:center}.ch-card h4{font-size:.95rem;font-weight:700;margin-bottom:4px}.ch-card .ch-freq{font-size:.78rem;font-weight:700;margin-bottom:10px}.ch-card p{font-size:.78rem;color:var(--text-light);line-height:1.6;text-align:left}
+.ch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.ch-grid.ch-grid-2{grid-template-columns:repeat(2,1fr)}.ch-card{border-radius:14px;padding:24px 20px;text-align:center}.ch-card h4{font-size:.95rem;font-weight:700;margin-bottom:4px}.ch-card .ch-freq{font-size:.78rem;font-weight:700;margin-bottom:10px}.ch-card p{font-size:.78rem;color:var(--text-light);line-height:1.6;text-align:left}
 .ch-green{background:var(--green-light);border:1px solid rgba(91,140,90,.15)}.ch-green h4{color:var(--green-dark)}.ch-green .ch-freq{color:var(--green)}.ch-blue{background:var(--blue-light);border:1px solid rgba(90,126,181,.15)}.ch-blue h4{color:#2D5A8C}.ch-blue .ch-freq{color:var(--blue)}.ch-teal{background:#E1F5EE;border:1px solid rgba(29,158,117,.15)}.ch-teal h4{color:#085041}.ch-teal .ch-freq{color:#1D9E75}
 .tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:16px 0}.tbl th{text-align:left;padding:10px 14px;font-weight:700;font-size:.78rem;background:rgba(91,140,90,.06);border-bottom:2px solid rgba(91,140,90,.15);color:var(--green-dark)}.tbl td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}.tbl tr:last-child td{border-bottom:none}
 .divider{height:1px;background:rgba(0,0,0,.06);margin:56px 0}
@@ -101,7 +101,6 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
   <nav class="topbar-nav">
     <a href="#channel">チャネル</a>
     <a href="#tone">方針</a>
-    <a href="#s-app">アプリ</a>
     <a href="#s-mail">メール</a>
     <a href="#s-line">LINE</a>
     <a href="system.html">システム構成</a>
@@ -115,11 +114,10 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <div class="section" id="channel">
 <div class="section-badge badge-channel">チャネルと頻度</div>
 <h2>何で、いつ届けるか</h2>
-<p class="desc">3つのチャネルで、それぞれ役割の違う「安心」を届ける。</p>
-<div class="ch-grid">
-  <div class="ch-card ch-teal"><h4>LINE</h4><div class="ch-freq">隔週月曜 ＋ 必要時</div><p>2週に1回、1行だけ。通知バナーでチラ見するだけで「大丈夫」とわかる。アラートは必要な時だけ届く。</p></div>
+<p class="desc">2つのチャネルで、それぞれ役割の違う「安心」を届ける。</p>
+<div class="ch-grid ch-grid-2">
+  <div class="ch-card ch-teal"><h4>LINE</h4><div class="ch-freq">隔週月曜 ＋ 必要時</div><p>あかりからのお便り。2週に1回、お母さんのようすを短く温かく。アラートは本当に必要な時だけ。</p></div>
   <div class="ch-card ch-blue"><h4>メール</h4><div class="ch-freq">毎月1日</div><p>月に1回の「手紙」。1ヶ月のようすをまとめてお届け。開封しなくても、届いたこと自体が安心。</p></div>
-  <div class="ch-card ch-green"><h4>アプリ</h4><div class="ch-freq">毎月1日更新</div><p>一番詳しいレポート。気になった時にいつでも開ける「安心の引き出し」。</p></div>
 </div>
 </div>
 
@@ -186,117 +184,11 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 
 <div class="divider"></div>
 
-<!-- ===== 1. アプリレポート ===== -->
-<div class="section" id="s-app">
-<div class="section-badge badge-report">1. アプリレポート</div>
-<h2>アプリ内レポート（月次）</h2>
-<p class="desc">毎月1日更新。アプリの「見守りタブ」に蓄積される、一番詳しいレポート。<br>「あまり使わない」ユーザーが多数派の想定。どちらでもスカスカにならない設計。</p>
-
-<!-- パターンA -->
-<div class="card">
-<div class="pattern-label pattern-a">パターンA ─ よく使うユーザー</div>
-<p>ライトを毎日使い、スマホ充電やテレビなどにも日常的に利用しているケース。</p>
-<div class="dual">
-<div class="dual-doc">
-<div class="akari-bubble">
-  <img src="akari.png" alt="あかり" class="akari-bubble-img">
-  <div class="akari-bubble-body">
-    <span class="sample-label">☀ 今月のようす</span>
-新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。
-
-4月も穏やかにお過ごしの様子です。30日中28日お使いになっていました。
-平日は毎日、日曜も毎週お使いで、土曜は月に2回ほどお出かけの様子です。
-ライトはほぼ毎日、夕方18時半頃〜夜22時頃のリズムで点けていらっしゃいます。
-3月より30分ほど遅くなりました。日が長くなりましたね。
-4/23はいつもより長めにコンセントをお使いでした。
-ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
-</div>
-<div class="sample"><span class="sample-label">📊 今月の見守りメモ</span>
-solarichを使った日　：28 / 30日
-ライトを点けた日　　：26日
-スマホを充電した日　：22日
-ライトの確認　　　　：4回お送りして、すべてお返事がありました ✅</div>
-</div>
-
-<div class="dual-phone">
-<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
-<div class="phone-status"><span>9:41</span><div class="phone-status-r">📶 📡 🔋</div></div>
-<div class="phone-content">
-<div class="app-header"><span style="font-size:16px">‹</span><span class="app-header-title">見守りレポート</span><span style="font-size:14px">⚙</span></div>
-<div class="app-avatar"><img src="akari.png" alt="あかり"><div class="app-avatar-name">お母さん</div></div>
-<div class="app-body">
-<div style="font-size:10px;color:#999;margin-bottom:12px">2026年4月のレポート</div>
-<div class="app-section-title">☀ 今月のようす</div>
-<div class="app-text">新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。<br><br>4月も穏やかにお過ごしの様子です。30日中28日お使いになっていました。平日は毎日、日曜も毎週お使いで、土曜は月に2回ほどお出かけの様子です。<br><br>ライトはほぼ毎日、夕方18時半頃〜夜22時頃のリズムです。3月より30分ほど遅くなりました。日が長くなりましたね。<br><br>ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
-<div class="app-section-title">📊 今月の見守りメモ</div>
-<div class="app-memo">
-<div class="app-memo-row"><span class="app-memo-label">solarichを使った日</span><span>28 / 30日</span></div>
-<div class="app-memo-row"><span class="app-memo-label">ライトを点けた日</span><span>26日</span></div>
-<div class="app-memo-row"><span class="app-memo-label">スマホを充電した日</span><span>22日</span></div>
-<div class="app-memo-row"><span class="app-memo-label">ライトの確認</span><span>4回すべて応答 ✅</span></div>
-</div>
-</div>
-</div>
-</div></div>
-</div>
-</div>
-</div>
-
-<!-- パターンB -->
-<div class="card">
-<div class="pattern-label pattern-b">パターンB ─ あまり使わないユーザー（多数派の想定）</div>
-<p>コンセントに繋ぎっぱなしで、たまにライトを使う程度。<br><strong>このパターンでもレポートが温かく、読む価値があるように。</strong></p>
-<div class="dual">
-<div class="dual-doc">
-<div class="akari-bubble">
-  <img src="akari.png" alt="あかり" class="akari-bubble-img">
-  <div class="akari-bubble-body">
-    <span class="sample-label">☀ 今月のようす</span>
-新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。
-
-4月もsolarichは元気に稼働しています。
-コンセント接続が1ヶ月途切れておらず、いつでもお使いいただける状態です。ご安心ください。
-ライトは週に2〜3回、夕方以降に点けていらっしゃいます。穏やかにお過ごしの気配ですね。
-4/15と4/22にはスマホを充電されていました。
-ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
-</div>
-<div class="sample"><span class="sample-label">📊 今月の見守りメモ</span>
-コンセント接続　　　：30日 / 30日 ✅
-ライトを点けた日　　：10日
-スマホを充電した日　：3日
-ライトの確認　　　　：4回お送りして、すべてお返事がありました ✅</div>
-</div>
-
-<div class="dual-phone">
-<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
-<div class="phone-status"><span>9:41</span><div class="phone-status-r">📶 📡 🔋</div></div>
-<div class="phone-content">
-<div class="app-header"><span style="font-size:16px">‹</span><span class="app-header-title">見守りレポート</span><span style="font-size:14px">⚙</span></div>
-<div class="app-avatar"><img src="akari.png" alt="あかり"><div class="app-avatar-name">お母さん</div></div>
-<div class="app-body">
-<div style="font-size:10px;color:#999;margin-bottom:12px">2026年4月のレポート</div>
-<div class="app-section-title">☀ 今月のようす</div>
-<div class="app-text">新緑がまぶしい季節ですね。お母さんのところにも気持ちのいい風が届いていますように。<br><br>4月もsolarichは元気に稼働しています。コンセント接続が1ヶ月途切れておらず、いつでもお使いいただける状態です。ご安心ください。<br><br>ライトは週に2〜3回、夕方以降に点けていらっしゃいます。穏やかにお過ごしの気配ですね。<br><br>ライトの確認4回すべてにお返事がありました。お元気な証ですね。</div>
-<div class="app-section-title">📊 今月の見守りメモ</div>
-<div class="app-memo">
-<div class="app-memo-row"><span class="app-memo-label">コンセント接続</span><span>30 / 30日 ✅</span></div>
-<div class="app-memo-row"><span class="app-memo-label">ライトを点けた日</span><span>10日</span></div>
-<div class="app-memo-row"><span class="app-memo-label">スマホを充電した日</span><span>3日</span></div>
-<div class="app-memo-row"><span class="app-memo-label">ライトの確認</span><span>4回すべて応答 ✅</span></div>
-</div>
-</div>
-</div>
-</div></div>
-</div>
-</div>
-</div>
-</div>
-
-<!-- ===== 2. メール ===== -->
+<!-- ===== 1. メール ===== -->
 <div class="section" id="s-mail">
-<div class="section-badge badge-mail">2. メール</div>
+<div class="section-badge badge-mail">1. メール</div>
 <h2>メールレポート（月次・HTML形式）</h2>
-<p class="desc">アプリレポートの要約版。毎月1日配信。<br>開封しなくても「来たな」と思えるだけで安心になる、月に一度の手紙。</p>
+<p class="desc">毎月1日配信、月に一度のあかりからのお便り。<br>1ヶ月のお母さんのようすを、データと言葉でお届けします。</p>
 
 <div class="card">
 <div class="dual">
@@ -360,7 +252,7 @@ solarichを使った日　：28 / 30日
 
 <!-- ===== 3. LINE ===== -->
 <div class="section" id="s-line">
-<div class="section-badge badge-line">3. LINE通知</div>
+<div class="section-badge badge-line">2. LINE通知</div>
 <h2>LINE通知（隔週＋アラート）</h2>
 <p class="desc">LINEには2種類だけ届く。隔週の「1行」と、必要な時だけの「お知らせ」。</p>
 
