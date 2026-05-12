@@ -16,105 +16,70 @@
     padding: 24px 16px 64px;
   }
 
-  /* ─── Layout: form + intent sidebar ─── */
-  .page-layout {
+  /* ─── Page wrapper ─── */
+  .page-wrap {
     max-width: 1160px;
     margin: 0 auto;
+  }
+
+  /* ─── Each form unit is a row: form-cell + intent-cell ─── */
+  .row {
     display: grid;
-    grid-template-columns: minmax(0, 640px) 380px;
-    gap: 32px;
+    grid-template-columns: minmax(0, 640px) 360px;
+    gap: 24px;
     align-items: start;
+    margin-bottom: 12px;
   }
+  .row.row-section { margin-top: 24px; }
   @media (max-width: 1080px) {
-    .page-layout { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; }
   }
 
-  .form-container {
-    max-width: 640px;
-    width: 100%;
-  }
+  .form-cell { min-width: 0; }
+  .intent-cell { padding-top: 4px; }
 
-  /* ─── Intent sidebar (PO レビュー用) ─── */
-  .intent-panel {
-    position: sticky;
-    top: 24px;
+  /* ─── Intent memo box (next to each form unit) ─── */
+  .intent-memo {
     background: #fff;
-    border: 2px solid #4dd0e1;
-    border-radius: 12px;
-    padding: 0;
-    box-shadow: 0 4px 16px rgba(77,208,225,.15);
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
+    border: 1.5px solid #4dd0e1;
+    border-left: 4px solid #00acc1;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    color: #424242;
+    line-height: 1.7;
+    box-shadow: 0 1px 4px rgba(77,208,225,.12);
   }
-  .intent-header {
-    background: linear-gradient(135deg, #00acc1, #4dd0e1);
-    color: #fff;
-    padding: 16px 20px;
-    border-radius: 10px 10px 0 0;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
-  .intent-header h2 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 2px;
-  }
-  .intent-header p {
+  .intent-memo h4 {
     font-size: 12px;
-    opacity: 0.9;
-    line-height: 1.5;
-  }
-  .intent-body {
-    padding: 16px 20px 20px;
-  }
-  .intent-section {
-    margin-bottom: 18px;
-    padding-bottom: 16px;
-    border-bottom: 1px dashed #e0e0e0;
-  }
-  .intent-section:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-  .intent-section h3 {
-    font-size: 13px;
     font-weight: 700;
     color: #00838f;
     margin-bottom: 6px;
+    letter-spacing: 0.02em;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
   }
-  .intent-section h3::before {
-    content: '◆';
-    font-size: 10px;
-    color: #4dd0e1;
+  .intent-memo h4::before {
+    content: '💡';
+    font-size: 12px;
   }
-  .intent-section p {
-    font-size: 12.5px;
-    color: #424242;
-    line-height: 1.75;
-    margin-bottom: 6px;
-  }
-  .intent-section ul {
+  .intent-memo p { margin-bottom: 4px; }
+  .intent-memo p:last-child { margin-bottom: 0; }
+  .intent-memo ul {
     list-style: none;
     padding-left: 0;
-    margin-top: 4px;
+    margin: 4px 0;
   }
-  .intent-section ul li {
-    font-size: 12.5px;
-    color: #424242;
-    line-height: 1.75;
-    padding-left: 14px;
+  .intent-memo ul li {
+    padding-left: 12px;
     position: relative;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
-  .intent-section ul li::before {
+  .intent-memo ul li::before {
     content: '•';
     position: absolute;
-    left: 4px;
+    left: 2px;
     color: #00acc1;
     font-weight: 700;
   }
@@ -122,9 +87,9 @@
     display: inline-block;
     font-size: 10px;
     font-weight: 700;
-    padding: 2px 8px;
+    padding: 1px 8px;
     border-radius: 10px;
-    margin-right: 4px;
+    margin-right: 3px;
     margin-bottom: 4px;
     letter-spacing: 0.02em;
   }
@@ -136,9 +101,9 @@
   .intent-todo {
     background: #fffde7;
     border-left: 3px solid #fbc02d;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-size: 12px;
+    padding: 6px 10px;
+    margin-top: 6px;
+    font-size: 11.5px;
     color: #5d4037;
     border-radius: 0 4px 4px 0;
   }
@@ -150,7 +115,6 @@
     border-radius: 8px;
     border-top: 10px solid #673ab7;
     padding: 24px;
-    margin-bottom: 12px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
   }
   .form-header h1 {
@@ -160,27 +124,6 @@
     margin-bottom: 4px;
     color: #202124;
   }
-  .form-header .account-info {
-    font-size: 14px;
-    color: #202124;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid #dadce0;
-  }
-  .form-header .account-info a {
-    color: #673ab7;
-    text-decoration: none;
-  }
-  .form-header .account-info a:hover { text-decoration: underline; }
-  .form-header .shared {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: #5f6368;
-    margin-top: 4px;
-  }
-  .form-header .shared svg { width: 16px; height: 16px; fill: #5f6368; }
   .form-desc {
     font-size: 14px;
     color: #202124;
@@ -202,8 +145,6 @@
     border-radius: 8px;
     border-top: 10px solid #673ab7;
     padding: 24px;
-    margin-top: 24px;
-    margin-bottom: 12px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
   }
   .section-divider h2 {
@@ -225,7 +166,6 @@
     background: #fff;
     border-radius: 8px;
     padding: 24px;
-    margin-bottom: 12px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
     border: 1px solid transparent;
     transition: border-color .15s;
@@ -435,14 +375,14 @@
 
 <div class="draft-badge">📝 たたき案 v2（ポリシー反映済み）</div>
 
-<div class="page-layout">
-
-<div class="form-container">
+<div class="page-wrap">
 
   <!-- ━━━ HEADER ━━━ -->
-  <div class="form-header">
-    <h1>見守りプラス 解約申請フォーム</h1>
-    <div class="form-desc">見守りプラスの解約をご希望の方は、以下のフォームにご記入ください。
+  <div class="row">
+    <div class="form-cell">
+      <div class="form-header">
+        <h1>見守りプラス 解約申請フォーム</h1>
+        <div class="form-desc">見守りプラスの解約をご希望の方は、以下のフォームにご記入ください。
 
 【解約の締め日】
 ・毎月20日までのお申し込み → 当月末で解約
@@ -451,98 +391,245 @@
 
 ご不明な点がございましたら、お電話でもご相談いただけます。
 📞 0120-407-700（平日 10:00〜17:00）</div>
-    <div class="form-required-note">* 必須の質問です</div>
-  </div>
-
-  <!-- ━━━ SECTION 1 ━━━ -->
-  <div class="section-divider">
-    <h2>お申込者さまの情報</h2>
-  </div>
-
-  <div class="card">
-    <div class="card-label">お名前（フルネーム）<span class="req">*</span></div>
-    <input type="text" class="text-input" placeholder="回答を入力">
-  </div>
-
-  <div class="card">
-    <div class="card-label">ご住所<span class="req">*</span></div>
-    <input type="text" class="text-input full" placeholder="回答を入力">
-  </div>
-
-  <div class="card">
-    <div class="card-label">電話番号（日中連絡がとれる番号）<span class="req">*</span></div>
-    <input type="text" class="text-input" placeholder="回答を入力">
-  </div>
-
-  <div class="card">
-    <div class="card-label">メールアドレス（見守り通知を受け取っているアドレス）<span class="req">*</span></div>
-    <input type="text" class="text-input full" placeholder="回答を入力">
-  </div>
-
-  <!-- ━━━ SECTION 2 ━━━ -->
-  <div class="section-divider">
-    <h2>ご利用中のサービスについて</h2>
-  </div>
-
-  <div class="card">
-    <div class="card-label">solarich 1000 の製品シリアル番号<span class="req">*</span></div>
-    <input type="text" class="text-input" placeholder="本体背面に記載（わからない場合は「不明」と記入）">
-  </div>
-
-  <div class="card">
-    <div class="card-label">見守り対象の方のニックネーム<span class="req">*</span></div>
-    <input type="text" class="text-input" placeholder="アプリで設定した呼び名（例：お母さん）">
-  </div>
-
-  <div class="card">
-    <div class="card-label">おおよそのご利用開始時期<span class="req">*</span></div>
-    <div class="dropdown-wrap">
-      <select class="dropdown-select">
-        <option value="" disabled selected>選択</option>
-        <option>2026年4月〜</option>
-        <option>2026年5月〜</option>
-        <option>2026年6月〜</option>
-        <option>2026年7月〜</option>
-        <option>2026年8月〜</option>
-        <option>それ以前</option>
-        <option>わからない</option>
-      </select>
-      <span class="dropdown-arrow">▾</span>
+        <div class="form-required-note">* 必須の質問です</div>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>冒頭の説明文</h4>
+        <span class="intent-tag intent-tag-legal">トラブル防止</span>
+        <span class="intent-tag intent-tag-uxe">高齢者配慮</span>
+        <p>締め日ルールを最初に明示 → 想定外の課金トラブル防止。</p>
+        <p>電話番号を併記 → フォーム以外の選択肢を残す。</p>
+      </div>
     </div>
   </div>
 
-  <!-- ━━━ SECTION 3 ━━━ -->
-  <div class="section-divider">
-    <h2>解約の理由</h2>
-    <div class="section-desc">今後のサービス改善に活用させていただきます。</div>
+  <!-- ━━━ SECTION 1: 申込者情報 ━━━ -->
+  <div class="row row-section">
+    <div class="form-cell">
+      <div class="section-divider">
+        <h2>お申込者さまの情報</h2>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>セクション全体</h4>
+        <span class="intent-tag intent-tag-cs">本人確認</span>
+        <p>本人確認に必要な最小限の項目に限定。</p>
+        <div class="intent-todo"><strong>要検討：</strong> 契約者本人以外（家族）が申請するケースをどう扱うか。「ご本人ですか？」項目の追加要否。</div>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-label">解約の理由を教えてください（複数選択可）<span class="req">*</span></div>
-    <ul class="option-list" id="reasons">
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>見守り対象の方と同居することになった</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>見守り対象の方が施設に入居された</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>見守り対象の方がお亡くなりになった</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>他の見守りサービスに変更する</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>通知が思ったより届かなかった</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>使い方がよくわからなかった</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>メンテナンス（バッテリーリフレッシュ等）の負担が大きい</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>月額費用の負担</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>solarich 1000 本体の不具合</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>Wi-Fiドングルの不具合</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>その他</span></li>
-    </ul>
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">お名前（フルネーム）<span class="req">*</span></div>
+        <input type="text" class="text-input" placeholder="回答を入力">
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <p>契約者本人の特定に使用。CRM上の氏名と突合して契約レコードを確定する。</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-label">よろしければ、詳しい理由やご意見をお聞かせください</div>
-    <textarea class="textarea-input" placeholder="回答を入力"></textarea>
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">ご住所<span class="req">*</span></div>
+        <input type="text" class="text-input full" placeholder="回答を入力">
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <p>本人確認の補助 + 返金が発生する場合の振込確認連絡用。</p>
+      </div>
+    </div>
   </div>
 
-  <!-- ━━━ SECTION 4 ━━━ -->
-  <div class="section-divider">
-    <h2>解約条件のご確認</h2>
-    <div class="section-desc">解約にあたり、以下の条件が適用されます。ご一読ください。
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">電話番号（日中連絡がとれる番号）<span class="req">*</span></div>
+        <input type="text" class="text-input" placeholder="回答を入力">
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <span class="intent-tag intent-tag-retention">折り返し</span>
+        <p>「一時休止について相談したい」を選んだ方への折り返し連絡用。</p>
+        <p>「日中」と明示 → 携帯番号で確実に繋がる連絡先を取得。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">メールアドレス（見守り通知を受け取っているアドレス）<span class="req">*</span></div>
+        <input type="text" class="text-input full" placeholder="回答を入力">
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <span class="intent-tag intent-tag-cs">契約特定</span>
+        <p><strong>「見守り通知を受け取っているアドレス」</strong>と明示 → 別アドレスでの誤入力を防ぎ、契約と確実に紐付け。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━ SECTION 2: サービス情報 ━━━ -->
+  <div class="row row-section">
+    <div class="form-cell">
+      <div class="section-divider">
+        <h2>ご利用中のサービスについて</h2>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>セクション全体</h4>
+        <span class="intent-tag intent-tag-cs">契約特定</span>
+        <p>契約レコードを確定するための情報。聞き方が硬くなりすぎないよう注意。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">solarich 1000 の製品シリアル番号<span class="req">*</span></div>
+        <input type="text" class="text-input" placeholder="本体背面に記載（わからない場合は「不明」と記入）">
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <span class="intent-tag intent-tag-uxe">離脱防止</span>
+        <p>契約特定の最も確実な情報。ただし高齢者宅にある本体を確認できないケースが多いので、<strong>「不明と記入OK」</strong>を注記して離脱を防ぐ。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">見守り対象の方のニックネーム<span class="req">*</span></div>
+        <input type="text" class="text-input" placeholder="アプリで設定した呼び名（例：お母さん）">
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <span class="intent-tag intent-tag-uxe">温度感</span>
+        <p>運用者がフォローアップ時に <strong>「お母さんの解約手続き」</strong> と呼べる温度感を保つ。本名ではなく呼び名で受けることで、解約という事務的処理にも血を通わせる。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">おおよそのご利用開始時期<span class="req">*</span></div>
+        <div class="dropdown-wrap">
+          <select class="dropdown-select">
+            <option value="" disabled selected>選択</option>
+            <option>2026年4月〜</option>
+            <option>2026年5月〜</option>
+            <option>2026年6月〜</option>
+            <option>2026年7月〜</option>
+            <option>2026年8月〜</option>
+            <option>それ以前</option>
+            <option>わからない</option>
+          </select>
+          <span class="dropdown-arrow">▾</span>
+        </div>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <span class="intent-tag intent-tag-legal">返金判定</span>
+        <p><strong>30日以内の全額返金</strong>に該当するかの判定に使用。</p>
+        <p>「わからない」も選択肢に入れる → 離脱防止＋運用側で実データから確認。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━ SECTION 3: 解約の理由 ━━━ -->
+  <div class="row row-section">
+    <div class="form-cell">
+      <div class="section-divider">
+        <h2>解約の理由</h2>
+        <div class="section-desc">今後のサービス改善に活用させていただきます。</div>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>セクション全体</h4>
+        <span class="intent-tag intent-tag-feedback">改善ループ</span>
+        <p>「サービス改善に活用」と明示 → 正直な回答を促す（防御的にならない）。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">解約の理由を教えてください（複数選択可）<span class="req">*</span></div>
+        <ul class="option-list" id="reasons">
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>見守り対象の方と同居することになった</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>見守り対象の方が施設に入居された</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>見守り対象の方がお亡くなりになった</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>他の見守りサービスに変更する</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>通知が思ったより届かなかった</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>使い方がよくわからなかった</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>メンテナンス（バッテリーリフレッシュ等）の負担が大きい</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>月額費用の負担</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>solarich 1000 本体の不具合</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>Wi-Fiドングルの不具合</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>その他</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>選択肢の構成</h4>
+        <span class="intent-tag intent-tag-feedback">改善ループ</span>
+        <span class="intent-tag intent-tag-retention">リテンション</span>
+        <p>選択肢は意図的に3つのグループ：</p>
+        <ul>
+          <li>① <strong>ライフイベント</strong>（同居・施設入居・お亡くなり）→ 引き止め不要、慎重対応</li>
+          <li>② <strong>競合・体験</strong>（他社移行・通知少ない・使い方不明）→ 改善ヒント</li>
+          <li>③ <strong>不具合・コスト</strong>（本体不良・ドングル不良・月額負担）→ CS/開発に直結</li>
+        </ul>
+        <p>複数選択可 → 正直な回答を取りやすい。</p>
+        <div class="intent-todo"><strong>要検討：</strong> 「お亡くなりになった」の表現は適切か。「ご逝去」の方が丁寧かも？ ご家族の感情に配慮した文言にしたい。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">よろしければ、詳しい理由やご意見をお聞かせください</div>
+        <textarea class="textarea-input" placeholder="回答を入力"></textarea>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <span class="intent-tag intent-tag-feedback">生の声</span>
+        <p>必須にしない → 送信ハードルを下げる。書きたい人だけ書く。</p>
+        <p>「よろしければ」と前置きすることで、義務感を生まない。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ━━━ SECTION 4: 解約条件 ━━━ -->
+  <div class="row row-section">
+    <div class="form-cell">
+      <div class="section-divider">
+        <h2>解約条件のご確認</h2>
+        <div class="section-desc">解約にあたり、以下の条件が適用されます。ご一読ください。
 
 【解約日】
 毎月20日までのお申し込みは当月末、21日以降は翌月末での解約となります。解約月の末日まで、見守りサービスは通常どおりご利用いただけます。
@@ -560,47 +647,125 @@
 【サービスの再開について】
 ・解約後の再開は可能です。サポート窓口までご連絡ください。
 ・再開時にはドングルのデータプラン再購入（リチャージ）費用が発生します。</div>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>条件の事前明示</h4>
+        <span class="intent-tag intent-tag-legal">トラブル防止</span>
+        <span class="intent-tag intent-tag-retention">信頼構築</span>
+        <p>すべての条件を <strong>送信前</strong> に明示 → 後日「聞いてない」トラブル防止。</p>
+        <p><strong>30日以内全額返金</strong> は誠実さのアピール。</p>
+        <p><strong>「solarich本体は引き続き使える」「再開可能」</strong> を明示 → 解約のハードルを下げつつ、復活の道筋を残す。</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-label">解約ではなく「一時休止」をご希望ですか？<span class="req">*</span></div>
-    <ul class="option-list" id="timing">
-      <li onclick="selectRadio(this)"><div class="radio-circle"><div class="dot"></div></div><span>解約を希望する</span></li>
-      <li onclick="selectRadio(this)"><div class="radio-circle"><div class="dot"></div></div><span>一時休止について相談したい（担当から折り返しご連絡します）</span></li>
-    </ul>
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">解約ではなく「一時休止」をご希望ですか？<span class="req">*</span></div>
+        <ul class="option-list" id="timing">
+          <li onclick="selectRadio(this)"><div class="radio-circle"><div class="dot"></div></div><span>解約を希望する</span></li>
+          <li onclick="selectRadio(this)"><div class="radio-circle"><div class="dot"></div></div><span>一時休止について相談したい（担当から折り返しご連絡します）</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>一時休止 救済策</h4>
+        <span class="intent-tag intent-tag-retention">救済</span>
+        <p>2択にすることで、決めきれていない方をすくい上げる。</p>
+        <p>「相談したい」を選ぶと <strong>担当者から折り返し</strong> → 本当の理由を電話で深掘りでき、引き止め/代替案提示の機会に。</p>
+        <div class="intent-todo"><strong>要検討：</strong> 「一時休止」は実運用フローとして用意するか？ 月額課金停止+ドングル維持の仕組みを作るか要検討。</div>
+      </div>
+    </div>
   </div>
 
-  <!-- ━━━ SECTION 5 ━━━ -->
-  <div class="section-divider">
-    <h2>確認事項</h2>
-    <div class="section-desc">以下の内容をご確認の上、チェックを入れてください。</div>
+  <!-- ━━━ SECTION 5: 確認事項 ━━━ -->
+  <div class="row row-section">
+    <div class="form-cell">
+      <div class="section-divider">
+        <h2>確認事項</h2>
+        <div class="section-desc">以下の内容をご確認の上、チェックを入れてください。</div>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>セクション全体</h4>
+        <span class="intent-tag intent-tag-legal">明示同意</span>
+        <p>法的・契約的に重要な事項を <strong>明示同意</strong> として受領、記録に残す。</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-label">確認事項（すべてチェックしてください）<span class="req">*</span></div>
-    <ul class="option-list" id="confirm">
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>20日までの申し込みは当月末、21日以降は翌月末での解約となることを理解しています</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>解約後、見守り通知（プッシュ通知・LINE・メール）が届かなくなることを理解しています</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>Wi-Fiドングルのデータプラン残量分の返金がないことを理解しています</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>解約後の再開にはドングルのデータプラン再購入費用が発生することを理解しています</span></li>
-      <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>solarich 1000 本体はポータブル電源として引き続き使えることを理解しています</span></li>
-    </ul>
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">確認事項（すべてチェックしてください）<span class="req">*</span></div>
+        <ul class="option-list" id="confirm">
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>20日までの申し込みは当月末、21日以降は翌月末での解約となることを理解しています</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>解約後、見守り通知（プッシュ通知・LINE・メール）が届かなくなることを理解しています</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>Wi-Fiドングルのデータプラン残量分の返金がないことを理解しています</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>解約後の再開にはドングルのデータプラン再購入費用が発生することを理解しています</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>solarich 1000 本体はポータブル電源として引き続き使えることを理解しています</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>チェックを分けている理由</h4>
+        <p>1個のチェックで全部 → 読み飛ばされる。</p>
+        <p>項目ごとに分ける → <strong>1個1個チェックする手間</strong>が、内容を確認するきっかけになる。</p>
+      </div>
+    </div>
   </div>
 
-  <!-- ━━━ SECTION 6 ━━━ -->
-  <div class="section-divider">
-    <h2>その他ご連絡事項</h2>
+  <!-- ━━━ SECTION 6: その他 ━━━ -->
+  <div class="row row-section">
+    <div class="form-cell">
+      <div class="section-divider">
+        <h2>その他ご連絡事項</h2>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>セクション全体</h4>
+        <span class="intent-tag intent-tag-feedback">生の声</span>
+        <p>定型項目に収まらない情報を拾う最後の機会。</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="card-label">その他、ご要望やご連絡事項がありましたらご記入ください</div>
-    <textarea class="textarea-input" placeholder="回答を入力"></textarea>
+  <div class="row">
+    <div class="form-cell">
+      <div class="card">
+        <div class="card-label">その他、ご要望やご連絡事項がありましたらご記入ください</div>
+        <textarea class="textarea-input" placeholder="回答を入力"></textarea>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <p>感謝・要望・批判すべて受け止める受け皿。任意。</p>
+      </div>
+    </div>
   </div>
 
   <!-- ━━━ ACTIONS ━━━ -->
-  <div class="form-actions">
-    <button class="btn-submit" onclick="var d=new Date();var day=d.getDate();var m=d.getMonth();var y=d.getFullYear();if(day<=20){var end=new Date(y,m+1,0);alert('本日は'+d.toLocaleDateString('ja-JP')+'のため、'+(m+1)+'月末（'+end.toLocaleDateString('ja-JP')+'）での解約となります。\n\nこれはプレビューです。実際のGoogle Formsでは送信されます。');}else{var end=new Date(y,m+2,0);alert('本日は'+d.toLocaleDateString('ja-JP')+'（21日以降）のため、'+(m+2)+'月末（'+end.toLocaleDateString('ja-JP')+'）での解約となります。\n\nこれはプレビューです。実際のGoogle Formsでは送信されます。');}">送信</button>
-    <button class="btn-clear">フォームをクリア</button>
+  <div class="row">
+    <div class="form-cell">
+      <div class="form-actions">
+        <button class="btn-submit" onclick="var d=new Date();var day=d.getDate();var m=d.getMonth();var y=d.getFullYear();if(day<=20){var end=new Date(y,m+1,0);alert('本日は'+d.toLocaleDateString('ja-JP')+'のため、'+(m+1)+'月末（'+end.toLocaleDateString('ja-JP')+'）での解約となります。\n\nこれはプレビューです。実際のGoogle Formsでは送信されます。');}else{var end=new Date(y,m+2,0);alert('本日は'+d.toLocaleDateString('ja-JP')+'（21日以降）のため、'+(m+2)+'月末（'+end.toLocaleDateString('ja-JP')+'）での解約となります。\n\nこれはプレビューです。実際のGoogle Formsでは送信されます。');}">送信</button>
+        <button class="btn-clear">フォームをクリア</button>
+      </div>
+    </div>
+    <div class="intent-cell">
+      <div class="intent-memo">
+        <h4>送信時の挙動</h4>
+        <span class="intent-tag intent-tag-uxe">期待値調整</span>
+        <p>送信時に <strong>「○月末で解約」と具体的な期日</strong> を自動計算して表示 → 「いつまで使えるか」がその場で分かり、安心して解約できる。</p>
+      </div>
+    </div>
   </div>
 
   <!-- ━━━ FOOTER ━━━ -->
@@ -610,106 +775,7 @@
     <div class="google-logo" style="margin-top:16px;">Google フォーム</div>
   </div>
 
-</div><!-- /.form-container -->
-
-<!-- ━━━━━━━━━━━━━━━━━━ -->
-<!-- INTENT SIDEBAR (PO レビュー用) -->
-<!-- ━━━━━━━━━━━━━━━━━━ -->
-<aside class="intent-panel">
-  <div class="intent-header">
-    <h2>📋 設計意図メモ</h2>
-    <p>各セクションの「なぜこの聞き方か」をPO/担当者がレビュー・修正するためのメモ。フォーム本体には反映されません。</p>
-  </div>
-  <div class="intent-body">
-
-    <div class="intent-section">
-      <h3>フォーム冒頭の説明文</h3>
-      <span class="intent-tag intent-tag-legal">トラブル防止</span>
-      <span class="intent-tag intent-tag-uxe">高齢者配慮</span>
-      <p>解約締め日のルール（20日 / 21日以降）を最初に明示し、想定外の課金トラブルを防ぐ。</p>
-      <p>電話番号を併記して「フォーム以外の選択肢」を残す。電話派・操作不慣れな方への配慮。</p>
-    </div>
-
-    <div class="intent-section">
-      <h3>1. お申込者さまの情報</h3>
-      <span class="intent-tag intent-tag-cs">本人確認</span>
-      <p>本人確認に必要な最小限の項目に限定。住所・電話は折り返し連絡用、メールは契約特定用。</p>
-      <p>メールは <strong>「見守り通知を受け取っているアドレス」</strong> と明示することで、別アドレスでの誤入力を防ぐ。</p>
-      <div class="intent-todo"><strong>要検討：</strong> 契約者本人以外（家族）が申請するケースをどう扱うか。「ご本人ですか？」の項目を追加するかどうか。</div>
-    </div>
-
-    <div class="intent-section">
-      <h3>2. ご利用中のサービスについて</h3>
-      <span class="intent-tag intent-tag-cs">契約特定</span>
-      <span class="intent-tag intent-tag-uxe">離脱防止</span>
-      <p>シリアル番号で契約を特定するが、わからない方も多い想定で <strong>「不明」と記入OK</strong> と注記。</p>
-      <p>ニックネームを聞くことで、運用者がフォローアップ時に「お母さん」と呼べる温度感を保つ。</p>
-      <p>利用開始時期は <strong>30日以内の全額返金判定</strong> に使う。「わからない」も用意して離脱を防ぐ。</p>
-    </div>
-
-    <div class="intent-section">
-      <h3>3. 解約の理由</h3>
-      <span class="intent-tag intent-tag-feedback">改善ループ</span>
-      <span class="intent-tag intent-tag-retention">リテンション</span>
-      <p>複数選択可。正直な回答を得るため <strong>「サービス改善に活用」</strong> と明示。</p>
-      <p>選択肢を3つのグループで構成：</p>
-      <ul>
-        <li>① ライフイベント（同居・施設入居・お亡くなり）→ 引き止めできない / 慎重な対応必要</li>
-        <li>② 競合・体験（他社移行・通知少ない・使い方不明）→ プロダクト改善のヒント</li>
-        <li>③ 不具合・コスト（本体不良・ドングル不良・月額負担）→ CS/開発に直結フィードバック</li>
-      </ul>
-      <div class="intent-todo"><strong>要検討：</strong> 「お亡くなりになった」の表現は適切か。「ご逝去」の方が丁寧かも？ご家族の感情に配慮した文言にしたい。</div>
-    </div>
-
-    <div class="intent-section">
-      <h3>4. 解約条件のご確認</h3>
-      <span class="intent-tag intent-tag-legal">事前明示</span>
-      <span class="intent-tag intent-tag-retention">信頼構築</span>
-      <p>すべての条件を <strong>送信前</strong> に明示することで、後日「聞いてない」トラブルを防ぐ。</p>
-      <p><strong>30日以内全額返金</strong> は誠実さのアピール。新規購入時の不安を下げる効果も期待。</p>
-      <p><strong>「solarich本体は引き続き使える」「再開可能」</strong> を明示し、解約のハードルを下げつつ、リテンション復活の道筋を残す。</p>
-    </div>
-
-    <div class="intent-section">
-      <h3>一時休止 ラジオボタン</h3>
-      <span class="intent-tag intent-tag-retention">救済策</span>
-      <p>「解約」と「相談」の2択にすることで、決めきれていない方をすくい上げる。</p>
-      <p>「相談したい」を選ぶと <strong>担当者から折り返し</strong>。本当の理由を電話で深掘りでき、引き止めや代替案提示の機会になる。</p>
-      <div class="intent-todo"><strong>要検討：</strong> 「一時休止」は実際の運用フローとして用意するか？月額課金を止めて、再開時にドングル再購入なしで戻せる仕組みを作るか要検討。</div>
-    </div>
-
-    <div class="intent-section">
-      <h3>5. 確認事項チェックリスト</h3>
-      <span class="intent-tag intent-tag-legal">明示同意</span>
-      <p>法的・契約的に重要な事項を <strong>明示同意</strong> として受領。記録に残る形にする。</p>
-      <p>項目を分けることで「全部読まずにOK」を防ぐ。1個1個チェックする手間が、内容を確認するきっかけになる。</p>
-    </div>
-
-    <div class="intent-section">
-      <h3>6. その他ご連絡事項</h3>
-      <span class="intent-tag intent-tag-feedback">生の声</span>
-      <p>自由記述欄で定型項目に収まらない情報を拾う。感謝・要望・批判すべて受け止める。</p>
-      <p>必須にしないことで送信のハードルを下げる。</p>
-    </div>
-
-    <div class="intent-section">
-      <h3>送信ボタンの挙動</h3>
-      <span class="intent-tag intent-tag-uxe">期待値調整</span>
-      <p>送信時に <strong>「○月末で解約」と具体的な期日</strong> を自動計算して表示。「いつまで使えるか」がその場で分かり、安心して解約できる。</p>
-      <p>20日締めロジックは送信前にも明示済みだが、送信時にもう一度見せることで「読み飛ばし」を防ぐ。</p>
-    </div>
-
-    <div class="intent-section">
-      <h3>全体方針</h3>
-      <span class="intent-tag intent-tag-uxe">温度感</span>
-      <p>解約フォームは <strong>「離れていく方への最後の手紙」</strong>。冷たい事務処理にせず、Googleフォームの素朴な見た目に <strong>「お母さん」「ニックネーム」「相談したい」</strong> など人間的な言葉を散りばめる。</p>
-      <p>解約という負の体験を、 <strong>「ちゃんと丁寧だった」「また何かあれば戻ろう」</strong> という印象で終わらせるのが目的。</p>
-    </div>
-
-  </div>
-</aside>
-
-</div><!-- /.page-layout -->
+</div><!-- /.page-wrap -->
 
 <script>
 function selectRadio(li) {
