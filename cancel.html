@@ -384,10 +384,9 @@
         <h1>見守りプラス 解約申請フォーム</h1>
         <div class="form-desc">見守りプラスの解約をご希望の方は、以下のフォームにご記入ください。
 
-【解約の締め日】
-・毎月20日までのお申し込み → 当月末で解約
-・毎月21日以降のお申し込み → 翌月末で解約
-・解約月の末日まで、見守りサービスは通常どおりご利用いただけます。
+【解約のタイミング】
+・お申し込みから10営業日以内に見守りサービスを停止いたします。
+・停止までの間、見守りサービスは通常どおりご利用いただけます。
 
 ご不明な点がございましたら、お電話でもご相談いただけます。
 📞 0120-407-700（平日 10:00〜17:00）</div>
@@ -397,9 +396,9 @@
     <div class="intent-cell">
       <div class="intent-memo">
         <h4>冒頭の説明文</h4>
-        <span class="intent-tag intent-tag-legal">トラブル防止</span>
+        <span class="intent-tag intent-tag-legal">期待値調整</span>
         <span class="intent-tag intent-tag-uxe">高齢者配慮</span>
-        <p>締め日ルールを最初に明示 → 想定外の課金トラブル防止。</p>
+        <p>停止までの所要日数（10営業日以内）を最初に明示 → 「いつまで使えるか」を不安にさせない。</p>
         <p>電話番号を併記 → フォーム以外の選択肢を残す。</p>
       </div>
     </div>
@@ -459,8 +458,8 @@
     </div>
     <div class="intent-cell">
       <div class="intent-memo">
-        <span class="intent-tag intent-tag-retention">折り返し</span>
-        <p>「一時休止について相談したい」を選んだ方への折り返し連絡用。</p>
+        <span class="intent-tag intent-tag-cs">折り返し</span>
+        <p>申請内容の確認やドングル返却の案内が必要な場合の折り返し連絡用。</p>
         <p>「日中」と明示 → 携帯番号で確実に繋がる連絡先を取得。</p>
       </div>
     </div>
@@ -631,14 +630,19 @@
         <h2>解約条件のご確認</h2>
         <div class="section-desc">解約にあたり、以下の条件が適用されます。ご一読ください。
 
-【解約日】
-毎月20日までのお申し込みは当月末、21日以降は翌月末での解約となります。解約月の末日まで、見守りサービスは通常どおりご利用いただけます。
+【解約のタイミング】
+・お申し込みから10営業日以内に見守りサービスを停止いたします。
+・停止までの間、見守りサービスは通常どおりご利用いただけます。
 
 【解約後のサービス】
-・見守り通知（プッシュ通知・LINE・メール）は解約日をもって停止します。
-・Wi-Fiドングルのデータ通信も解約日をもって停止します。
+・見守り通知（プッシュ通知・LINE・メール）はサービス停止日をもって停止します。
+・Wi-Fiドングルのデータ通信もサービス停止日をもって停止します。
 ・solarich 1000 本体はポータブル電源として引き続きお使いいただけます。
-・Wi-Fiドングルのご返却は不要です。
+
+【Wi-Fiドングルのご返却（必須）】
+・Wi-Fiドングルは弊社にご返却いただきます。
+・解約手続き完了後、返送用の案内をメールにてお送りします。
+・返送料は弊社負担（着払い）にて承ります。
 
 【返金について】
 ・Wi-Fiドングルのデータプラン残量分の返金はいたしかねます。
@@ -657,27 +661,7 @@
         <p>すべての条件を <strong>送信前</strong> に明示 → 後日「聞いてない」トラブル防止。</p>
         <p><strong>30日以内全額返金</strong> は誠実さのアピール。</p>
         <p><strong>「solarich本体は引き続き使える」「再開可能」</strong> を明示 → 解約のハードルを下げつつ、復活の道筋を残す。</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-cell">
-      <div class="card">
-        <div class="card-label">解約ではなく「一時休止」をご希望ですか？<span class="req">*</span></div>
-        <ul class="option-list" id="timing">
-          <li onclick="selectRadio(this)"><div class="radio-circle"><div class="dot"></div></div><span>解約を希望する</span></li>
-          <li onclick="selectRadio(this)"><div class="radio-circle"><div class="dot"></div></div><span>一時休止について相談したい（担当から折り返しご連絡します）</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="intent-cell">
-      <div class="intent-memo">
-        <h4>一時休止 救済策</h4>
-        <span class="intent-tag intent-tag-retention">救済</span>
-        <p>2択にすることで、決めきれていない方をすくい上げる。</p>
-        <p>「相談したい」を選ぶと <strong>担当者から折り返し</strong> → 本当の理由を電話で深掘りでき、引き止め/代替案提示の機会に。</p>
-        <div class="intent-todo"><strong>要検討：</strong> 「一時休止」は実運用フローとして用意するか？ 月額課金停止+ドングル維持の仕組みを作るか要検討。</div>
+        <div class="intent-todo"><strong>ドングル返却（必須）：</strong> 通信費・端末費の回収のため必須化。返送料を弊社負担にすることで返却率を高め、お客様の負担感も下げる。</div>
       </div>
     </div>
   </div>
@@ -704,8 +688,9 @@
       <div class="card">
         <div class="card-label">確認事項（すべてチェックしてください）<span class="req">*</span></div>
         <ul class="option-list" id="confirm">
-          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>20日までの申し込みは当月末、21日以降は翌月末での解約となることを理解しています</span></li>
-          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>解約後、見守り通知（プッシュ通知・LINE・メール）が届かなくなることを理解しています</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>お申し込みから10営業日以内に見守りサービスが停止することを理解しています</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>サービス停止後、見守り通知（プッシュ通知・LINE・メール）が届かなくなることを理解しています</span></li>
+          <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>Wi-Fiドングルは弊社へご返却いただくことを理解しています（返送料は弊社負担）</span></li>
           <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>Wi-Fiドングルのデータプラン残量分の返金がないことを理解しています</span></li>
           <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>解約後の再開にはドングルのデータプラン再購入費用が発生することを理解しています</span></li>
           <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span>solarich 1000 本体はポータブル電源として引き続き使えることを理解しています</span></li>
@@ -755,7 +740,7 @@
   <div class="row">
     <div class="form-cell">
       <div class="form-actions">
-        <button class="btn-submit" onclick="var d=new Date();var day=d.getDate();var m=d.getMonth();var y=d.getFullYear();if(day<=20){var end=new Date(y,m+1,0);alert('本日は'+d.toLocaleDateString('ja-JP')+'のため、'+(m+1)+'月末（'+end.toLocaleDateString('ja-JP')+'）での解約となります。\n\nこれはプレビューです。実際のGoogle Formsでは送信されます。');}else{var end=new Date(y,m+2,0);alert('本日は'+d.toLocaleDateString('ja-JP')+'（21日以降）のため、'+(m+2)+'月末（'+end.toLocaleDateString('ja-JP')+'）での解約となります。\n\nこれはプレビューです。実際のGoogle Formsでは送信されます。');}">送信</button>
+        <button class="btn-submit" onclick="var d=new Date();var stop=new Date(d);var added=0;while(added<10){stop.setDate(stop.getDate()+1);var w=stop.getDay();if(w!==0&&w!==6)added++;}alert('本日は'+d.toLocaleDateString('ja-JP')+'です。\n\n10営業日以内（'+stop.toLocaleDateString('ja-JP')+'頃まで）に見守りサービスを停止いたします。\nそれまでは通常どおりご利用いただけます。\n\nWi-Fiドングルの返送案内は、後日メールにてお送りします。\n\nこれはプレビューです。実際のGoogle Formsでは送信されます。');">送信</button>
         <button class="btn-clear">フォームをクリア</button>
       </div>
     </div>
@@ -763,7 +748,8 @@
       <div class="intent-memo">
         <h4>送信時の挙動</h4>
         <span class="intent-tag intent-tag-uxe">期待値調整</span>
-        <p>送信時に <strong>「○月末で解約」と具体的な期日</strong> を自動計算して表示 → 「いつまで使えるか」がその場で分かり、安心して解約できる。</p>
+        <p>送信時に <strong>「10営業日後の目安日」</strong> を自動計算して表示 → 「いつまで使えるか」がその場で分かり、安心して解約できる。</p>
+        <p>ドングル返送案内が <strong>後日メール</strong> で届くことも明示 → 次のアクションが分かる。</p>
       </div>
     </div>
   </div>
