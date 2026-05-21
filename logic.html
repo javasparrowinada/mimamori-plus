@@ -75,6 +75,27 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 
 @media(max-width:900px){.dual{flex-direction:column;align-items:center}.compare{grid-template-columns:1fr}.axis-levels{flex-direction:column}}
 @media(max-width:640px){.topbar-nav{display:none}}
+
+/* Distinguish callout */
+.distinguish{background:var(--white);border:2px solid var(--purple);border-radius:16px;padding:24px 28px;box-shadow:var(--shadow)}
+.distinguish-label{display:inline-flex;font-size:.7rem;font-weight:700;letter-spacing:.12em;background:var(--purple);color:var(--white);padding:4px 12px;border-radius:100px;margin-bottom:12px}
+.distinguish h3{font-size:1.05rem;font-weight:900;margin-bottom:10px}
+.distinguish .d-lead{font-size:.86rem;color:var(--text-light);line-height:1.9;margin-bottom:18px}
+.distinguish .d-lead strong{color:var(--purple)}
+.vs-grid{display:grid;grid-template-columns:1fr 52px 1fr;align-items:stretch}
+.vs-col{border-radius:12px;padding:16px 18px}
+.vs-report{background:var(--purple-light)}
+.vs-notif{background:#FFF3E8}
+.vs-tag{font-size:.78rem;font-weight:900;margin-bottom:10px}
+.vs-report .vs-tag{color:var(--purple)}
+.vs-notif .vs-tag{color:var(--orange-dark)}
+.vs-col dl{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:.8rem;margin:0}
+.vs-col dt{color:var(--text-light);font-weight:700}
+.vs-col dd{color:var(--text);font-weight:500;margin:0}
+.vs-mid{display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:var(--text-light)}
+.d-note{background:#FFF8F0;border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.78rem;color:var(--text-light);line-height:1.8;margin:10px 0 4px}
+.d-note strong{color:var(--orange-dark)}
+@media(max-width:640px){.vs-grid{grid-template-columns:1fr}.vs-mid{padding:8px 0}}
 </style>
 </head>
 <body>
@@ -104,6 +125,38 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 </div>
 
 <div class="main">
+
+<!-- ===== AIレポートと通知の区別 ===== -->
+<div class="section" style="margin-bottom:36px">
+<div class="distinguish">
+<span class="distinguish-label">はじめに ─ 用語の区別</span>
+<h3>「AIレポート」は「通知」ではありません</h3>
+<p class="d-lead">本ページが扱う<strong>AIレポート</strong>と、見守りプラスの<strong>通知</strong>は、<strong>目的・タイミング・性質が異なる別の仕組み</strong>です。<br>
+理屈で切り分けると ── <strong>通知</strong>は「いま、これが起きた」をその場で伝えるリアルタイムの連絡。<strong>AIレポート</strong>は、1ヶ月ぶんの通知ログを<em>あとから集計して</em>「今月はこうでした」とふり返る読み物。<br>
+つまり通知は<strong>素材（イベント）</strong>、AIレポートはそれを月末にまとめた<strong>成果物（手紙）</strong>。発生のたびに飛ぶ通知と、月1回だけ届くレポートは、別物として扱ってください。</p>
+<div class="vs-grid">
+<div class="vs-col vs-report">
+<div class="vs-tag">📄 AIレポート（本ページの対象）</div>
+<dl>
+<dt>目的</dt><dd>1ヶ月のふり返り</dd>
+<dt>頻度</dt><dd>月1回（毎月1日 朝10時）</dd>
+<dt>チャネル</dt><dd>メールのみ</dd>
+<dt>性質</dt><dd>まとめ・読み物（成果物）</dd>
+</dl>
+</div>
+<div class="vs-mid">≠</div>
+<div class="vs-col vs-notif">
+<div class="vs-tag">🔔 通知（別の仕組み）</div>
+<dl>
+<dt>目的</dt><dd>いま起きたことの連絡</dd>
+<dt>頻度</dt><dd>都度（リアルタイム）</dd>
+<dt>チャネル</dt><dd>LINE ／ プッシュ通知</dd>
+<dt>性質</dt><dd>緊急・日常のお知らせ（素材）</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
 
 <!-- ===== 概要 ===== -->
 <div class="section" id="overview">
@@ -171,6 +224,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <h4>使用データ ─ 実数値（通知ログから自動集計）</h4>
 <div class="meta">通知ログの件数をそのまま表示 <span>自動生成</span></div>
 <p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">情緒的なメッセージ（②）と実数値（③）の両方があって、バランスの良いレポートに。</p>
+<div class="d-note">注記：ここで言う<strong>「通知ログ」「通知#4〜#6」</strong>は、デバイスの動作イベントを記録した<strong>集計用の内部データ</strong>を指します。ご家族のLINEに届く「通知」そのものではなく、その<strong>素材となる記録</strong>です（AIレポートはこれを月末に集計して文章化します）。以降のセクションの「通知」も同じ意味で使っています。</div>
 <table class="tbl">
 <tr><th>項目</th><th>データ元</th><th>表示例</th></tr>
 <tr><td>コンセント接続</td><td>常時接続が前提</td><td>接続中 ✅</td></tr>
