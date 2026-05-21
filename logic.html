@@ -3,639 +3,386 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>見守りプラス｜テンプレート選択ロジック解説</title>
+<title>見守りプラス｜AIレポート仕様</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--red:#D65050;--red-light:#FFF0F0;--blue:#5A7EB5;--blue-light:#EDF2F8;--shadow:0 4px 24px rgba(45,42,38,.06)}
-html{scroll-behavior:smooth}
-body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;line-height:1.85;font-size:15px}
-.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}
-.topbar-brand a{color:inherit;text-decoration:none}
-.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
-.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
-.topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}
-.topbar-sheet{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:#1D9E75;padding:6px 14px!important;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
-.topbar-sheet:hover{background:#157d5c!important}
-.topbar-cta{font-size:.72rem;font-weight:700;color:var(--white)!important;background:var(--orange);padding:6px 14px!important;border-radius:100px;text-decoration:none}
-.topbar-cta:hover{background:var(--orange-dark)!important}
-.header{background:linear-gradient(135deg,var(--green-dark),var(--green));color:var(--white);padding:48px 24px 40px;text-align:center}
-.header h1{font-size:clamp(1.2rem,3.5vw,1.7rem);font-weight:900;margin-bottom:8px}
-.header p{opacity:.8;font-size:.88rem;font-weight:300;max-width:700px;margin:0 auto}
-.header-meta{margin-top:20px;font-size:.72rem;opacity:.65;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
-.header-meta a{color:var(--white);text-decoration:underline;text-decoration-color:rgba(255,255,255,.4);text-underline-offset:3px}
-.header-meta a:hover{text-decoration-color:rgba(255,255,255,.9)}
-.main{max-width:1100px;margin:0 auto;padding:32px 20px 80px}
+:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--red:#D65050;--red-light:#FFF0F0;--blue:#5A7EB5;--blue-light:#EDF2F8;--shadow:0 4px 24px rgba(45,42,38,.06);--purple:#7B5EA7;--purple-light:#F0EBF8}
+html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#F5F3F0;line-height:1.85;font-size:15px}
+.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}.topbar-brand a{color:inherit;text-decoration:none}.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}.topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}.topbar-sheet{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:#1D9E75;padding:6px 14px!important;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}.topbar-sheet:hover{background:#157d5c!important}
+.header{background:linear-gradient(135deg,var(--purple),#9B7EC8);color:var(--white);padding:56px 24px 48px;text-align:center}.header h1{font-size:clamp(1.3rem,4vw,1.9rem);font-weight:900;margin-bottom:8px}.header p{opacity:.8;font-size:.9rem;font-weight:300;max-width:640px;margin:0 auto}.header-meta{margin-top:20px;font-size:.72rem;opacity:.65}
+.main{max-width:1100px;margin:0 auto;padding:40px 20px 80px}
+.section{margin-bottom:56px;scroll-margin-top:70px}
+.section-badge{display:inline-flex;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:16px}
+.badge-overview{background:var(--purple-light);color:var(--purple)}.badge-block{background:var(--green-light);color:var(--green-dark)}.badge-axis{background:var(--warm);color:var(--orange-dark)}.badge-example{background:var(--blue-light);color:var(--blue)}
+.section h2{font-size:1.3rem;font-weight:900;margin-bottom:8px;line-height:1.4}
+.section>.desc{color:var(--text-light);font-size:.9rem;margin-bottom:28px;font-weight:300}
+.card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:28px;margin-bottom:20px;border:1px solid rgba(0,0,0,.04)}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card h3 .icon{font-size:1.2rem}
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem;margin:16px 0}.tbl th{text-align:left;padding:10px 14px;font-weight:700;font-size:.78rem;background:rgba(123,94,167,.06);border-bottom:2px solid rgba(123,94,167,.15);color:var(--purple)}.tbl td{padding:10px 14px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}.tbl tr:last-child td{border-bottom:none}
+.rule-tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin:12px 0}.rule-tbl td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}.rule-tbl td:first-child{font-weight:600;width:22%;color:var(--text)}.rule-tbl td:nth-child(2){width:38%}.rule-tbl td:last-child{color:var(--text-light)}
+.divider{height:1px;background:rgba(0,0,0,.06);margin:56px 0}
 
-/* Tabs */
-.tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;justify-content:center;position:sticky;top:0;z-index:50;background:#F5F3F0;padding:12px 0;border-bottom:1px solid rgba(0,0,0,.06)}
-.tab{padding:10px 18px;border-radius:100px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .25s;border:2px solid rgba(0,0,0,.08);background:var(--white);color:var(--text-light);user-select:none}
-.tab:hover{border-color:var(--green);color:var(--green-dark)}
-.tab.active{background:var(--green-dark);color:var(--white);border-color:var(--green-dark)}
+/* Blocks */
+.block-flow{display:flex;flex-direction:column;gap:0;margin:20px 0}
+.block-item{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid rgba(0,0,0,.04)}
+.block-item:last-child{border-bottom:none}
+.block-num{width:48px;height:48px;min-width:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:900;color:var(--white)}
+.bn-1{background:var(--green)}.bn-2{background:var(--purple)}.bn-3{background:var(--orange)}.bn-4{background:var(--blue)}
+.block-body{flex:1;min-width:0}
+.block-body h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.block-body .meta{font-size:.78rem;color:var(--text-light);margin-bottom:8px}
+.block-body .meta span{display:inline-block;background:var(--purple-light);color:var(--purple);font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:100px;margin-left:8px}
 
-.pattern-panel{display:none}.pattern-panel.active{display:block}
+/* Axis */
+.axis{background:var(--purple-light);border-radius:12px;padding:18px 20px;margin:12px 0}
+.axis h5{font-size:.85rem;font-weight:700;color:var(--purple);margin-bottom:8px}
+.axis-levels{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.axis-level{flex:1;min-width:140px;background:var(--white);border-radius:10px;padding:12px 14px;border:1px solid rgba(123,94,167,.1)}
+.axis-level strong{display:block;font-size:.82rem;color:var(--purple);margin-bottom:2px}
+.axis-level p{font-size:.78rem;color:var(--text-light);line-height:1.6}
 
-/* Cards */
-.card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:24px;margin-bottom:20px;border:1px solid rgba(0,0,0,.04)}
-.card h3{font-size:.95rem;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+/* Sample */
+.sample{background:#FAFAF7;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:20px 24px;margin:16px 0;font-size:.84rem;line-height:1.9;white-space:pre-line}
+.sample-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block}
+.sample-label-safe{color:var(--green-dark)}.sample-label-warn{color:var(--red)}
 
-/* Step flow */
-.step{margin-bottom:28px}
-.step-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:900;color:var(--white);flex-shrink:0}
-.step-num-green{background:var(--green-dark)}.step-num-orange{background:var(--orange)}.step-num-blue{background:var(--blue)}.step-num-red{background:var(--red)}
-.step-title{font-size:.88rem;font-weight:700}
-.step-sheet{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--green-light);color:var(--green-dark)}
+/* Phone mockup */
+.dual{display:flex;gap:32px;align-items:flex-start;margin:20px 0}
+.dual-doc{flex:1;min-width:0}
+.dual-phone{position:sticky;top:80px}
+.phone{width:280px;border-radius:36px;border:3px solid #1a1a1a;background:#1a1a1a;padding:12px;box-shadow:0 12px 48px rgba(0,0,0,.15)}
+.phone-notch{width:100px;height:24px;background:#1a1a1a;border-radius:0 0 16px 16px;margin:0 auto -12px;position:relative;z-index:2}
+.phone-screen{background:var(--white);border-radius:24px;overflow:hidden}
+.phone-status{display:flex;justify-content:space-between;align-items:center;padding:6px 20px 4px;font-size:10px;font-weight:600;color:#1a1a1a}
+.phone-content{height:520px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}.phone-content::-webkit-scrollbar{display:none}
+.mail-header{background:#F2F2F7;padding:10px 16px;border-bottom:1px solid #e0e0e0}.mail-from{font-size:9px;color:#8E8E93;margin-bottom:2px}.mail-subject{font-size:11px;font-weight:700;color:var(--text)}
+.mail-inner{background:var(--cream);padding:20px 18px;font-size:11px;color:var(--text);line-height:2}
+.mail-greeting{margin-bottom:16px}
+.mail-section-title{font-size:11px;font-weight:700;color:var(--text);margin:18px 0 8px;display:flex;align-items:center;gap:4px}
+.mail-memo-box{background:var(--white);border-radius:10px;padding:12px 14px;font-size:10.5px;line-height:2;margin:10px 0;border:1px solid rgba(0,0,0,.04)}
+.mail-contact{font-size:9.5px;color:var(--text-light);margin-top:18px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06);line-height:1.8}
+.mail-sig{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06)}.mail-sig img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--warm)}.mail-sig-text{font-size:10px;color:var(--text);line-height:1.6}.mail-sig-text strong{display:block;font-size:11px}
 
-/* Logic table */
-.logic-tbl{width:100%;border-collapse:collapse;font-size:.82rem;margin:8px 0}
-.logic-tbl th{text-align:left;padding:8px 12px;font-weight:700;font-size:.72rem;background:rgba(45,42,38,.04);border-bottom:2px solid rgba(0,0,0,.1);color:var(--text-light);letter-spacing:.05em}
-.logic-tbl td{padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);vertical-align:top}
-.logic-tbl .cell-ref{font-family:monospace;font-size:.75rem;color:var(--blue);font-weight:600;background:var(--blue-light);padding:2px 6px;border-radius:4px;white-space:nowrap}
-.logic-tbl .val{font-weight:700;color:var(--green-dark)}
-.logic-tbl .val-warn{font-weight:700;color:var(--orange)}
-.logic-tbl .val-alert{font-weight:700;color:var(--red)}
-.logic-tbl .formula{font-family:monospace;font-size:.72rem;color:var(--text-light);background:#F5F3F0;padding:2px 6px;border-radius:4px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.compare-item{border-radius:14px;padding:20px;font-size:.84rem;line-height:1.8;white-space:pre-line}
+.compare-safe{background:var(--green-light);border:1px solid rgba(91,140,90,.15)}.compare-safe h4{color:var(--green-dark);font-size:.82rem;margin-bottom:10px}
+.compare-warn{background:var(--red-light);border:1px solid rgba(214,80,80,.12)}.compare-warn h4{color:var(--red);font-size:.82rem;margin-bottom:10px}
 
-/* Arrow */
-.arrow-down{text-align:center;margin:8px 0;font-size:1.2rem;color:var(--green)}
+.total{background:var(--purple-light);border-radius:12px;padding:16px 20px;text-align:center;font-size:.9rem;color:var(--purple);font-weight:700;margin:20px 0}
+.total span{font-size:1.2rem}
 
-/* Result box */
-.result-box{border-radius:10px;padding:14px 18px;margin:10px 0;font-size:.84rem;line-height:1.9;white-space:pre-line}
-.result-mail{background:var(--blue-light);border:1px solid rgba(90,126,181,.15)}
-.result-line{background:#E8F8E8;border:1px solid rgba(6,168,68,.12)}
-.result-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;margin-bottom:6px;display:block}
-.result-label-mail{color:var(--blue)}.result-label-line{color:#06A844}
-
-/* Highlight selected */
-.hl{background:linear-gradient(to right,#FFF9E6,#FFFDF5);border-left:3px solid var(--orange);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0}
-.hl-label{font-size:.68rem;font-weight:700;color:var(--orange);margin-bottom:4px}
-
-/* Badge */
-.badge{display:inline-flex;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:100px;letter-spacing:.03em}
-.bg{background:var(--green-light);color:var(--green-dark)}.bo{background:#FFF3E8;color:var(--orange-dark)}.br{background:var(--red-light);color:var(--red)}.bb{background:var(--blue-light);color:var(--blue)}.bgr{background:#F0EFED;color:var(--text-light)}
-
-/* Data input mini table */
-.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:6px;margin:8px 0}
-.input-item{background:#FAFAF7;border-radius:6px;padding:6px 10px;font-size:.75rem;border:1px solid rgba(0,0,0,.04)}
-.input-item .il{color:var(--text-light)}.input-item .iv{font-weight:700;color:var(--text)}
-
-.divider{height:1px;background:rgba(0,0,0,.06);margin:28px 0}
-.final-output{background:var(--white);border:2px solid var(--green);border-radius:14px;padding:24px;margin-top:20px}
-.final-output h3{color:var(--green-dark);margin-bottom:16px}
-
-@media(max-width:640px){.input-grid{grid-template-columns:1fr 1fr}.logic-tbl{font-size:.75rem}}
+@media(max-width:900px){.dual{flex-direction:column;align-items:center}.compare{grid-template-columns:1fr}.axis-levels{flex-direction:column}}
+@media(max-width:640px){.topbar-nav{display:none}}
 </style>
 </head>
 <body>
-
 <div class="topbar">
-  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス｜ロジック解説</a></div>
-  <nav class="topbar-nav">
-    <a href="index.html">AIレポート設計（メイン）</a>
-    <a href="index.html#tone">方針</a>
-    <a href="index.html#s-mail">メール</a>
-    <a href="index.html#s-line">LINE</a>
-    <a href="logic.html" class="active">ロジック解説</a>
-    <a href="system.html">システム構成</a>
-    <a href="ai-system.html">Claude AI詳細</a>
-    <a href="product.html">商品紹介</a>
-    <a href="test-guide.html">テスト工程</a>
-    <a href="cancel.html">解約フォーム</a>
-  </nav>
-  <a href="https://docs.google.com/spreadsheets/d/1i1KNhr2TwUKSkDOnAnLmk0xrQW5yWhgb8athGAwLazM/edit?usp=sharing" target="_blank" rel="noopener" class="topbar-sheet">📊 スプレッドシート ↗</a>
-  <a href="index.html" class="topbar-cta">← AIレポート設計へ</a>
+<div class="topbar-brand"><a href="index.html">☀ 見守りプラス｜AIレポート仕様</a></div>
+<nav class="topbar-nav">
+<a href="index.html">レポート設計</a>
+<a href="logic.html" class="active">AIレポート仕様</a>
+<a href="system.html">システム構成</a>
+<a href="ai-system.html">Claude AI詳細</a>
+<a href="product.html">商品紹介</a>
+<a href="test-guide.html">テスト工程</a>
+<a href="cancel.html">解約フォーム</a>
+<span style="width:1px;height:18px;background:rgba(0,0,0,.1);margin:0 2px"></span>
+<a href="#overview">概要</a>
+<a href="#blocks">4ブロック</a>
+<a href="#axes">3軸判定</a>
+<a href="#examples">レポート例</a>
+</nav>
+<a href="https://docs.google.com/spreadsheets/d/1geYwF6j_Tm__yFs6VxAZTmbk80tC1WDnW6Frnsv39m8/edit" target="_blank" rel="noopener" class="topbar-sheet">📊 スプレッドシート ↗</a>
 </div>
 
 <div class="header">
-<h1>テンプレート選択ロジック 完全解説</h1>
-<p>入力データ → 判定ロジック → テンプレート選択 → 最終出力<br>エクセルのどのセルを参照して、なぜこの文面になったかを5パターン全て図解</p>
-<div class="header-meta">
-  <span>5パターン × 5ブロック × 7判定軸</span>
-  <span>·</span>
-  <a href="https://docs.google.com/spreadsheets/d/1i1KNhr2TwUKSkDOnAnLmk0xrQW5yWhgb8athGAwLazM/edit?usp=sharing" target="_blank" rel="noopener">参照スプレッドシートを開く ↗</a>
-</div>
+<h1>見守りプラス｜AIレポート仕様</h1>
+<p>テンプレートの組み合わせで「AIが考えたように見える」<br>月次レポートを自動生成する仕組み</p>
+<div class="header-meta">2026年5月20日｜PO確認済み</div>
 </div>
 
 <div class="main">
-<div class="tabs" id="tabs"></div>
-<div id="panels"></div>
+
+<!-- ===== 概要 ===== -->
+<div class="section" id="overview">
+<div class="section-badge badge-overview">概要</div>
+<h2>AIレポートとは</h2>
+<p class="desc">毎月1日、メールで届く「あかりからの手紙」。使用状況に応じて文面が自動で変わる。</p>
+
+<div class="card">
+<table class="tbl">
+<tr><th>項目</th><th>内容</th></tr>
+<tr><td>チャネル</td><td><strong>メールのみ</strong>（LINEでは送らない。LINEは緊急通知・日常通知に専念）</td></tr>
+<tr><td>頻度</td><td><strong>月1回</strong>（毎月1日 朝10時）</td></tr>
+<tr><td>文面方式</td><td><strong>テンプレートエンジン</strong>（AI APIは使わない。テンプレートの組み合わせで実現）</td></tr>
+<tr><td>語り手</td><td><div style="display:flex;align-items:center;gap:12px"><img src="akari.png" alt="森川あかり" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #F5E6D3"><div><strong>森川あかり</strong>（サポート担当店長。「あかりからの手紙」の温度感）</div></div></td></tr>
+<tr><td>構成</td><td>4ブロック：①挨拶 → ②総評 → ③使用データ → ④締め</td></tr>
+</table>
+</div>
+
+<div class="total">理論組み合わせ総数: 12 × 27 × 12 = <span>3,888通り</span>（情緒メッセージ）＋ 使用データは実数値で自動表示</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== 4ブロック構成 ===== -->
+<div class="section" id="blocks">
+<div class="section-badge badge-block">4ブロック構成</div>
+<h2>メールの中身はどうなっているか</h2>
+<p class="desc">4つのブロックを順に並べてメールを構成する。<br>②総評だけがユーザーの活動データで変わり、残りは季節で変わる。</p>
+
+<div class="card">
+<div class="block-flow">
+
+<!-- Block 1 -->
+<div class="block-item">
+<div class="block-num bn-1">①</div>
+<div class="block-body">
+<h4>挨拶 ─ 季節のひと言＋名乗り</h4>
+<div class="meta">あらかじめ準備した季節の文言を適用 <span>12パターン</span></div>
+<p style="font-size:.84rem;color:var(--text-light)">月ごとに1パターン。「こんにちは、森川あかりです」で始まり、季節のひと言を添える。</p>
+<table class="tbl" style="margin-top:12px">
+<tr><th>月</th><th>テーマの例</th></tr>
+<tr><td>1月</td><td>新年のご挨拶</td></tr>
+<tr><td>4月</td><td>桜の季節、会いに行くのも</td></tr>
+<tr><td>7月</td><td>暑さ、水分補給を</td></tr>
+<tr><td>8月</td><td>夏バテ、お盆に帰省</td></tr>
+<tr><td>12月</td><td>年末、会えるといいですね</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Block 2 -->
+<div class="block-item">
+<div class="block-num bn-2">②</div>
+<div class="block-body">
+<h4>総評 ─ 今月のようす（レポートの核心）</h4>
+<div class="meta">3軸 × 3段階の掛け合わせ <span>27パターン</span></div>
+<p style="font-size:.84rem;color:var(--text-light)">USB/ACの使用頻度 × 見守りライトの応答 × 先月との比較の3軸で、文面のトーンが自動で変わる。詳細は下の「3軸判定」セクションへ。</p>
+</div>
+</div>
+
+<!-- Block 3 -->
+<div class="block-item">
+<div class="block-num bn-3">③</div>
+<div class="block-body">
+<h4>使用データ ─ 実数値（通知ログから自動集計）</h4>
+<div class="meta">通知ログの件数をそのまま表示 <span>自動生成</span></div>
+<p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">情緒的なメッセージ（②）と実数値（③）の両方があって、バランスの良いレポートに。</p>
+<table class="tbl">
+<tr><th>項目</th><th>データ元</th><th>表示例</th></tr>
+<tr><td>コンセント接続</td><td>常時接続が前提</td><td>接続中 ✅</td></tr>
+<tr><td>ライト使用</td><td>通知#6 の送信回数</td><td>5回</td></tr>
+<tr><td>AC給電</td><td>通知#5 の送信回数</td><td>8回</td></tr>
+<tr><td>USB給電</td><td>通知#4 の送信回数</td><td>12回</td></tr>
+</table>
+<p style="font-size:.78rem;color:var(--text-light);margin-top:8px">※ 0回の項目は行ごと非表示。全部0回ならコンセント接続だけ残る。</p>
+</div>
+</div>
+
+<!-- Block 4 -->
+<div class="block-item">
+<div class="block-num bn-4">④</div>
+<div class="block-body">
+<h4>締め ─ 季節の結び＋署名</h4>
+<div class="meta">月ごとの結び文 <span>12パターン</span></div>
+<p style="font-size:.84rem;color:var(--text-light)">季節に合わせた結びの一言＋森川あかりの署名（固定）。</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== 3軸判定 ===== -->
+<div class="section" id="axes">
+<div class="section-badge badge-axis">3軸判定</div>
+<h2>②総評はどう出し分けるか</h2>
+<p class="desc">3つの軸でそれぞれ3段階。掛け合わせで27パターンの文面が生まれる。</p>
+
+<!-- 軸1 -->
+<div class="card">
+<h3><span class="icon">🔌</span> 軸1：USB/ACの使用頻度</h3>
+<p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">通知が送信された回数で判定。①通知一覧の #4 USB給電通知・#5 AC給電通知が送信された回数を月合算。</p>
+<div class="axis-levels">
+<div class="axis-level"><strong>よく使っている</strong><p>通知#4 + #5の合計が<br>月10回以上</p></div>
+<div class="axis-level"><strong>ときどき使っている</strong><p>通知#4 + #5の合計が<br>月1〜9回</p></div>
+<div class="axis-level"><strong>使っていない</strong><p>通知#4 + #5の合計が<br>今月は0回</p></div>
+</div>
+<p style="font-size:.78rem;color:var(--text-light);margin-top:10px">集計方法：通知ログからCOUNTで取得。追加開発不要。<br>前提条件：バックグラウンド取得（1時間に1回）がローンチまでに実装される（方針決定済み 2026-05-07、見積1,540,000円に含む）</p>
+</div>
+
+<!-- 軸2 -->
+<div class="card">
+<h3><span class="icon">💡</span> 軸2：見守りライトの応答</h3>
+<p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">安否確認のライトを送った時にお返事があったかどうか。見守る側が送らない月も普通にある。それ自体はネガティブではない。</p>
+<div class="axis-levels">
+<div class="axis-level"><strong>お返事あり</strong><p>見守りライトを送って<br>お返事があった（全部 or 一部）</p></div>
+<div class="axis-level"><strong>お返事なし</strong><p>見守りライトを送ったが<br>お返事がなかった</p></div>
+<div class="axis-level"><strong>今月は未送信</strong><p>見守りライトを送っていない<br>（お忙しい月もありますよね）</p></div>
+</div>
+<p style="font-size:.78rem;color:var(--text-light);margin-top:10px">送らないこと自体はネガティブにしない。「お忙しい月もありますよね」と受容しつつ「来月はぜひ」とやんわり促す程度。</p>
+</div>
+
+<!-- 軸3 -->
+<div class="card">
+<h3><span class="icon">📊</span> 軸3：先月との比較</h3>
+<p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">USB/ACの使用回数が先月と比べてどう変わったか。軸1と同じく通知ログベース。</p>
+<div class="axis-levels">
+<div class="axis-level"><strong>増えた</strong><p>先月よりUSB/ACの<br>使用回数が多い</p></div>
+<div class="axis-level"><strong>変わらない</strong><p>先月と同じくらいの<br>使用回数</p></div>
+<div class="axis-level"><strong>減った</strong><p>先月よりUSB/ACの<br>使用回数が少ない</p></div>
+</div>
+<p style="font-size:.78rem;color:var(--text-light);margin-top:10px">初月は比較対象がないため、この文言を省略。</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== レポート全体例 ===== -->
+<div class="section" id="examples">
+<div class="section-badge badge-example">レポート全体例</div>
+<h2>実際のメールはこうなる</h2>
+<p class="desc">同じテンプレートエンジンから、安心なケースと心配なケースで<br>全く違うトーンのレポートが出力される。</p>
+
+<!-- 安心ケース -->
+<div class="card">
+<h3><span class="icon">☀️</span> 安心ケース（7月 / よく使っている / 全応答 / 増えた）</h3>
+
+<div class="dual">
+<div class="dual-doc">
+<div style="background:var(--blue-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--blue)">件名：</span>【見守りプラス】7月のお母さんのようす</div>
+<div class="sample">田中 様
+
+こんにちは、見守りプラス サポート担当の森川あかりです。
+蝉の声が聞こえる季節ですね。
+いつもご利用ありがとうございます。今月のレポートです。
+
+━━━━━━━━━━━━━━━
+☀ 今月のようす
+━━━━━━━━━━━━━━━
+
+solarichは元気に稼働中です。ご安心ください。
+
+お母さんはUSBやコンセントをよくお使いで、
+先月よりも使う回数が増えています。
+お元気にお過ごしの様子が伝わってきます。
+
+見守りライトにもすべてお返事をいただけています。
+お元気な証ですね。
+
+━━━━━━━━━━━━━━━
+📊 今月の使用データ
+━━━━━━━━━━━━━━━
+
+コンセント接続 ｜ 接続中 ✅
+ライト使用　　 ｜ 5回
+AC給電　　　　｜ 8回
+USB給電　　　 ｜ 12回
+
+━━━━━━━━━━━━━━━
+
+暑い日が続きますので、お母さんの水分補給も
+気にかけてあげてくださいね。
+何かありましたら、いつでもご連絡ください。
+
+───
+森川あかり
+見守りプラス サポート担当
+📞 0120-407-700</div>
+</div>
+
+<div class="dual-phone">
+<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
+<div class="phone-status"><span>9:41</span><div style="display:flex;gap:4px;align-items:center">📶 📡 🔋</div></div>
+<div class="phone-content">
+<div class="mail-header"><div class="mail-from">solarich見守りプラス &lt;mimamori@solarich.co.jp&gt;</div><div class="mail-subject">【見守りプラス】7月のお母さんのようす</div></div>
+<div class="mail-inner">
+<div class="mail-greeting">田中 様<br><br>こんにちは、見守りプラス サポート担当の森川あかりです。<br>蝉の声が聞こえる季節ですね。<br>いつもご利用ありがとうございます。今月のレポートです。</div>
+<div class="mail-section-title">☀ 今月のようす</div>
+<div>solarichは元気に稼働中です。ご安心ください。<br><br>お母さんはUSBやコンセントをよくお使いで、先月よりも使う回数が増えています。お元気にお過ごしの様子が伝わってきます。<br><br>見守りライトにもすべてお返事をいただけています。お元気な証ですね。</div>
+<div class="mail-section-title">📊 今月の使用データ</div>
+<div class="mail-memo-box">コンセント接続 ｜ 接続中 ✅<br>ライト使用　　 ｜ 5回<br>AC給電　　　　｜ 8回<br>USB給電　　　 ｜ 12回</div>
+<div class="mail-contact">暑い日が続きますので、お母さんの水分補給も気にかけてあげてくださいね。<br>何かありましたら、いつでもご連絡ください。<br><br>💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
+<div class="mail-sig"><img src="akari.png" alt="あかり"><div class="mail-sig-text"><strong>森川あかり</strong>見守りプラス サポート担当</div></div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+
+<!-- 要注意ケース -->
+<div class="card">
+<h3><span class="icon">⚠️</span> 要注意ケース（12月 / 使っていない / 返事なし / 減った）</h3>
+
+<div class="dual">
+<div class="dual-doc">
+<div style="background:var(--red-light);border-radius:10px;padding:14px 18px;margin:8px 0 16px;font-size:.82rem"><span style="font-weight:700;color:var(--red)">件名：</span>【見守りプラス】12月のお母さんのようす</div>
+<div class="sample">高橋 様
+
+こんにちは、見守りプラス サポート担当の森川あかりです。
+今年も残りわずかですね。
+年末年始、お母さんに会えるといいですね。
+
+━━━━━━━━━━━━━━━
+☀ 今月のようす
+━━━━━━━━━━━━━━━
+
+今月はUSB・コンセントのご使用がありませんでした。
+お出かけが多かったのかもしれませんね。
+
+見守りライトへのお返事もいただけていない状態です。
+お母さんのご様子が少し気になります。
+お電話で一度お声を聞いてみていただけますか。
+
+━━━━━━━━━━━━━━━
+📊 今月の使用データ
+━━━━━━━━━━━━━━━
+
+コンセント接続 ｜ 接続中 ✅
+
+━━━━━━━━━━━━━━━
+
+寒い日が続きますので、お母さんのことも
+気にかけてあげてくださいね。
+何かありましたら、いつでもご連絡ください。
+
+───
+森川あかり
+見守りプラス サポート担当
+📞 0120-407-700</div>
+<p style="font-size:.78rem;color:var(--red);margin-top:8px">※ ライト/AC/USB全て0回のため、使用データはコンセント接続だけ残る</p>
+</div>
+
+<div class="dual-phone">
+<div class="phone"><div class="phone-notch"></div><div class="phone-screen">
+<div class="phone-status"><span>9:41</span><div style="display:flex;gap:4px;align-items:center">📶 📡 🔋</div></div>
+<div class="phone-content">
+<div class="mail-header"><div class="mail-from">solarich見守りプラス &lt;mimamori@solarich.co.jp&gt;</div><div class="mail-subject">【見守りプラス】12月のお母さんのようす</div></div>
+<div class="mail-inner">
+<div class="mail-greeting">高橋 様<br><br>こんにちは、見守りプラス サポート担当の森川あかりです。<br>今年も残りわずかですね。<br>年末年始、お母さんに会えるといいですね。</div>
+<div class="mail-section-title">☀ 今月のようす</div>
+<div>今月はUSB・コンセントのご使用がありませんでした。お出かけが多かったのかもしれませんね。<br><br>見守りライトへのお返事もいただけていない状態です。お母さんのご様子が少し気になります。お電話で一度お声を聞いてみていただけますか。</div>
+<div class="mail-section-title">📊 今月の使用データ</div>
+<div class="mail-memo-box">コンセント接続 ｜ 接続中 ✅</div>
+<div class="mail-contact">寒い日が続きますので、お母さんのことも気にかけてあげてくださいね。<br>何かありましたら、いつでもご連絡ください。<br><br>💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
+<div class="mail-sig"><img src="akari.png" alt="あかり"><div class="mail-sig-text"><strong>森川あかり</strong>見守りプラス サポート担当</div></div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+
+</div>
+
 </div>
 
 <script>
-const P = [
-{
-  id:"p1", tab:"① 安定×活発×ベテラン",
-  title:"パターン① コンセント完璧・ライト活発・長期利用者・夏（7月）",
-  desc:"最も安心できるケース。すべての指標が良好。",
-  inputs:[
-    {l:"family_name",v:"田中",ref:"D2"},{l:"nickname",v:"お母さん",ref:"D3"},
-    {l:"month",v:"7",ref:"D4"},{l:"month_days",v:"31",ref:"D5"},
-    {l:"plug_days",v:"31",ref:"D6"},{l:"light_days",v:"18",ref:"D7"},
-    {l:"light_count",v:"42",ref:"D8"},{l:"check_sent",v:"4",ref:"D9"},
-    {l:"check_replied",v:"4",ref:"D10"},{l:"battery_pct",v:"85",ref:"D11"},
-    {l:"subscription_months",v:"8",ref:"D13"},{l:"prev_month_light",v:"16",ref:"D15"},
-  ],
-  judgments:[
-    {axis:"接続安定度",formula:"plug_days(31) == month_days(31)",result:"PERFECT",cls:"bg",reason:"31日 = 31日 → 全日接続なのでPERFECT"},
-    {axis:"ライト活動度",formula:"light_days(18) >= 15",result:"ACTIVE",cls:"bg",reason:"18日 ≧ 15日閾値 → よく使っているのでACTIVE"},
-    {axis:"確認応答度",formula:"check_replied(4) == check_sent(4) かつ >0",result:"ALL",cls:"bg",reason:"4/4 全部お返事 → ALL"},
-    {axis:"利用フェーズ",formula:"subscription_months(8) >= 7",result:"VETERAN",cls:"bb",reason:"8ヶ月目 ≧ 7ヶ月 → ベテラン利用者"},
-    {axis:"先月比トレンド",formula:"light_days(18) > prev(16)",result:"UP",cls:"bg",reason:"先月16日→今月18日 → 使用増加"},
-    {axis:"バッテリー状態",formula:"battery_pct(85) >= 60",result:"OK",cls:"bg",reason:"85% ≧ 60% → 問題なし"},
-    {axis:"季節",formula:"month(7) → 6〜8月",result:"夏",cls:"bgr",reason:"7月は夏季"},
-  ],
-  combined_key:"PERFECT_ACTIVE",
-  full_key:"PERFECT_ACTIVE_UP_VETERAN",
-  blocks:[
-    {
-      num:"①",color:"step-num-green",
-      title:"挨拶テンプレート",
-      sheet:"③挨拶テンプレート",
-      lookup:"月=7, フェーズ=VETERAN",
-      match_row:"該当行のバリエーション2を選択",
-      why:"7月 × VETERAN → 「蝉の声が聞こえる季節ですね。いつもご利用ありがとうございます」を選択。長期利用者なので感謝の言葉が入るVETERANテンプレート。初月(NEW)だと「見守りプラスを始めていただいたばかりですが」になる。",
-      selected:`田中 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n蝉の声が聞こえる季節ですね。いつもご利用ありがとうございます。今月のレポートです。`
-    },
-    {
-      num:"②",color:"step-num-orange",
-      title:"総評テンプレート",
-      sheet:"④総評テンプレート",
-      lookup:"接続=PERFECT, 活動=ACTIVE, トレンド=UP",
-      match_row:"キー「PERFECT_ACTIVE_UP」のバリエーション1を選択",
-      why:"接続PERFECT → 「1ヶ月途切れておらず」が入る。活動ACTIVE → 「よくお使い」が入る。トレンドUP → 「先月よりも使う日が増えています」が入る。\nもしトレンドがSAMEなら「いつも通りお元気に」、DOWNなら「少し落ち着きましたが」になる。\nもし接続がUNSTABLEなら「コンセントが外れている日が何日か」が追加される。",
-      selected:`7月もsolarichは元気に稼働しています。コンセント接続が1ヶ月途切れておらず、いつでもお使いいただける状態です。ご安心ください。\nお母さんはライトをよくお使いで、先月よりも使う日が増えています。お元気にお過ごしの様子が伝わってきます。`
-    },
-    {
-      num:"③",color:"step-num-blue",
-      title:"確認応答テンプレート",
-      sheet:"⑤確認応答テンプレート",
-      lookup:"応答レベル=ALL",
-      match_row:"ALLのバリエーション1を選択",
-      why:"応答レベルALL（4/4全応答）→ 「すべてお返事をいただけています。お元気な証ですね。」\nもしPARTIALなら「2回お返事がありました。お返事があったことが何よりです」になる。\nもしNONEなら「お返事がありませんでした。お電話でお声を聞いてみてください」に変わる。\nもしNOT_SENT（未送信）なら、このブロック自体が非表示になる。",
-      selected:`ライトの確認を4回お送りしました。すべてお返事をいただけています。お元気な証ですね。`
-    },
-    {
-      num:"④",color:"step-num-green",
-      title:"見守りメモ（自動生成）",
-      sheet:"数値からの自動組み立て",
-      lookup:"ゼロでない項目だけ表示",
-      match_row:"plug_days>0, light_days>0, check_sent>0 → 3項目すべて表示",
-      why:"3項目すべて値があるので全行表示。plug_days == month_days なので ✅ マーク付き。check_replied == check_sent なので ✅ マーク付き。\nもしlight_days=0なら「ライト」行自体が消える（ゼロの項目は載せないルール）。",
-      selected:`コンセント接続　｜ 31 / 31日 ✅\nライト　　　　　｜ 18日\nライトの確認　　｜ 4回すべてお返事あり ✅`
-    },
-    {
-      num:"⑤",color:"step-num-orange",
-      title:"締めテンプレート",
-      sheet:"⑥締めテンプレート",
-      lookup:"季節=夏, フェーズ=VETERAN",
-      match_row:"夏×任意のバリエーション1を選択",
-      why:"季節が夏 → 「暑い日が続きますので、水分補給も気にかけて」が入る。冬なら「寒い日が続きますので、お体にお気をつけて」になる。VETERANは共通テンプレートでカバー。",
-      selected:`暑い日が続きますので、お母さんの水分補給も気にかけてあげてくださいね。\n何かありましたら、いつでもご連絡ください。`
-    },
-  ],
-  line_block:{
-    sheet:"⑦LINE隔週テンプレート",
-    lookup:"接続=PERFECT, 活動=ACTIVE, バッテリー=OK",
-    match_row:"PERFECT_ACTIVE_OKのバリエーション2を選択",
-    why:"接続PERFECT + 活動ACTIVE + バッテリーOK → 最もポジティブなテンプレート。「ライトもたくさん使っていらして毎日お元気そうです」。\nもし活動NONEなら「ライトは使われていません。お出かけが多い時期かもしれませんね」に切り替わる。",
-    selected:`田中さん、あかりです😊\n\nお母さんの2週間のようすを\nお届けしますね🌸\n\nこの2週間も\n穏やかにお過ごしでした✨\n\nライトもたくさん使っていらして\n毎日お元気そうです\n\nご安心くださいね💛`
-  }
-},
-
-{
-  id:"p2", tab:"② 安定×新規ユーザー",
-  title:"パターン② コンセント完璧・ライトほどほど・初月ユーザー・春（4月）",
-  desc:"始めたばかりのユーザー。接続は安定、使用はそこそこ。",
-  inputs:[
-    {l:"family_name",v:"鈴木",ref:"D2"},{l:"nickname",v:"おばあちゃん",ref:"D3"},
-    {l:"month",v:"4",ref:"D4"},{l:"month_days",v:"30",ref:"D5"},
-    {l:"plug_days",v:"30",ref:"D6"},{l:"light_days",v:"8",ref:"D7"},
-    {l:"light_count",v:"15",ref:"D8"},{l:"check_sent",v:"2",ref:"D9"},
-    {l:"check_replied",v:"2",ref:"D10"},{l:"battery_pct",v:"72",ref:"D11"},
-    {l:"subscription_months",v:"1",ref:"D13"},{l:"prev_month_light",v:"0（初月）",ref:"D15"},
-  ],
-  judgments:[
-    {axis:"接続安定度",formula:"plug_days(30) == month_days(30)",result:"PERFECT",cls:"bg",reason:"30日 = 30日 → PERFECT"},
-    {axis:"ライト活動度",formula:"light_days(8) >= 5 かつ < 15",result:"MODERATE",cls:"bb",reason:"8日は5〜14の範囲 → ときどき使っている"},
-    {axis:"確認応答度",formula:"check_replied(2) == check_sent(2) かつ >0",result:"ALL",cls:"bg",reason:"2/2 全応答 → ALL"},
-    {axis:"利用フェーズ",formula:"subscription_months(1) <= 1",result:"NEW",cls:"bo",reason:"1ヶ月目 → 初月ユーザー"},
-    {axis:"先月比トレンド",formula:"light_days(8) > prev(0)",result:"UP",cls:"bg",reason:"初月なので前月0 → 必然的にUP"},
-    {axis:"バッテリー状態",formula:"battery_pct(72) >= 60",result:"OK",cls:"bg",reason:"72% → 問題なし"},
-    {axis:"季節",formula:"month(4) → 3〜5月",result:"春",cls:"bgr",reason:"4月は春季"},
-  ],
-  combined_key:"PERFECT_MODERATE",
-  full_key:"PERFECT_MODERATE_UP_NEW",
-  blocks:[
-    {
-      num:"①",color:"step-num-green",
-      title:"挨拶テンプレート",
-      sheet:"③挨拶テンプレート",
-      lookup:"月=4, フェーズ=NEW",
-      match_row:"4月×NEWのバリエーション2を選択",
-      why:"4月 × NEW（初月）→ 「見守りプラスも少しずつおばあちゃんの暮らしに馴染んできた頃でしょうか」を選択。\n初月なので「馴染んできた頃」という新規ならではの表現。\nもしVETERANなら「いつもご利用いただきありがとうございます」になる。\n月が7月なら「暑い日が増えてきましたね」に変わる。",
-      selected:`鈴木 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n桜の季節ですね。お花見がてら、おばあちゃんに会いに行くのもいいかもしれません。\n見守りプラスも少しずつおばあちゃんの暮らしに馴染んできた頃でしょうか。`
-    },
-    {
-      num:"②",color:"step-num-orange",
-      title:"総評テンプレート",
-      sheet:"④総評テンプレート",
-      lookup:"接続=PERFECT, 活動=MODERATE, トレンド=UP",
-      match_row:"キー「PERFECT_MODERATE_UP」のバリエーション1を選択",
-      why:"接続PERFECT → 「1ヶ月途切れておらず」。活動MODERATE → 「よくお使い」ではなく控えめな表現。トレンドUP → 「先月より増えています」「嬉しいですね」。\nパターン①（ACTIVE）との違い: 「よくお使い」→「ライトの使用が増えています」と表現が変わる。",
-      selected:`4月もsolarichは元気に稼働しています。コンセント接続が1ヶ月途切れておらず、ご安心ください。\nライトの使用が先月より増えています。おばあちゃんが活発にお過ごしの様子で、嬉しいですね。`
-    },
-    {
-      num:"③",color:"step-num-blue",
-      title:"確認応答テンプレート",
-      sheet:"⑤確認応答テンプレート",
-      lookup:"応答レベル=ALL",
-      match_row:"ALLのバリエーション2を選択",
-      why:"パターン①と同じALLだが、バリエーション2を選択することで文面が変わる。「しっかり反応してくださっていて、安心です」。\n同じ判定結果でもバリエーション番号で表現が変わるのがマンネリ防止の仕組み。",
-      selected:`2回のライトの確認に、すべてお返事がありました。おばあちゃんがしっかり反応してくださっていて、安心です。`
-    },
-    {
-      num:"④",color:"step-num-green",
-      title:"見守りメモ（自動生成）",
-      sheet:"数値からの自動組み立て",
-      lookup:"ゼロでない項目だけ表示",
-      match_row:"plug_days>0, light_days>0, check_sent>0 → 3項目すべて表示",
-      why:"パターン①と同じ3項目表示だが、数値が違うので見た目が変わる。check_replied==check_sentなので✅付き。",
-      selected:`コンセント接続　｜ 30 / 30日 ✅\nライト　　　　　｜ 8日\nライトの確認　　｜ 2回すべてお返事あり ✅`
-    },
-    {
-      num:"⑤",color:"step-num-orange",
-      title:"締めテンプレート",
-      sheet:"⑥締めテンプレート",
-      lookup:"季節=春, フェーズ=NEW",
-      match_row:"春×NEWのバリエーション1を選択",
-      why:"季節=春 × フェーズ=NEW → 「始めていただいたばかりですが」が入る新規専用テンプレート。VETERANなら「いつもご利用いただきありがとうございます」に変わる。",
-      selected:`見守りプラスを始めていただいたばかりですが、何かお気づきの点がございましたら、いつでもご連絡くださいね。\nおばあちゃんの暮らしが穏やかでありますように。`
-    },
-  ],
-  line_block:{
-    sheet:"⑦LINE隔週テンプレート",
-    lookup:"接続=PERFECT, 活動=MODERATE, バッテリー=OK",
-    match_row:"PERFECT_MODERATE_OKのバリエーション2を選択",
-    why:"MODERATE → パターン①の「たくさん使っていらして」ではなく「ときどきライトも使っていらっしゃいますよ」に変わる。活動度の差がLINE文面にも反映される。",
-    selected:`鈴木さん、あかりです😊\n\nおばあちゃん、いつも通りの\n穏やかな2週間でした🌸\n\nsolarichもずっと\nコンセントに繋がっていて\nいつでも使える状態です\n\nご安心くださいね💛`
-  }
-},
-
-{
-  id:"p3", tab:"③ 不安定×少なめ",
-  title:"パターン③ コンセント不安定・ライト少なめ・半年目・秋（10月）",
-  desc:"少し心配なケース。接続が不安定で、使用も減少傾向。",
-  inputs:[
-    {l:"family_name",v:"佐藤",ref:"D2"},{l:"nickname",v:"お母さん",ref:"D3"},
-    {l:"month",v:"10",ref:"D4"},{l:"month_days",v:"31",ref:"D5"},
-    {l:"plug_days",v:"18",ref:"D6"},{l:"light_days",v:"3",ref:"D7"},
-    {l:"light_count",v:"4",ref:"D8"},{l:"check_sent",v:"4",ref:"D9"},
-    {l:"check_replied",v:"2",ref:"D10"},{l:"battery_pct",v:"45",ref:"D11"},
-    {l:"subscription_months",v:"5",ref:"D13"},{l:"prev_month_light",v:"8",ref:"D15"},
-  ],
-  judgments:[
-    {axis:"接続安定度",formula:"plug_days(18) ÷ month_days(31) = 58%　→ ≧50%",result:"UNSTABLE",cls:"bo",reason:"58%は50〜90%の範囲 → 「たまに外れている」UNSTABLE。90%以上ならSTABLEだった"},
-    {axis:"ライト活動度",formula:"light_days(3) >= 1 かつ < 5",result:"LOW",cls:"bo",reason:"3日は1〜4の範囲 → たまに使っているLOW。5日以上ならMODERATEだった"},
-    {axis:"確認応答度",formula:"check_replied(2) > 0 かつ < check_sent(4)",result:"PARTIAL",cls:"bo",reason:"2/4 → 一部だけ応答のPARTIAL"},
-    {axis:"利用フェーズ",formula:"subscription_months(5) → 4〜6",result:"GROWING",cls:"bb",reason:"5ヶ月目は成長期GROWING"},
-    {axis:"先月比トレンド",formula:"light_days(3) < prev(8)",result:"DOWN",cls:"br",reason:"先月8日→今月3日 → 減少DOWN。ここが一番気になるポイント"},
-    {axis:"バッテリー状態",formula:"battery_pct(45) → 30〜59",result:"LOW",cls:"bo",reason:"45%は注意ゾーン（ただし今回は緊急ではない）"},
-    {axis:"季節",formula:"month(10) → 9〜11月",result:"秋",cls:"bgr",reason:"10月は秋季"},
-  ],
-  combined_key:"UNSTABLE_LOW",
-  full_key:"UNSTABLE_LOW_DOWN_GROWING",
-  blocks:[
-    {
-      num:"①",color:"step-num-green",
-      title:"挨拶テンプレート",
-      sheet:"③挨拶テンプレート",
-      lookup:"月=10, フェーズ=GROWING",
-      match_row:"10月×GROWINGのバリエーション1を選択",
-      why:"10月 × GROWING → 「暮らしぶりもだいぶ見えてきました」。半年近く使っているので、データの蓄積を暗に示す表現。NEWだと「お電話してみるのもいいかもしれません」という提案型になる。",
-      selected:`佐藤 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n秋が深まってきましたね。お母さんの暮らしぶりもだいぶ見えてきました。今月もお届けします。`
-    },
-    {
-      num:"②",color:"step-num-orange",
-      title:"総評テンプレート",
-      sheet:"④総評テンプレート",
-      lookup:"接続=UNSTABLE, 活動=LOW, トレンド=DOWN（※近似キー UNSTABLE_LOW_SAME で代用）",
-      match_row:"UNSTABLE_LOW系のテンプレートを選択",
-      why:"ここが最大の違い。接続UNSTABLE → 「コンセントが外れている日が何日かありました」が入る。活動LOW → 「少なめでしたが」。トレンドDOWN → 「先月より少し減りました」。\nパターン①②では出なかった「次のご訪問時にご確認いただけると安心です」という行動促進フレーズが登場する。\nもし接続がCONCERNなら「かなり多くなっています」とさらに強い表現に変わる。",
-      selected:`ライトの使用は先月より少し減りましたが、お母さんのペースでお過ごしのようです。\nコンセントが外れている日が何日かありました。次のご訪問時にご確認いただけると安心です。`
-    },
-    {
-      num:"③",color:"step-num-blue",
-      title:"確認応答テンプレート",
-      sheet:"⑤確認応答テンプレート",
-      lookup:"応答レベル=PARTIAL",
-      match_row:"PARTIALのバリエーション1を選択",
-      why:"PARTIAL → 「4回中2回お返事がありました。お忙しいときもありますよね」。ALLの「お元気な証ですね」とは違い、「お返事があったことが何よりです」とフォロー寄りの表現。\nもしNONEだったら「お返事がありませんでした。お電話でお声を聞いてみてください」と行動を促す文面に変わる。",
-      selected:`ライトの確認を4回お送りし、2回お返事がありました。お忙しいときもありますよね。お返事があったことが何よりです。`
-    },
-    {
-      num:"④",color:"step-num-green",
-      title:"見守りメモ（自動生成）",
-      sheet:"数値からの自動組み立て",
-      lookup:"ゼロでない項目だけ表示",
-      match_row:"plug_days>0, light_days>0, check_sent>0 → 3項目表示",
-      why:"3項目とも値があるので表示。ただしplug_days≠month_daysなので✅なし。check_replied≠check_sentなので✅なし。\nパターン①②と比べると✅マークが消えていることで、視覚的にも「完璧ではない」ことが伝わる。",
-      selected:`コンセント接続　｜ 18 / 31日\nライト　　　　　｜ 3日\nライトの確認　　｜ 4回中2回お返事あり`
-    },
-    {
-      num:"⑤",color:"step-num-orange",
-      title:"締めテンプレート",
-      sheet:"⑥締めテンプレート",
-      lookup:"季節=秋, フェーズ=GROWING（汎用テンプレート使用）",
-      match_row:"秋の汎用バリエーション1を選択",
-      why:"秋 → 「お電話してみるのもいいかもしれません」。パターン①の夏テンプレ「水分補給を気にかけて」とは違う季節感。活動が少なめなので、電話を促す文面が締めとして効果的。",
-      selected:`過ごしやすい季節ですね。お母さんにお電話してみるのもいいかもしれません。\n何かありましたら、いつでもご連絡ください。`
-    },
-  ],
-  line_block:{
-    sheet:"⑦LINE隔週テンプレート",
-    lookup:"接続=UNSTABLE, 活動=NONE（2週間単位で使用なしと判定された場合）",
-    match_row:"UNSTABLE_NONE_OKを選択",
-    why:"LINEは2週間単位。月3日しかライトを使っていないので、直近2週間では使用なしと判定される可能性が高い。\nUNSTABLE × NONE → 「少しだけ気になることがあったのでお知らせします🙏」と、メールより短くダイレクトに伝える。\n絵文字が😊から🙏に変わっていることに注目。パターン①②の💛ではなく、行動を促すトーン。",
-    selected:`佐藤さん、あかりです😊\n\n少しだけ気になることが\nあったのでお知らせします🙏\n\nこの2週間\nお母さんがライトを\nお使いになっていません\n\nコンセントが外れている日も\nありました\n\nよかったらお電話で\nお声を聞いてみてくださいね💛`
-  }
-},
-
-{
-  id:"p4", tab:"④ 接続完璧×使用ゼロ",
-  title:"パターン④ コンセント完璧だがライト使用ゼロ・確認応答ゼロ・2ヶ月目・冬（1月）",
-  desc:"繋がっているのに使われていない。不安を煽らずポジティブ解釈を先に出す。",
-  inputs:[
-    {l:"family_name",v:"山本",ref:"D2"},{l:"nickname",v:"おかあさん",ref:"D3"},
-    {l:"month",v:"1",ref:"D4"},{l:"month_days",v:"31",ref:"D5"},
-    {l:"plug_days",v:"31",ref:"D6"},{l:"light_days",v:"0",ref:"D7"},
-    {l:"light_count",v:"0",ref:"D8"},{l:"check_sent",v:"4",ref:"D9"},
-    {l:"check_replied",v:"0",ref:"D10"},{l:"battery_pct",v:"92",ref:"D11"},
-    {l:"subscription_months",v:"2",ref:"D13"},{l:"prev_month_light",v:"3",ref:"D15"},
-  ],
-  judgments:[
-    {axis:"接続安定度",formula:"plug_days(31) == month_days(31)",result:"PERFECT",cls:"bg",reason:"全日接続 → PERFECT（これが最大の安心材料）"},
-    {axis:"ライト活動度",formula:"light_days(0) == 0",result:"NONE",cls:"br",reason:"0日 → 今月は一切使っていない"},
-    {axis:"確認応答度",formula:"check_replied(0) == 0 かつ check_sent(4) > 0",result:"NONE",cls:"br",reason:"送ったのに応答ゼロ → NONE（NOT_SENTではない。送っている）"},
-    {axis:"利用フェーズ",formula:"subscription_months(2) → 2〜3",result:"EARLY",cls:"bb",reason:"2ヶ月目 → まだ初期段階"},
-    {axis:"先月比トレンド",formula:"light_days(0) < prev(3)",result:"DOWN",cls:"br",reason:"先月3日→今月0日 → 減少"},
-    {axis:"バッテリー状態",formula:"battery_pct(92) >= 60",result:"OK",cls:"bg",reason:"92% → バッテリーは問題なし"},
-    {axis:"季節",formula:"month(1) → 12〜2月",result:"冬",cls:"bgr",reason:"1月は冬季"},
-  ],
-  combined_key:"PERFECT_NONE",
-  full_key:"PERFECT_NONE_DOWN_EARLY",
-  blocks:[
-    {
-      num:"①",color:"step-num-green",
-      title:"挨拶テンプレート",
-      sheet:"③挨拶テンプレート",
-      lookup:"月=1, フェーズ=NEW（※2ヶ月目だがEARLYに近いNEW寄りテンプレートを使用）",
-      match_row:"1月×NEWのバリエーション3を選択",
-      why:"1月 × EARLY寄り → 「まだ始まったばかりですが、少しずつ暮らしのリズムが見えてきています」。新年の挨拶 + 初期フェーズの温かみ。VETERANなら「いつもありがとうございます。今年もお届けしていきます」になる。",
-      selected:`山本 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n新しい年が始まりましたね。おかあさんにとっても、穏やかな一年になりますように。\n見守りプラスでの初めてのお正月レポートです。`
-    },
-    {
-      num:"②",color:"step-num-orange",
-      title:"総評テンプレート",
-      sheet:"④総評テンプレート",
-      lookup:"接続=PERFECT, 活動=NONE, トレンド=DOWN",
-      match_row:"キー「PERFECT_NONE_DOWN」のバリエーション1を選択",
-      why:"ここが核心。接続PERFECTだが活動NONE。ルール「ポジティブな解釈を先に」に従い、\n「ずっとコンセントに繋がっていて安心です」を最初に置く。\n次にトレンドDOWN → 「先月はお使いでしたが今月は使われていません」と事実を伝える。\n最後に「お出かけが多かったのかもしれませんね」とポジティブ解釈で締める。\n\nもし接続もCONCERNだったら（パターン⑤）、「お電話で一度お声を聞いてみていただけますか」と明確な行動促進に変わる。",
-      selected:`solarichはずっとコンセントに繋がっていて安心です。先月はライトをお使いでしたが、今月は使われていません。おかあさんのペースもありますので、お出かけが多かったのかもしれませんね。`
-    },
-    {
-      num:"③",color:"step-num-red",
-      title:"確認応答テンプレート",
-      sheet:"⑤確認応答テンプレート",
-      lookup:"応答レベル=NONE",
-      match_row:"NONEのバリエーション1を選択",
-      why:"NONE → 「お返事がありませんでした」+「よかったらお電話でお声を聞いてみてくださいね」。\nALLの「お元気な証ですね」、PARTIALの「お返事があったことが何よりです」とは全く違うトーン。\n行動促進フレーズが入るが、「お変わりないとは思いますが」と前置きしてあくまで柔らかく。",
-      selected:`ライトの確認を4回お送りしましたが、今月はお返事がありませんでした。お変わりないとは思いますが、よかったらお電話でお声を聞いてみてくださいね。`
-    },
-    {
-      num:"④",color:"step-num-green",
-      title:"見守りメモ（自動生成）",
-      sheet:"数値からの自動組み立て",
-      lookup:"ゼロでない項目だけ表示",
-      match_row:"plug_days>0 → 表示 / light_days==0 → 非表示 / check_replied==0 → 非表示",
-      why:"「ゼロの項目は載せない」ルールが発動。ライト0日なので「ライト」行が消える。確認応答も0回なので消える。\nコンセント接続だけが残る。✅付き（31/31日）。\n1行だけのメモになることで「ライトは使われていない」ことが逆に際立つが、明示的に「0日」とは書かない。ないものを書くと寂しくなるルール。",
-      selected:`コンセント接続　｜ 31 / 31日 ✅`
-    },
-    {
-      num:"⑤",color:"step-num-orange",
-      title:"締めテンプレート",
-      sheet:"⑥締めテンプレート",
-      lookup:"季節=冬, フェーズ=EARLY（近いNEW寄りテンプレート使用）",
-      match_row:"春×NEWのバリエーション1を流用（冬専用NEWがない場合）",
-      why:"冬 → 「暖かくお過ごしでありますように」。フェーズNEW/EARLY → 「始めていただいたばかりですが」。季節感 + 初期フェーズの両方を反映。",
-      selected:`見守りプラスを始めていただいたばかりですが、何かお気づきの点がございましたら、いつでもご連絡くださいね。\nおかあさんが暖かくお過ごしでありますように。`
-    },
-  ],
-  line_block:{
-    sheet:"⑦LINE隔週テンプレート",
-    lookup:"接続=PERFECT, 活動=NONE, バッテリー=OK",
-    match_row:"PERFECT_NONE_OKのバリエーション1を選択",
-    why:"接続PERFECTだが活動NONE → 「繋がっていますがライトは使われていません」。\n「お出かけが多い時期かもしれませんね」とポジティブ解釈を挟んでから、\n「よかったらお電話で」と行動促進。\nパターン①②のような「✨ご安心くださいね💛」の締めではなく、「💛」で柔らかく促す。",
-    selected:`山本さん、あかりです😊\n\nおかあさんのようすを\nお届けしますね🌸\n\nsolarichはずっと\nコンセントに繋がっていますが\nライトは使われていません\n\nお出かけが多い時期\nかもしれませんね\n\nよかったらお電話で\nお声を聞いてみてくださいね💛`
-  }
-},
-
-{
-  id:"p5", tab:"⑤ 接続不良×ゼロ（要注意）",
-  title:"パターン⑤ コンセント不良・使用ゼロ・バッテリー危険・長期利用・夏（8月）",
-  desc:"最も心配なケース。すべての指標が悪い方向。行動を明確に促す。",
-  inputs:[
-    {l:"family_name",v:"高橋",ref:"D2"},{l:"nickname",v:"お母さん",ref:"D3"},
-    {l:"month",v:"8",ref:"D4"},{l:"month_days",v:"31",ref:"D5"},
-    {l:"plug_days",v:"10",ref:"D6"},{l:"light_days",v:"0",ref:"D7"},
-    {l:"light_count",v:"0",ref:"D8"},{l:"check_sent",v:"4",ref:"D9"},
-    {l:"check_replied",v:"0",ref:"D10"},{l:"battery_pct",v:"18",ref:"D11"},
-    {l:"subscription_months",v:"10",ref:"D13"},{l:"prev_month_light",v:"2",ref:"D15"},
-  ],
-  judgments:[
-    {axis:"接続安定度",formula:"plug_days(10) ÷ month_days(31) = 32% → <50%",result:"CONCERN",cls:"br",reason:"32%は50%未満 → 最も深刻なCONCERN。パターン③(58%→UNSTABLE)より悪い"},
-    {axis:"ライト活動度",formula:"light_days(0) == 0",result:"NONE",cls:"br",reason:"パターン④と同じ0日だが、接続もCONCERNなのでより深刻"},
-    {axis:"確認応答度",formula:"check_replied(0) == 0 かつ check_sent(4) > 0",result:"NONE",cls:"br",reason:"パターン④と同じNONEだが、接続不良と合わせると意味が変わる"},
-    {axis:"利用フェーズ",formula:"subscription_months(10) >= 7",result:"VETERAN",cls:"bb",reason:"10ヶ月目 → 長期利用者。以前は使っていたはず"},
-    {axis:"先月比トレンド",formula:"light_days(0) < prev(2)",result:"DOWN",cls:"br",reason:"先月2日→今月0日 → 減少"},
-    {axis:"バッテリー状態",formula:"battery_pct(18) < 30",result:"CRITICAL",cls:"br",reason:"18%は30%未満 → 危険ゾーン。パターン③(45%→LOW)よりさらに悪い"},
-    {axis:"季節",formula:"month(8) → 6〜8月",result:"夏",cls:"bgr",reason:"8月は夏季（熱中症リスクの季節）"},
-  ],
-  combined_key:"CONCERN_NONE",
-  full_key:"CONCERN_NONE_DOWN_VETERAN",
-  blocks:[
-    {
-      num:"①",color:"step-num-green",
-      title:"挨拶テンプレート",
-      sheet:"③挨拶テンプレート",
-      lookup:"月=8, フェーズ=VETERAN",
-      match_row:"8月×VETERANのバリエーション1を選択",
-      why:"8月 × VETERAN → 「お母さんのことが気になる季節です」。夏の暑さへの心配 + 長期利用への感謝。\n状況が悪くても挨拶ブロック自体はいつも通りの温かさを保つ。いきなり不安を煽らない設計。",
-      selected:`高橋 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\nまだまだ暑い日が続きますね。お母さんのことが気になる季節です。今月もお届けします。`
-    },
-    {
-      num:"②",color:"step-num-red",
-      title:"総評テンプレート ← ★ここが最も変わる",
-      sheet:"④総評テンプレート",
-      lookup:"接続=CONCERN, 活動=NONE, トレンド=DOWN（近似キー CONCERN_NONE_SAME）",
-      match_row:"キー「CONCERN_NONE_SAME」のバリエーション1を選択",
-      why:"ここがパターン④との最大の違い。\n\nパターン④（PERFECT_NONE）: 「ずっとコンセントに繋がっていて安心です」→ ポジティブ先行\nパターン⑤（CONCERN_NONE）: 「ライトのご使用がなく、コンセントも外れている日がかなり多い」→ 事実を率直に\n\n接続がPERFECTかCONCERNかで、同じ「ライト使用ゼロ」でも文面の深刻度が全く変わる。\nCONCERNでは「お電話で一度お声を聞いてみていただけますか」と疑問形で行動を促す。\nパターン③(UNSTABLE)の「ご確認いただけると安心です」より一段強い表現。",
-      selected:`今月はライトのご使用がなく、コンセントも外れている日がかなり多い状態です。\nお母さんのご様子が気になります。お電話で一度お声を聞いてみていただけますか。`
-    },
-    {
-      num:"③",color:"step-num-red",
-      title:"確認応答テンプレート",
-      sheet:"⑤確認応答テンプレート",
-      lookup:"応答レベル=NONE",
-      match_row:"NONEのバリエーション2を選択",
-      why:"パターン④と同じNONEだが、バリエーション2を選択。「ご様子が少し気になります。お電話してみてはいかがでしょうか」。\nパターン④のバリエーション1「お変わりないとは思いますが」より踏み込んだ表現。\n接続CONCERN + 応答NONE の組み合わせでは、柔らかいフォローより率直な促しを優先。",
-      selected:`4回のライトの確認にお返事がない状態です。お母さんのご様子が少し気になります。お電話してみてはいかがでしょうか。`
-    },
-    {
-      num:"④",color:"step-num-green",
-      title:"見守りメモ（自動生成）",
-      sheet:"数値からの自動組み立て",
-      lookup:"ゼロでない項目だけ表示",
-      match_row:"plug_days>0 → 表示 / light_days==0 → 非表示 / check_replied==0 → 非表示",
-      why:"パターン④と同じくコンセント接続のみ表示。ただし10/31日で✅なし。\nパターン④は31/31日✅だったので、視覚的に「コンセントすら不安定」が伝わる。\nこの1行の差が、パターン④（安心寄り）と⑤（要注意）の違いを如実に示す。",
-      selected:`コンセント接続　｜ 10 / 31日`
-    },
-    {
-      num:"⑤",color:"step-num-orange",
-      title:"締めテンプレート",
-      sheet:"⑥締めテンプレート",
-      lookup:"季節=夏, フェーズ=VETERAN（汎用テンプレート使用）",
-      match_row:"夏の汎用バリエーション1を選択",
-      why:"パターン①と同じ「夏」テンプレだが、総評とブロック③が深刻なので、締めの「水分補給も気にかけて」が別のニュアンスを帯びる。テンプレート自体は同じでも、前のブロックとの文脈で読み味が変わる例。",
-      selected:`暑い日が続きますので、お母さんの水分補給も気にかけてあげてくださいね。\n何かありましたら、いつでもご連絡ください。`
-    },
-  ],
-  line_block:{
-    sheet:"⑦LINE隔週テンプレート → ⑧LINEアラート（深刻なため通常レポートよりアラート寄り）",
-    lookup:"接続=CONCERN, 活動=NONE → 通常の隔週レポートではなくアラート寄りテンプレートを使用",
-    match_row:"CONCERN_NONE_OKを選択",
-    why:"CONCERN × NONE → LINEでは最も強いトーン。\n冒頭が「😊」ではなく「🙏」で始まる。\n「ここ2週間ほど使われていないようです」「お電話でご様子を伺ってみてください🙏」と、明確な行動依頼。\n\nパターン①: 「お元気そうです✨ ご安心くださいね💛」\nパターン④: 「お出かけかも。よかったらお電話で💛」\nパターン⑤: 「使われていません。お電話でご様子を伺ってください🙏」\n\n絵文字の変化（💛→🙏）とフレーズの強さが段階的に上がっている。",
-    selected:`高橋さん、あかりです🙏\n\nお母さんのsolarich\nここ2週間ほど\n使われていないようです\n\nコンセントも外れている日が\n多くなっています\n\nお電話で\nご様子を伺ってみてください🙏`
-  }
-}
-];
-
-// Render
-const tabsEl = document.getElementById('tabs');
-const panelsEl = document.getElementById('panels');
-
-P.forEach((p, idx) => {
-  const tab = document.createElement('div');
-  tab.className = 'tab' + (idx===0?' active':'');
-  tab.textContent = p.tab;
-  tab.dataset.id = p.id;
-  tab.onclick = () => {
-    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.id===p.id));
-    document.querySelectorAll('.pattern-panel').forEach(pp=>pp.classList.toggle('active',pp.id===p.id));
-  };
-  tabsEl.appendChild(tab);
-
-  const panel = document.createElement('div');
-  panel.className = 'pattern-panel'+(idx===0?' active':'');
-  panel.id = p.id;
-
-  // Build input grid
-  const inputsHtml = p.inputs.map(i=>`<div class="input-item"><span class="il">${i.l}</span><br><span class="iv">${i.v}</span> <span class="cell-ref" style="font-size:.65rem">①${i.ref}</span></div>`).join('');
-
-  // Build judgments table
-  const judgeRows = p.judgments.map(j=>`<tr><td>${j.axis}</td><td><span class="formula">${j.formula}</span></td><td><span class="badge ${j.cls}">${j.result}</span></td><td style="font-size:.78rem;color:var(--text-light)">${j.reason}</td></tr>`).join('');
-
-  // Build blocks
-  const blocksHtml = p.blocks.map(b=>`
-    <div class="step">
-      <div class="step-header">
-        <div class="step-num ${b.color}">${b.num}</div>
-        <span class="step-title">${b.title}</span>
-        <span class="step-sheet">${b.sheet}</span>
-      </div>
-      <table class="logic-tbl">
-        <tr><th>検索キー</th><th>一致行</th></tr>
-        <tr><td>${b.lookup}</td><td>${b.match_row}</td></tr>
-      </table>
-      <div class="hl">
-        <div class="hl-label">▼ なぜこのテンプレートが選ばれたか</div>
-        <div style="font-size:.82rem;line-height:1.8;white-space:pre-line">${b.why}</div>
-      </div>
-      <div class="result-box result-mail">
-        <span class="result-label result-label-mail">選択されたテンプレート（プレースホルダー置換後）</span>
-        ${b.selected}
-      </div>
-    </div>
-  `).join('<div class="arrow-down">↓</div>');
-
-  // LINE block
-  const lineHtml = `
-    <div class="step">
-      <div class="step-header">
-        <div class="step-num" style="background:#06C755">L</div>
-        <span class="step-title">LINE隔週レポート</span>
-        <span class="step-sheet">${p.line_block.sheet}</span>
-      </div>
-      <table class="logic-tbl">
-        <tr><th>検索キー</th><th>一致行</th></tr>
-        <tr><td>${p.line_block.lookup}</td><td>${p.line_block.match_row}</td></tr>
-      </table>
-      <div class="hl">
-        <div class="hl-label">▼ なぜこのテンプレートが選ばれたか</div>
-        <div style="font-size:.82rem;line-height:1.8;white-space:pre-line">${p.line_block.why}</div>
-      </div>
-      <div class="result-box result-line">
-        <span class="result-label result-label-line">選択されたLINEテンプレート</span>
-        ${p.line_block.selected}
-      </div>
-    </div>
-  `;
-
-  panel.innerHTML = `
-    <div class="card">
-      <h3>📋 ${p.title}</h3>
-      <p style="font-size:.84rem;color:var(--text-light);margin-bottom:16px">${p.desc}</p>
-      
-      <h3 style="margin-top:20px">📥 STEP 1：入力データ <span class="step-sheet">①入力データ シート</span></h3>
-      <p style="font-size:.78rem;color:var(--text-light);margin-bottom:8px">黄色セル（D列）に入っている値。これが全ての判定の起点。</p>
-      <div class="input-grid">${inputsHtml}</div>
-    </div>
-
-    <div class="arrow-down">⬇</div>
-
-    <div class="card">
-      <h3>⚙️ STEP 2：判定ロジック <span class="step-sheet">②判定ロジック シート</span></h3>
-      <p style="font-size:.78rem;color:var(--text-light);margin-bottom:8px">入力値を数式で自動判定。各軸ごとにレベルを振り分ける。</p>
-      <table class="logic-tbl">
-        <tr><th style="width:14%">判定軸</th><th style="width:28%">判定式</th><th style="width:12%">結果</th><th>なぜこの結果になったか</th></tr>
-        ${judgeRows}
-      </table>
-      <div style="margin-top:12px;padding:10px 14px;background:var(--cream);border-radius:8px;font-size:.82rem">
-        <strong>総合キー：</strong><span style="color:var(--red);font-weight:900;font-size:.95rem">${p.combined_key}</span>
-        <span style="margin-left:12px;color:var(--text-light)">フルキー：${p.full_key}</span>
-      </div>
-    </div>
-
-    <div class="arrow-down">⬇</div>
-
-    <div class="card">
-      <h3>📝 STEP 3：メール テンプレート選択 <span class="step-sheet">③〜⑥シート</span></h3>
-      <p style="font-size:.78rem;color:var(--text-light);margin-bottom:16px">判定結果をキーにして各シートからテンプレートを取得。5ブロックを順に組み立てる。</p>
-      ${blocksHtml}
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="card">
-      <h3>💬 STEP 4：LINE テンプレート選択 <span class="step-sheet">⑦⑧シート</span></h3>
-      <p style="font-size:.78rem;color:var(--text-light);margin-bottom:16px">メールと同じ判定結果を使うが、LINE用の短い文面テンプレートから選択。</p>
-      ${lineHtml}
-    </div>
-  `;
-
-  panelsEl.appendChild(panel);
-});
+document.querySelectorAll('.section').forEach(el=>{new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.topbar-nav a[href^="#"]').forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.topbar-nav a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}})},{threshold:.15,rootMargin:'-70px 0px 0px 0px'}).observe(el)});
 </script>
 </body>
 </html>
