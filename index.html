@@ -84,13 +84,14 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 </head>
 <body>
 <div class="topbar">
-  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス｜レポート設計</a></div>
+  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス</a></div>
   <nav class="topbar-nav">
+    <a href="index.html" class="active">レポート設計</a>
     <a href="logic.html">AIレポート仕様</a>
+    <a href="product.html">商品紹介</a>
     <a href="cancel.html">解約フォーム</a>
   </nav>
   <a href="https://docs.google.com/spreadsheets/d/1geYwF6j_Tm__yFs6VxAZTmbk80tC1WDnW6Frnsv39m8/edit" target="_blank" rel="noopener" class="topbar-sheet">📊 スプレッドシート ↗</a>
-  <a href="product.html" class="topbar-back">商品紹介</a>
 </div>
 <div class="header"><h1>見守りプラス｜レポート設計</h1><p>ご家族の暮らしの気配を、<br>どんな手段で、どんな言葉で、どう届けるか</p><div class="header-meta">2026年4月30日</div></div>
 <div class="main">
@@ -470,7 +471,7 @@ solarichもずっと
 
 </div>
 <script>
-document.querySelectorAll('.section').forEach(el=>{new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.topbar-nav a:not(.topbar-back)').forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.topbar-nav a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}})},{threshold:.15,rootMargin:'-70px 0px 0px 0px'}).observe(el)});
+/* In-page section observer disabled: nav no longer contains #section anchors after header unification. */
 </script>
 </body>
 </html>
