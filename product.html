@@ -23,35 +23,16 @@
 html{scroll-behavior:smooth;font-size:16px}
 body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;line-height:1.8}
 
-/* ===== SITE HEADER ===== */
-.site-header{
-  position:sticky;top:0;z-index:1000;background:rgba(255,248,240,.92);
-  backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);
-  border-bottom:1px solid rgba(0,0,0,.06);
-  padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;
-}
-.site-header .brand{
-  font-weight:900;font-size:.95rem;color:var(--green-dark);text-decoration:none;
-  display:inline-flex;align-items:center;gap:8px;
-}
-.site-header .brand::before{content:'☀';font-size:1.1rem}
-.site-header nav{display:flex;align-items:center;gap:8px}
-.site-header nav a{
-  font-size:.82rem;font-weight:700;color:var(--text-light);text-decoration:none;
-  padding:8px 14px;border-radius:100px;transition:all .2s;
-}
-.site-header nav a:hover{background:var(--green-light);color:var(--green-dark)}
-.site-header nav a.cta{
-  background:var(--orange);color:var(--white);
-  box-shadow:0 2px 8px rgba(232,131,74,.25);
-}
-.site-header nav a.cta:hover{background:var(--orange-dark);color:var(--white);transform:translateY(-1px)}
-@media(max-width:640px){
-  .site-header{padding:10px 16px}
-  .site-header .brand{font-size:.85rem}
-  .site-header nav a{font-size:.74rem;padding:6px 10px}
-  .site-header nav a.hide-sm{display:none}
-}
+/* ===== UNIFIED SITE TOPBAR ===== */
+.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}
+.topbar-brand a{color:inherit;text-decoration:none}
+.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
+.topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}
+.topbar-sheet{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:#1D9E75;padding:6px 14px!important;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.topbar-sheet:hover{background:#157d5c!important}
+@media(max-width:640px){.topbar-nav{display:none}}
 
 /* ===== HERO ===== */
 .hero{
@@ -255,17 +236,17 @@ footer strong{color:rgba(255,255,255,.8)}
 </head>
 <body>
 
-<!-- SITE HEADER -->
-<header class="site-header">
-  <a href="index.html" class="brand">見守りプラス｜商品紹介</a>
-  <nav>
-    <a href="#features" class="hide-sm">特長</a>
-    <a href="#faq" class="hide-sm">FAQ</a>
-    <a href="logic.html" class="hide-sm">AIレポート仕様</a>
-    <a href="cancel.html" class="hide-sm">解約フォーム</a>
-    <a href="index.html" class="cta">📊 AIレポート設計（メイン）</a>
+<!-- UNIFIED SITE TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス</a></div>
+  <nav class="topbar-nav">
+    <a href="index.html">レポート設計</a>
+    <a href="logic.html">AIレポート仕様</a>
+    <a href="product.html" class="active">商品紹介</a>
+    <a href="cancel.html">解約フォーム</a>
   </nav>
-</header>
+  <a href="https://docs.google.com/spreadsheets/d/1geYwF6j_Tm__yFs6VxAZTmbk80tC1WDnW6Frnsv39m8/edit" target="_blank" rel="noopener" class="topbar-sheet">📊 スプレッドシート ↗</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="top">
