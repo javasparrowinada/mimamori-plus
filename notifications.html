@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>見守りプラス｜通知テンプレート</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--red:#D65050;--red-light:#FFF0F0;--blue:#5A7EB5;--blue-light:#EDF2F8;--shadow:0 4px 24px rgba(45,42,38,.06)}
+html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;line-height:1.85;font-size:15px}
+/* ── unified topbar ── */
+.topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}
+.topbar-brand a{color:inherit;text-decoration:none}
+.topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
+.topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}
+.topbar-sheet{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:#1D9E75;padding:6px 14px!important;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.topbar-sheet:hover{background:#157d5c!important}
+@media(max-width:640px){.topbar-nav{display:none}}
+/* ── React mount loading state ── */
+#root:empty::before{content:'読み込み中…';display:block;text-align:center;padding:60px 20px;color:#999;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand"><a href="index.html">☀ 見守りプラス</a></div>
+  <nav class="topbar-nav">
+    <a href="logic.html">AIレポート仕様</a>
+    <a href="notifications.html" class="active">通知テンプレート</a>
+    <a href="background.html">バックグラウンド対策</a>
+    <a href="product.html">商品紹介</a>
+    <a href="cancel.html">解約フォーム</a>
+  </nav>
+  <a href="https://docs.google.com/spreadsheets/d/1geYwF6j_Tm__yFs6VxAZTmbk80tC1WDnW6Frnsv39m8/edit" target="_blank" rel="noopener" class="topbar-sheet">📊 スプレッドシート ↗</a>
+</div>
+
+<div id="root"></div>
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" data-type="module">
+const { useState } = React;
+
+/* ══════════════════════════════════════════
+   全通知データ（緊急＋復旧＋見守り）
+   ══════════════════════════════════════════ */
+const allNotifications = [
+  // ── 緊急通知 ──
+  {
+    id:"t1", group:"urgent", label:"#1 停電アラート", badge:"緊急", badgeColor:"#D32F2F",
+    trigger:"コンセント給電が途絶して5分経過。停電と断定しない。",
+    push:{ title:"◯名前さん◯の家が停電の可能性があります", body:"連絡を取ってください。", time:"18:46" },
+    line:{ body:"◯苗字◯さん、あかりです🙏\n\n◯名前さん◯のsolarich\nコンセントが外れているようです🔌\n\n念のため◯名前さん◯に\nお電話でご様子を\n確認いただけると安心です🙏" },
+    email:{
+      subject:"【要確認】◯名前さん◯のご自宅でコンセントが外れました",
+      body:"◯苗字◯ 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n\n◯名前さん◯のご自宅でコンセントが外れました。\n停電の可能性があります。\n\nソラリッチが自動でバックアップ電力を供給していますので、すぐに使えなくなることはありません。\n気になる場合は◯名前さん◯へ直接ご連絡ください。",
+      section:"🔌 検知情報",
+      data:[["検知時刻","◯時刻◯"],["バッテリー残量","◯残量◯%"],["バックアップ","自動稼働中 ✅"]],
+      cta:true, ctaColor:"#E8943A",
+    },
+  },
+  {
+    id:"t1r", group:"recovery", label:"#1-R コンセント復旧", badge:"復旧", badgeColor:"#388E3C",
+    trigger:"停電アラート送信後、コンセント給電が再開。",
+    push:{ title:"◯名前さん◯のsolarich ── コンセントが復旧しました", body:"ご安心ください。", time:"19:12" },
+    line:{ body:"◯苗字◯さん、あかりです😊\n\n◯名前さん◯のsolarich\nコンセントの接続が復旧しました🌸\n\nこれでまた◯名前さん◯のようすを\nお届けできます\n\nご安心くださいね💛" },
+    email:{
+      subject:"【見守りプラス】◯名前さん◯のsolarich ── コンセントが復旧しました",
+      body:"◯苗字◯ 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n\n◯名前さん◯のsolarich、コンセントの接続が復旧しました。\n\nこれでまた◯名前さん◯のようすをお届けできます。\nご安心ください。",
+      section:"🌸 復旧情報",
+      data:[["復旧時刻","◯時刻◯"],["バッテリー残量","◯残量◯%"]],
+      cta:false,
+    },
+  },
+  {
+    id:"t2", group:"urgent", label:"#2 SOSボタン", badge:"緊急", badgeColor:"#D32F2F",
+    trigger:"本体のDCボタン押下でSOS発信。",
+    push:{ title:"◯名前さん◯がSOSボタンを押しました", body:"すぐに連絡してください", time:"14:22" },
+    line:{ body:"◯苗字◯さん、あかりです🙏\n\n◯名前さん◯がSOSボタンを押しました\n\nすぐに◯名前さん◯へ\nご連絡ください🙏" },
+    email:{
+      subject:"【要確認】◯名前さん◯からSOSが届きました",
+      body:"◯苗字◯ 様\n\n見守りプラス サポート担当の森川あかりです。\n\n◯名前さん◯がSOSボタンを押しました。\n\nすぐに◯名前さん◯へご連絡されることをおすすめします。",
+      section:"🆘 検知情報",
+      data:[["検知時刻","◯時刻◯"],["バッテリー残量","◯残量◯%"]],
+      cta:true, ctaColor:"#D32F2F",
+    },
+  },
+  {
+    id:"t2r", group:"recovery", label:"#2-R ライト返答あり", badge:"復旧", badgeColor:"#388E3C",
+    trigger:"見守りライト点灯後、本体LEDボタン1回押しで消灯。",
+    push:{ title:"◯名前さん◯から「見守りライト」へ返答がありました", body:"ソラリッチを操作できています", time:"15:03" },
+    line:{ body:"◯苗字◯さん、あかりです😊\n\n◯名前さん◯から\nお返事がありました🌸\n\nご心配おかけしました\n今日もお元気な様子です✨" },
+    email:{
+      subject:"【見守りプラス】◯名前さん◯からお返事がありました",
+      body:"◯苗字◯ 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n\n◯名前さん◯から「見守りライト」へお返事がありました。\nソラリッチを操作できています。お元気な証ですね。\n\nご安心ください。",
+      section:"📊 見守りメモ",
+      data:[["返答時刻","◯時刻◯"],["状態","操作できています ✅"]],
+      cta:false,
+    },
+  },
+  {
+    id:"t3", group:"urgent", label:"#3 バッテリー低下", badge:"緊急", badgeColor:"#D32F2F",
+    trigger:"バッテリー残量 ≤ 20%。",
+    push:{ title:"◯名前さん◯のバッテリーが低下しています", body:"コンセント充電をお知らせください", time:"16:30" },
+    line:{ body:"◯苗字◯さん、あかりです😊\n\n◯名前さん◯のsolarich\nバッテリーが少なめになっています🔋\n\n次に訪問されるときに\nコンセントを差し直して\nいただけると安心です🙏" },
+    email:{
+      subject:"【要確認】◯名前さん◯のsolarich ── バッテリーが低下しています",
+      body:"◯苗字◯ 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n\n◯名前さん◯のsolarichのバッテリーが低下しています。\nコンセントが外れているかもしれません。\n\n◯名前さん◯にコンセント充電をお知らせください。",
+      section:"🔋 検知情報",
+      data:[["バッテリー残量","◯残量◯%"],["検知時刻","◯時刻◯"]],
+      cta:true, ctaColor:"#E8943A",
+    },
+  },
+  {
+    id:"t4", group:"urgent", label:"#4 オフライン", badge:"緊急", badgeColor:"#D32F2F", isNew:true,
+    trigger:"電源オフまたはWi-Fiドングル故障で接続不可。",
+    push:{ title:"◯名前さん◯のsolarichがオフラインです", body:"電源またはWi-Fiが切れています\n今すぐご確認ください", time:"16:05" },
+    line:{ body:"◯苗字◯さん、あかりです🙏\n\n◯名前さん◯のsolarichと\n通信が途切れているようです📡\n\nドングルが抜けていないか\n次のご訪問時に\nご確認いただけると安心です🙏" },
+    email:{
+      subject:"【要確認】◯名前さん◯のsolarich ── 電源またはWi-Fiが切れています",
+      body:"◯苗字◯ 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n\n◯名前さん◯のsolarichとの通信が途切れています。\n電源またはWi-Fiが切れている可能性があります。\n\n今すぐご確認ください。\n◯名前さん◯にお電話で状況を確認いただけると安心です。",
+      section:"📡 検知情報",
+      data:[["最終通信","◯最終通信時刻◯"],["オフライン検知","◯時刻◯"],["最終バッテリー","◯残量◯%"]],
+      cta:true, ctaColor:"#D32F2F",
+      extra:{ emoji:"💡", title:"考えられる原因", items:["solarichの電源がオフになっている","Wi-Fiドングルが抜けている、または故障している","コンセントが外れてバッテリーが切れた"] },
+    },
+  },
+  {
+    id:"t4r", group:"recovery", label:"#4-R オフライン復旧", badge:"復旧", badgeColor:"#388E3C", isNew:true,
+    trigger:"オフライン通知送信後、通信が復旧した場合。",
+    push:{ title:"◯名前さん◯のsolarich ── 通信が復旧しました", body:"ご安心ください。", time:"16:42" },
+    line:{ body:"◯苗字◯さん、あかりです😊\n\n通信が復旧しました📡\n\nこれでまた\n◯名前さん◯のようすを\nお届けできます\n\nご安心くださいね💛" },
+    email:{
+      subject:"【見守りプラス】◯名前さん◯のsolarich ── 通信が復旧しました",
+      body:"◯苗字◯ 様\n\nこんにちは、見守りプラス サポート担当の森川あかりです。\n\n◯名前さん◯のsolarichとの通信が復旧しました。\n\nこれでまた◯名前さん◯のようすをお届けできます。\nご安心ください。",
+      section:"📡 復旧情報",
+      data:[["復旧時刻","◯時刻◯"],["バッテリー残量","◯残量◯%"]],
+      cta:false,
+    },
+  },
+  // ── 見守り通知（プッシュのみ）──
+  {
+    id:"w1", group:"watch", label:"①USB充電", badge:"見守り", badgeColor:"#757575",
+    trigger:"USB給電が開始された場合。",
+    push:{ title:"◯名前さん◯がUSBを使い始めました", body:"USB給電で利用中です", time:"08:12" },
+    line:null, email:null,
+  },
+  {
+    id:"w2", group:"watch", label:"②AC給電", badge:"見守り", badgeColor:"#757575",
+    trigger:"AC給電が開始された場合。",
+    push:{ title:"◯名前さん◯がコンセントを使っています", body:"AC給電で使用中です", time:"21:03" },
+    line:null, email:null,
+  },
+  {
+    id:"w3", group:"watch", label:"③ライト点灯", badge:"見守り", badgeColor:"#757575",
+    trigger:"ライトが点灯した場合。",
+    push:{ title:"◯名前さん◯がライトを点けました", body:"ライトを使用中です", time:"19:30" },
+    line:null, email:null,
+  },
+  {
+    id:"w4", group:"watch", label:"④未使用アラート", badge:"見守り", badgeColor:"#757575",
+    trigger:"一定期間（1ヶ月）利用なし。",
+    push:{ title:"しばらくソラリッチが使用されていません", body:"気になる場合は連絡してみましょう", time:"10:00" },
+    line:null, email:null,
+  },
+  {
+    id:"w5", group:"watch", label:"⑤見守りライト返答", badge:"見守り", badgeColor:"#757575",
+    trigger:"見守る側からのSOSライトを、LEDボタン1回押しで消灯。",
+    push:{ title:"◯名前さん◯から「見守りライト」へ返答がありました", body:"ソラリッチを操作できています", time:"15:03" },
+    line:null, email:null,
+  },
+];
+
+function Divider(){ return <div style={{padding:"12px 0 0",color:"#ccc",fontSize:11,letterSpacing:3}}>━━━━━━━━━━━━━━━━━━</div>; }
+
+function IPhone({children, h=420}){
+  return(
+    <div style={{width:220,flexShrink:0,background:"#0a0a0a",borderRadius:32,padding:"8px 8px",boxShadow:"0 8px 28px rgba(0,0,0,0.22)",position:"relative"}}>
+      <div style={{position:"absolute",right:-2,top:75,width:2.5,height:30,background:"#2a2a2a",borderRadius:"0 2px 2px 0"}}/>
+      <div style={{background:"#fff",borderRadius:24,overflow:"hidden",position:"relative"}}>
+        <div style={{position:"absolute",top:6,left:"50%",transform:"translateX(-50%)",width:72,height:20,background:"#0a0a0a",borderRadius:16,zIndex:10}}/>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"12px 16px 4px",fontSize:10,fontWeight:600,color:"#1a1a1a",position:"relative",zIndex:5}}>
+          <span>9:41</span>
+          <div style={{width:72}}/>
+          <div style={{display:"flex",gap:3,alignItems:"center"}}>
+            <svg width="12" height="8" viewBox="0 0 17 12"><rect x="0" y="7" width="3" height="5" rx=".8" fill="#1a1a1a"/><rect x="4.5" y="5" width="3" height="7" rx=".8" fill="#1a1a1a"/><rect x="9" y="2.5" width="3" height="9.5" rx=".8" fill="#1a1a1a"/><rect x="13.5" y="0" width="3" height="12" rx=".8" fill="#1a1a1a"/></svg>
+            <svg width="17" height="9" viewBox="0 0 25 12"><rect x="0" y=".5" width="21" height="11" rx="2.5" stroke="#1a1a1a" strokeWidth="1" fill="none"/><rect x="2" y="2.5" width="15" height="7" rx="1.2" fill="#34C759"/><path d="M22.5 4v4a1.5 1.5 0 000-4z" fill="#1a1a1a" opacity=".4"/></svg>
+          </div>
+        </div>
+        <div style={{height:h,overflowY:"auto"}}>{children}</div>
+        <div style={{padding:"4px 0 6px",textAlign:"center"}}><div style={{width:80,height:3.5,background:"#d1d1d1",borderRadius:2,margin:"0 auto"}}/></div>
+      </div>
+    </div>
+  );
+}
+
+function PushUI({d}){
+  if(!d) return <Empty label="プッシュ通知"/>;
+  return(
+    <div style={{minHeight:"100%",background:"linear-gradient(165deg,#1C1C1E,#2C2C2E)",padding:"0 10px 16px"}}>
+      <div style={{textAlign:"center",paddingTop:30,marginBottom:18}}>
+        <svg width="12" height="16" viewBox="0 0 14 18" fill="none" style={{marginBottom:6,display:"block",margin:"0 auto 6px"}}>
+          <rect x="1" y="7" width="12" height="10" rx="2.5" stroke="#888" strokeWidth="1.2" fill="none"/><path d="M4 7V5a3 3 0 016 0v2" stroke="#888" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+        </svg>
+        <div style={{fontSize:40,fontWeight:200,color:"#fff",letterSpacing:-2,lineHeight:1}}>9:41</div>
+        <div style={{fontSize:11,color:"rgba(255,255,255,.55)",marginTop:3}}>5月26日 月曜日</div>
+      </div>
+      <div style={{background:"rgba(255,255,255,.92)",borderRadius:16,padding:"10px 12px",boxShadow:"0 3px 14px rgba(0,0,0,.12)"}}>
+        <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:6}}>
+          <div style={{width:26,height:26,borderRadius:6,background:"linear-gradient(135deg,#F5A623,#E89220)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,color:"#fff",fontWeight:700}}>S</div>
+          <div style={{flex:1,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <span style={{fontSize:10,fontWeight:600,color:"#333"}}>solarich 1000</span>
+            <span style={{fontSize:9,color:"#8E8E93"}}>{d.time}</span>
+          </div>
+        </div>
+        <div style={{fontSize:12,fontWeight:600,color:"#1C1C1E",lineHeight:1.45,marginBottom:2}}>{d.title}</div>
+        <div style={{fontSize:11,color:"#48484A",lineHeight:1.45,whiteSpace:"pre-line"}}>{d.body}</div>
+      </div>
+    </div>
+  );
+}
+
+function LineUI({d}){
+  if(!d) return <Empty label="LINE通知"/>;
+  return(
+    <div style={{background:"#7494C0",minHeight:"100%"}}>
+      <div style={{display:"flex",alignItems:"center",padding:"6px 10px",background:"rgba(0,0,0,.06)"}}>
+        <svg width="8" height="12" viewBox="0 0 10 18"><path d="M8 2L2 9l6 7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+        <div style={{flex:1,textAlign:"center"}}><div style={{fontSize:11,fontWeight:600,color:"#fff"}}>見守りプラス｜あかり</div></div>
+        <div style={{width:8}}/>
+      </div>
+      <div style={{padding:"14px 8px"}}>
+        <div style={{textAlign:"center",marginBottom:12}}><span style={{fontSize:9,color:"#fff",background:"rgba(0,0,0,.12)",padding:"2px 8px",borderRadius:8}}>今日</span></div>
+        <div style={{display:"flex",alignItems:"flex-start",gap:6}}>
+          <div style={{width:28,height:28,borderRadius:14,background:"#F5E6D0",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,flexShrink:0}}>🌸</div>
+          <div style={{maxWidth:"84%"}}>
+            <div style={{fontSize:8,color:"rgba(255,255,255,.65)",marginBottom:2,marginLeft:2}}>あかり</div>
+            <div style={{background:"#fff",borderRadius:"0 14px 14px 14px",padding:"10px 12px",boxShadow:"0 1px 3px rgba(0,0,0,.06)"}}>
+              <div style={{fontSize:11,color:"#333",lineHeight:1.7,whiteSpace:"pre-line"}}>{d.body}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MailUI({d}){
+  if(!d) return <Empty label="メール通知"/>;
+  return(
+    <div style={{background:"#F2F2F7",minHeight:"100%"}}>
+      <div style={{padding:"4px 10px 6px",display:"flex",alignItems:"center"}}>
+        <svg width="8" height="12" viewBox="0 0 10 18"><path d="M8 2L2 9l6 7" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/></svg>
+        <span style={{fontSize:12,color:"#007AFF",marginLeft:2}}>受信</span>
+      </div>
+      <div style={{background:"#fff",borderRadius:"10px 10px 0 0",minHeight:360}}>
+        <div style={{padding:"10px 12px",borderBottom:".5px solid #E5E5EA"}}>
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+            <div style={{width:26,height:26,borderRadius:13,background:"linear-gradient(135deg,#F5A623,#E89220)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,color:"#fff",fontWeight:700}}>S</div>
+            <span style={{fontSize:12,fontWeight:600,color:"#1C1C1E",flex:1}}>solarich見守りプラス</span>
+          </div>
+          <div style={{fontSize:11,fontWeight:600,color:"#1C1C1E",lineHeight:1.35}}>{d.subject}</div>
+        </div>
+        <div style={{padding:"12px 12px 16px"}}>
+          <div style={{fontSize:11,lineHeight:1.85,color:"#333",whiteSpace:"pre-line",marginBottom:8}}>{d.body}</div>
+          <Divider/>
+          <div style={{fontSize:11,fontWeight:700,color:"#E8943A",padding:"8px 0 0"}}>{d.section}</div>
+          <Divider/>
+          <div style={{margin:"8px 0 0",background:"#F7F5F0",border:"1px solid #E8E4DE",borderRadius:8,padding:"10px 12px"}}>
+            <table style={{width:"100%",fontSize:10}}><tbody>
+              {d.data.map(([k,v],i)=><tr key={i}><td style={{padding:"3px 0",color:"#8E8E93",width:90}}>{k}</td><td style={{padding:"3px 0"}}>{v}</td></tr>)}
+            </tbody></table>
+          </div>
+          {d.extra&&(<>
+            <Divider/>
+            <div style={{fontSize:11,fontWeight:700,color:"#E8943A",padding:"8px 0 0"}}>{d.extra.emoji} {d.extra.title}</div>
+            <Divider/>
+            <div style={{padding:"8px 0 0",fontSize:10,lineHeight:1.8}}>{d.extra.items.map((x,i)=><div key={i}>・{x}</div>)}</div>
+          </>)}
+          {d.cta&&<div style={{textAlign:"center",padding:"12px 0 0"}}><div style={{display:"inline-block",background:d.ctaColor||"#E8943A",color:"#fff",fontSize:10,fontWeight:600,padding:"8px 16px",borderRadius:8}}>▼ アプリで詳細を確認する</div></div>}
+          <div style={{padding:"14px 0 0"}}>
+            <div style={{fontSize:9,color:"#8E8E93"}}>何かあればお気軽にご連絡ください</div>
+            <div style={{fontSize:9,color:"#636366",marginTop:2}}>💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
+          </div>
+          <div style={{borderTop:".5px solid #E5E5EA",marginTop:12,paddingTop:10,display:"flex",alignItems:"center",gap:8}}>
+            <div style={{width:26,height:26,borderRadius:13,background:"#F5E6D0",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11}}>🌸</div>
+            <div><div style={{fontSize:10,fontWeight:600,color:"#1C1C1E"}}>森川あかり</div><div style={{fontSize:8,color:"#8E8E93"}}>見守りプラス サポート担当</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Empty({label}){
+  return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",minHeight:"100%",background:"#F2F2F7",padding:20,textAlign:"center"}}>
+    <div style={{fontSize:24,marginBottom:8,opacity:.25}}>─</div>
+    <div style={{fontSize:12,fontWeight:600,color:"#8E8E93"}}>{label}</div>
+    <div style={{fontSize:10,color:"#AEAEB2",marginTop:3}}>この通知では使用しません</div>
+  </div>;
+}
+
+function HtmlTemplate({n}){
+  if(!n.email) return(
+    <div style={{background:"#F5F3EE",borderRadius:12,padding:40,textAlign:"center",color:"#999",fontSize:13}}>
+      この通知にメールテンプレートはありません<br/>（プッシュ通知のみ）
+    </div>
+  );
+  const e = n.email;
+  return(
+    <div style={{background:"#FAF8F5",border:"1px solid #E8E4DE",borderRadius:12,overflow:"hidden"}}>
+      <div style={{background:"#F5F5F5",padding:"12px 20px",borderBottom:"1px solid #E0E0E0",fontSize:13,color:"#666"}}>
+        <strong style={{color:"#333"}}>件名：</strong>{e.subject}
+      </div>
+      <div style={{padding:"24px 24px",background:"#fff"}}>
+        <div style={{maxWidth:520,margin:"0 auto",border:"1px solid #E8E4DE",borderRadius:8,background:"#fff"}}>
+          <div style={{padding:"28px 28px 12px"}}>
+            <div style={{fontSize:15,lineHeight:1.9,color:"#333",whiteSpace:"pre-line"}}>{e.body}</div>
+          </div>
+          <div style={{padding:"0 28px"}}><div style={{color:"#ccc",fontSize:13,letterSpacing:3}}>━━━━━━━━━━━━━━━━━━━━</div></div>
+          <div style={{padding:"12px 28px 0"}}><span style={{fontSize:14,fontWeight:700,color:"#E8943A"}}>{e.section}</span></div>
+          <div style={{padding:"6px 28px 0"}}><div style={{color:"#ccc",fontSize:13,letterSpacing:3}}>━━━━━━━━━━━━━━━━━━━━</div></div>
+          <div style={{padding:"12px 28px 0"}}>
+            <div style={{background:"#F7F5F0",border:"1px solid #E8E4DE",borderRadius:8,padding:"14px 18px"}}>
+              <table style={{width:"100%",fontSize:14}}><tbody>
+                {e.data.map(([k,v],i)=><tr key={i}><td style={{padding:"5px 0",color:"#888",width:140}}>{k}</td><td style={{padding:"5px 0"}}>{v}</td></tr>)}
+              </tbody></table>
+            </div>
+          </div>
+          {e.extra&&(<>
+            <div style={{padding:"16px 28px 0"}}><div style={{color:"#ccc",fontSize:13,letterSpacing:3}}>━━━━━━━━━━━━━━━━━━━━</div></div>
+            <div style={{padding:"12px 28px 0"}}><span style={{fontSize:14,fontWeight:700,color:"#E8943A"}}>{e.extra.emoji} {e.extra.title}</span></div>
+            <div style={{padding:"6px 28px 0"}}><div style={{color:"#ccc",fontSize:13,letterSpacing:3}}>━━━━━━━━━━━━━━━━━━━━</div></div>
+            <div style={{padding:"10px 28px 0",fontSize:14,lineHeight:1.9}}>{e.extra.items.map((x,i)=><div key={i}>・{x}</div>)}</div>
+          </>)}
+          {e.cta&&<div style={{textAlign:"center",padding:"20px 28px 0"}}><div style={{display:"inline-block",background:e.ctaColor||"#E8943A",color:"#fff",fontSize:14,fontWeight:700,padding:"12px 28px",borderRadius:6}}>▼ アプリで詳細を確認する</div></div>}
+          <div style={{padding:"24px 28px 0"}}>
+            <div style={{fontSize:13,color:"#999"}}>何かあればお気軽にご連絡ください</div>
+            <div style={{fontSize:13,color:"#666",marginTop:3}}>💬 LINE：@741gbrqo ／ 📞 0120-407-700</div>
+          </div>
+          <div style={{padding:"16px 28px 0"}}><hr style={{border:"none",borderTop:"1px solid #E8E4DE"}}/></div>
+          <div style={{padding:"14px 28px 24px",display:"flex",alignItems:"center",gap:10}}>
+            <div style={{width:36,height:36,borderRadius:18,background:"#F5E6D0",display:"flex",alignItems:"center",justifyContent:"center",fontSize:15}}>🌸</div>
+            <div><div style={{fontSize:14,fontWeight:700,color:"#333"}}>森川あかり</div><div style={{fontSize:12,color:"#888"}}>見守りプラス サポート担当</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  const [idx,setIdx]=useState(0);
+  const n = allNotifications[idx];
+
+  const groups=[
+    {label:"緊急通知",color:"#D32F2F",ids:["t1","t1r","t2","t2r","t3","t4","t4r"]},
+    {label:"見守り通知",color:"#757575",ids:["w1","w2","w3","w4","w5"]},
+  ];
+
+  return(
+    <div style={{minHeight:"calc(100vh - 60px)",background:"#EDEBE6",fontFamily:"-apple-system,BlinkMacSystemFont,'Noto Sans JP','Hiragino Sans',sans-serif",padding:"24px 12px"}}>
+
+      <div style={{textAlign:"center",marginBottom:20}}>
+        <h1 style={{fontSize:17,fontWeight:700,color:"#1C1C1E",margin:0}}>見守りプラス 通知テンプレート一覧</h1>
+        <p style={{fontSize:11,color:"#8E8E93",marginTop:4}}>HTMLメール本文とスマホUIを同時に確認できます</p>
+      </div>
+
+      {groups.map(g=>(
+        <div key={g.label} style={{marginBottom:12}}>
+          <div style={{textAlign:"center",fontSize:11,fontWeight:600,color:g.color,marginBottom:6}}>{g.label}</div>
+          <div style={{display:"flex",justifyContent:"center",gap:5,flexWrap:"wrap",maxWidth:700,margin:"0 auto"}}>
+            {g.ids.map(id=>{
+              const ni = allNotifications.findIndex(x=>x.id===id);
+              const item = allNotifications[ni];
+              const sel = idx===ni;
+              return(
+                <button key={id} onClick={()=>setIdx(ni)} style={{
+                  border:sel?`2px solid ${item.badgeColor}`:"1px solid #D5D0C8",
+                  borderRadius:8,padding:"5px 10px",fontSize:11,
+                  fontWeight:sel?700:400,color:sel?item.badgeColor:"#666",
+                  background:sel?"#fff":"#F5F3EE",cursor:"pointer",position:"relative",
+                }}>
+                  {item.label}
+                  {item.isNew&&<span style={{position:"absolute",top:-6,right:-6,background:"#D32F2F",color:"#fff",fontSize:8,fontWeight:700,padding:"1px 5px",borderRadius:6}}>NEW</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+
+      <div style={{maxWidth:1100,margin:"20px auto 12px",display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}}>
+        <span style={{display:"inline-block",padding:"3px 10px",borderRadius:10,fontSize:11,fontWeight:700,color:"#fff",background:n.badgeColor}}>{n.badge}</span>
+        <span style={{fontSize:15,fontWeight:700,color:"#1C1C1E"}}>{n.label}</span>
+        <span style={{fontSize:12,color:"#8E8E93"}}>── {n.trigger}</span>
+      </div>
+
+      <div style={{maxWidth:1100,margin:"0 auto",display:"flex",gap:20,alignItems:"flex-start",flexWrap:"wrap"}}>
+
+        <div style={{flex:"1 1 480px",minWidth:320}}>
+          <div style={{fontSize:12,fontWeight:600,color:"#1C1C1E",marginBottom:8}}>✉️ HTMLメールテンプレート</div>
+          <HtmlTemplate n={n}/>
+        </div>
+
+        <div style={{flex:"0 0 auto"}}>
+          <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+            {[
+              {label:"🔔 プッシュ",comp:<PushUI d={n.push}/>},
+              {label:"💬 LINE",comp:<LineUI d={n.line}/>},
+              {label:"✉️ メール",comp:<MailUI d={n.email}/>},
+            ].map((ch,i)=>(
+              <div key={i}>
+                <div style={{fontSize:11,fontWeight:600,color:"#1C1C1E",marginBottom:6,textAlign:"center"}}>{ch.label}</div>
+                <IPhone h={380}>{ch.comp}</IPhone>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+
+</body>
+</html>
