@@ -96,6 +96,35 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 .d-note{background:#FFF8F0;border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.78rem;color:var(--text-light);line-height:1.8;margin:10px 0 4px}
 .d-note strong{color:var(--orange-dark)}
 @media(max-width:640px){.vs-grid{grid-template-columns:1fr}.vs-mid{padding:8px 0}}
+
+/* Dynamic template loader */
+.tmpl-meta{font-size:.78rem;color:var(--text-light);margin-bottom:14px;padding:10px 14px;background:#FAFAF7;border-radius:8px}
+.tmpl-meta strong{color:var(--purple);font-weight:700}
+.tmpl-filters{display:flex;flex-direction:column;gap:12px;margin-bottom:18px;padding:16px;background:#FAFAF7;border-radius:10px}
+.tmpl-filter-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tmpl-filter-label{font-size:.74rem;font-weight:700;color:var(--text);min-width:54px}
+.tmpl-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.tmpl-chip{font-size:.72rem;font-weight:600;color:var(--text-light);background:var(--white);border:1px solid rgba(0,0,0,.1);padding:4px 11px;border-radius:100px;cursor:pointer;transition:all .15s;user-select:none}
+.tmpl-chip:hover{border-color:var(--purple);color:var(--purple)}
+.tmpl-chip.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.tmpl-hint{font-size:.72rem;color:var(--text-light);margin:4px 0 0;line-height:1.6}
+.tmpl-summary{font-size:.78rem;color:var(--text);font-weight:700;margin:6px 0 10px}
+.tmpl-results{display:grid;gap:10px}
+.tmpl-card{background:var(--white);border:1px solid rgba(0,0,0,.08);border-radius:10px;padding:14px 16px}
+.tmpl-card-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed rgba(0,0,0,.06)}
+.tmpl-card-id{font-family:monospace;font-size:.72rem;color:var(--purple);font-weight:700;background:var(--purple-light);padding:2px 8px;border-radius:4px}
+.tmpl-card-tag{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:100px}
+.tmpl-card-axes{font-size:.7rem;color:var(--text-light);font-weight:600}
+.tmpl-tone-安心{background:var(--green-light);color:var(--green-dark)}
+.tmpl-tone-穏やか{background:var(--blue-light);color:var(--blue)}
+.tmpl-tone-やや注意{background:#FFF3E8;color:var(--orange-dark)}
+.tmpl-tone-注意{background:#FFF3E8;color:var(--orange-dark)}
+.tmpl-tone-要注意{background:var(--red-light);color:var(--red)}
+.tmpl-card-body{font-size:.84rem;line-height:1.85;white-space:pre-line;color:var(--text)}
+.tmpl-card-body em{background:var(--warm);padding:0 4px;border-radius:3px;color:var(--orange-dark);font-style:normal;font-weight:600;font-size:.78rem}
+.tmpl-empty,.tmpl-loading{padding:24px;text-align:center;color:var(--text-light);font-size:.82rem}
+.tmpl-error{padding:16px 18px;background:var(--red-light);border-left:3px solid var(--red);border-radius:0 8px 8px 0;color:var(--text);font-size:.82rem;line-height:1.7}
+.tmpl-error strong{color:var(--red);display:block;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -451,10 +480,129 @@ USB給電　　　 ｜ 12回
 
 </div>
 
+<div class="divider"></div>
+
+<!-- ===== 全テンプレート（シート直結） ===== -->
+<div class="section" id="all-templates">
+<div class="section-badge badge-example">全テンプレート（シート直結）</div>
+<h2>全81テンプレートを絞り込んで確認</h2>
+<p class="desc">スプレッドシート（<a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit?gid=1669364860" target="_blank" rel="noopener" style="color:var(--purple);font-weight:700">📊 1RLGT9ZY / gid=1669364860 ↗</a>）から直接読込。シート最新版がそのままここに反映される。</p>
+
+<div class="card">
+<div class="tmpl-meta" id="tmpl-meta">📥 読み込み中…</div>
+
+<div class="tmpl-filters" id="tmpl-filters" style="display:none">
+  <div class="tmpl-filter-row">
+    <span class="tmpl-filter-label">軸1</span>
+    <div class="tmpl-chips" data-axis="軸1"></div>
+  </div>
+  <div class="tmpl-filter-row">
+    <span class="tmpl-filter-label">軸2</span>
+    <div class="tmpl-chips" data-axis="軸2"></div>
+  </div>
+  <div class="tmpl-filter-row">
+    <span class="tmpl-filter-label">軸3</span>
+    <div class="tmpl-chips" data-axis="軸3"></div>
+  </div>
+  <div class="tmpl-filter-row">
+    <span class="tmpl-filter-label">バリエ</span>
+    <div class="tmpl-chips" data-axis="V"></div>
+  </div>
+  <p class="tmpl-hint">チップをクリック=絞り込み／もう一度クリック=解除。何も選ばないと全件表示。</p>
+</div>
+
+<div class="tmpl-summary" id="tmpl-summary"></div>
+<div class="tmpl-results" id="tmpl-results"></div>
+</div>
+</div>
+
 </div>
 
 <script>
+// In-page section scroll-spy (only for #anchors, not cross-page links)
 document.querySelectorAll('.section').forEach(el=>{new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.topbar-nav a[href^="#"]').forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.topbar-nav a[href="#${e.target.id}"]`);if(l)l.classList.add('active')}})},{threshold:.15,rootMargin:'-70px 0px 0px 0px'}).observe(el)});
+
+// ── 全テンプレート動的ローダー（gviz JSONP 経由でシート直結） ──
+(async () => {
+  const SHEET_ID = '1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY';
+  const GID = '1669364860';
+  const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${GID}&headers=1`;
+  const meta = document.getElementById('tmpl-meta');
+  const filtersEl = document.getElementById('tmpl-filters');
+  const resultsEl = document.getElementById('tmpl-results');
+  const summaryEl = document.getElementById('tmpl-summary');
+  if (!meta) return;
+
+  const F = { '軸1':'', '軸2':'', '軸3':'', 'V':'' };
+  let rows = [];
+
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+  function render() {
+    const filtered = rows.filter(r =>
+      (!F['軸1'] || r[1] === F['軸1']) &&
+      (!F['軸2'] || r[2] === F['軸2']) &&
+      (!F['軸3'] || r[3] === F['軸3']) &&
+      (!F['V']  || r[4] === F['V'])
+    );
+    summaryEl.textContent = `表示中：${filtered.length} / ${rows.length} 件`;
+    if (!filtered.length) {
+      resultsEl.innerHTML = '<div class="tmpl-empty">該当するテンプレートはありません</div>';
+      return;
+    }
+    resultsEl.innerHTML = filtered.map(r => {
+      const [id, a1, a2, a3, v, text, tone] = r;
+      const toneTag = tone
+        ? `<span class="tmpl-card-tag tmpl-tone-${escapeHtml(tone)}">${escapeHtml(tone)}</span>`
+        : '';
+      const body = escapeHtml(text).replace(/\{\{ニックネーム\}\}/g, '<em>{{ニックネーム}}</em>');
+      return `
+        <div class="tmpl-card">
+          <div class="tmpl-card-head">
+            <span class="tmpl-card-id">${escapeHtml(id)}</span>
+            ${toneTag}
+            <span class="tmpl-card-axes">${escapeHtml(a1)} ／ ${escapeHtml(a2)} ／ ${escapeHtml(a3)} ／ ${escapeHtml(v)}</span>
+          </div>
+          <div class="tmpl-card-body">${body}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  try {
+    const res = await fetch(URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    const text = await res.text();
+    const json = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
+    rows = json.table.rows.map(r => (r.c || []).map(c => (c && c.v != null ? String(c.v) : '')));
+    if (!rows.length) throw new Error('シートが空です');
+
+    meta.innerHTML = `✅ 読込完了：<strong>${rows.length}件</strong>　<span style="color:var(--text-light)">（${new Date().toLocaleString('ja-JP')} 取得）</span>`;
+    filtersEl.style.display = 'flex';
+
+    // チップ生成
+    const axes = { '軸1':1, '軸2':2, '軸3':3, 'V':4 };
+    Object.entries(axes).forEach(([axis, col]) => {
+      const vals = [...new Set(rows.map(r => r[col]).filter(Boolean))];
+      const container = filtersEl.querySelector(`[data-axis="${axis}"]`);
+      vals.forEach(v => {
+        const chip = document.createElement('div');
+        chip.className = 'tmpl-chip';
+        chip.textContent = v;
+        chip.onclick = () => {
+          F[axis] = F[axis] === v ? '' : v;
+          container.querySelectorAll('.tmpl-chip').forEach(c =>
+            c.classList.toggle('active', c.textContent === F[axis]));
+          render();
+        };
+        container.appendChild(chip);
+      });
+    });
+    render();
+  } catch (e) {
+    meta.innerHTML = `<div class="tmpl-error"><strong>シート読込失敗：${escapeHtml(e.message)}</strong>シートが「リンクを知っている全員に閲覧可」になっているかご確認ください。直接開く: <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID}" target="_blank" rel="noopener" style="color:var(--purple);font-weight:700">📊 スプレッドシート ↗</a></div>`;
+  }
+})();
 </script>
 </body>
 </html>
