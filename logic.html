@@ -139,55 +139,23 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 
 <div class="header">
 <h1>見守りプラス｜AIレポート仕様</h1>
-<p>テンプレートの組み合わせで「AIが考えたように見える」<br>月次レポートを自動生成する仕組み</p>
+<p>テンプレートの組み合わせで「AIが考えたように見える」<br>隔週レポートを自動生成する仕組み</p>
 <div class="header-meta">2026年5月20日｜PO確認済み</div>
 </div>
 
 <div class="main">
 
-<!-- ===== AIレポートと通知の区別 ===== -->
-<div class="section" style="margin-bottom:36px">
-<div class="distinguish">
-<span class="distinguish-label">はじめに ─ 用語の区別</span>
-<h3>「AIレポート」は「通知」ではありません</h3>
-<p class="d-lead">本ページが扱う<strong>AIレポート</strong>と、見守りプラスの<strong>通知</strong>は、<strong>目的・タイミング・性質が異なる別の仕組み</strong>です。<br>
-理屈で切り分けると ── <strong>通知</strong>は「いま、これが起きた」をその場で伝えるリアルタイムの連絡。<strong>AIレポート</strong>は、1ヶ月ぶんの通知ログを<em>あとから集計して</em>「今月はこうでした」とふり返る読み物。<br>
-つまり通知は<strong>素材（イベント）</strong>、AIレポートはそれを月末にまとめた<strong>成果物（手紙）</strong>。発生のたびに飛ぶ通知と、月1回だけ届くレポートは、別物として扱ってください。</p>
-<div class="vs-grid">
-<div class="vs-col vs-report">
-<div class="vs-tag">📄 AIレポート（本ページの対象）</div>
-<dl>
-<dt>目的</dt><dd>1ヶ月のふり返り</dd>
-<dt>頻度</dt><dd>月1回（毎月1日 朝10時）</dd>
-<dt>チャネル</dt><dd>メールのみ</dd>
-<dt>性質</dt><dd>まとめ・読み物（成果物）</dd>
-</dl>
-</div>
-<div class="vs-mid">≠</div>
-<div class="vs-col vs-notif">
-<div class="vs-tag">🔔 通知（別の仕組み）</div>
-<dl>
-<dt>目的</dt><dd>いま起きたことの連絡</dd>
-<dt>頻度</dt><dd>都度（リアルタイム）</dd>
-<dt>チャネル</dt><dd>LINE ／ プッシュ通知</dd>
-<dt>性質</dt><dd>緊急・日常のお知らせ（素材）</dd>
-</dl>
-</div>
-</div>
-</div>
-</div>
-
 <!-- ===== 概要 ===== -->
 <div class="section" id="overview">
 <div class="section-badge badge-overview">概要</div>
 <h2>AIレポートとは</h2>
-<p class="desc">毎月1日、メールで届く「あかりからの手紙」。使用状況に応じて文面が自動で変わる。</p>
+<p class="desc">隔週月曜、メールで届く「あかりからの手紙」。使用状況に応じて文面が自動で変わる。</p>
 
 <div class="card">
 <table class="tbl">
 <tr><th>項目</th><th>内容</th></tr>
 <tr><td>チャネル</td><td><strong>メールのみ</strong>（LINEでは送らない。LINEは緊急通知・日常通知に専念）</td></tr>
-<tr><td>頻度</td><td><strong>月1回</strong>（毎月1日 朝10時）</td></tr>
+<tr><td>頻度</td><td><strong>隔週1回</strong>（隔週月曜 朝10時）</td></tr>
 <tr><td>文面方式</td><td><strong>テンプレートエンジン</strong>（AI APIは使わない。テンプレートの組み合わせで実現）</td></tr>
 <tr><td>語り手</td><td><div style="display:flex;align-items:center;gap:12px"><img src="akari.png" alt="森川あかり" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #F5E6D3"><div><strong>森川あかり</strong>（サポート担当店長。「あかりからの手紙」の温度感）</div></div></td></tr>
 <tr><td>構成</td><td>4ブロック：①挨拶 → ②総評 → ③使用データ → ④締め</td></tr>
@@ -243,7 +211,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <h4>使用データ ─ 実数値（通知ログから自動集計）</h4>
 <div class="meta">通知ログの件数をそのまま表示 <span>自動生成</span></div>
 <p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">情緒的なメッセージ（②）と実数値（③）の両方があって、バランスの良いレポートに。</p>
-<div class="d-note">注記：ここで言う<strong>「通知ログ」「通知#4〜#6」</strong>は、デバイスの動作イベントを記録した<strong>集計用の内部データ</strong>を指します。ご家族のLINEに届く「通知」そのものではなく、その<strong>素材となる記録</strong>です（AIレポートはこれを月末に集計して文章化します）。以降のセクションの「通知」も同じ意味で使っています。</div>
+<div class="d-note">注記：ここで言う<strong>「通知ログ」「通知#4〜#6」</strong>は、デバイスの動作イベントを記録した<strong>集計用の内部データ</strong>を指します。ご家族のLINEに届く「通知」そのものではなく、その<strong>素材となる記録</strong>です（AIレポートはこれを集計して文章化します）。以降のセクションの「通知」も同じ意味で使っています。</div>
 <table class="tbl">
 <tr><th>項目</th><th>データ元</th><th>表示例</th></tr>
 <tr><td>コンセント接続</td><td>常時接続が前提</td><td>接続中 ✅</td></tr>
@@ -325,7 +293,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <tr><td><strong>使っていない</strong></td><td><span style="display:inline-block;font-size:.72rem;font-weight:700;color:#D06830;background:#FFF3E8;padding:2px 10px;border-radius:100px">やや注意</span></td><td><span style="display:inline-block;font-size:.72rem;font-weight:700;color:#D65050;background:#FFF0F0;padding:2px 10px;border-radius:100px">要注意</span></td><td><span style="display:inline-block;font-size:.72rem;font-weight:700;color:#D06830;background:#FFF3E8;padding:2px 10px;border-radius:100px">やや注意</span></td></tr>
 </tbody>
 </table>
-<p style="font-size:.78rem;color:var(--text-light);margin-top:10px">バリエーション：各組み合わせに V1 / V2 / V3 の3種の言い回しを用意し、毎月ローテーション（同じ文面が連続しないように）。<br>合計テンプレ数：27組合せ × 3バリエーション = <strong>81通り</strong>。<a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit?gid=1669364860" target="_blank" rel="noopener" style="color:var(--purple)">📊 全テンプレート一覧 ↗</a></p>
+<p style="font-size:.78rem;color:var(--text-light);margin-top:10px">バリエーション：各組み合わせに V1 / V2 / V3 の3種の言い回しを用意し、送信のたびにローテーション（同じ文面が連続しないように）。<br>合計テンプレ数：27組合せ × 3バリエーション = <strong>81通り</strong>。<a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit?gid=1669364860" target="_blank" rel="noopener" style="color:var(--purple)">📊 全テンプレート一覧 ↗</a></p>
 </div>
 </div>
 
