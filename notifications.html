@@ -126,37 +126,6 @@ const allNotifications = [
       extra:{ emoji:"💡", title:"考えられる原因", items:["solarichの電源がオフになっている","Wi-Fiドングルが抜けている、または故障している","コンセントが外れてバッテリーが切れた"] },
     },
   },
-  // ── 見守り通知（プッシュのみ）──
-  {
-    id:"w1", group:"watch", label:"①USB充電", badge:"見守り", badgeColor:"#757575",
-    trigger:"USB給電が開始された場合。",
-    push:{ title:"◯名前さん◯がUSBを使い始めました", body:"USB給電で利用中です", time:"08:12" },
-    line:null, email:null,
-  },
-  {
-    id:"w2", group:"watch", label:"②AC給電", badge:"見守り", badgeColor:"#757575",
-    trigger:"AC給電が開始された場合。",
-    push:{ title:"◯名前さん◯がコンセントを使っています", body:"AC給電で使用中です", time:"21:03" },
-    line:null, email:null,
-  },
-  {
-    id:"w3", group:"watch", label:"③ライト点灯", badge:"見守り", badgeColor:"#757575",
-    trigger:"ライトが点灯した場合。",
-    push:{ title:"◯名前さん◯がライトを点けました", body:"ライトを使用中です", time:"19:30" },
-    line:null, email:null,
-  },
-  {
-    id:"w4", group:"watch", label:"④未使用アラート", badge:"見守り", badgeColor:"#757575",
-    trigger:"一定期間（1ヶ月）利用なし。",
-    push:{ title:"しばらくソラリッチが使用されていません", body:"気になる場合は連絡してみましょう", time:"10:00" },
-    line:null, email:null,
-  },
-  {
-    id:"w5", group:"watch", label:"⑤見守りライト返答", badge:"見守り", badgeColor:"#757575",
-    trigger:"見守る側からのSOSライトを、LEDボタン1回押しで消灯。",
-    push:{ title:"◯名前さん◯から「見守りライト」へ返答がありました", body:"ソラリッチを操作できています", time:"15:03" },
-    line:null, email:null,
-  },
 ];
 
 function Divider(){ return <div style={{padding:"12px 0 0",color:"#ccc",fontSize:11,letterSpacing:3}}>━━━━━━━━━━━━━━━━━━</div>; }
@@ -343,7 +312,6 @@ function App(){
 
   const groups=[
     {label:"緊急通知",color:"#D32F2F",ids:["t1","t1r","t2","t2r","t3","t4"]},
-    {label:"見守り通知",color:"#757575",ids:["w1","w2","w3","w4","w5"]},
   ];
 
   return(
