@@ -49,6 +49,7 @@ const allNotifications = [
   // ── 緊急通知 ──
   {
     id:"t1", group:"urgent", label:"#1 停電アラート", badge:"緊急", badgeColor:"#D32F2F",
+    realEmail:"emails/緊急通知_01_停電.html",
     trigger:"コンセント給電が途絶して5分経過。停電と断定しない。",
     push:{ title:"◯名前さん◯の家が停電の可能性があります", body:"連絡を取ってください。", time:"18:46" },
     line:{ body:"◯苗字◯さん、あかりです🙏\n\n◯名前さん◯のsolarich\nコンセントが外れているようです🔌\n\n念のため◯名前さん◯に\nお電話でご様子を\n確認いただけると安心です🙏" },
@@ -62,6 +63,7 @@ const allNotifications = [
   },
   {
     id:"t1r", group:"recovery", label:"#1-R コンセント復旧", badge:"復旧", badgeColor:"#388E3C",
+    realEmail:"emails/緊急通知_02_停電復旧.html",
     trigger:"停電アラート送信後、コンセント給電が再開。",
     push:{ title:"◯名前さん◯のsolarich ── コンセントが復旧しました", body:"ご安心ください。", time:"19:12" },
     line:{ body:"◯苗字◯さん、あかりです😊\n\n◯名前さん◯のsolarich\nコンセントの接続が復旧しました🌸\n\nこれでまた◯名前さん◯のようすを\nお届けできます\n\nご安心くださいね💛" },
@@ -75,6 +77,7 @@ const allNotifications = [
   },
   {
     id:"t2", group:"urgent", label:"#2 SOSボタン", badge:"緊急", badgeColor:"#D32F2F",
+    realEmail:"emails/緊急通知_03_SOS.html",
     trigger:"本体のDCボタン押下でSOS発信。",
     push:{ title:"◯名前さん◯がSOSボタンを押しました", body:"すぐに連絡してください", time:"14:22" },
     line:{ body:"◯苗字◯さん、あかりです🙏\n\n◯名前さん◯がSOSボタンを押しました\n\nすぐに◯名前さん◯へ\nご連絡ください🙏" },
@@ -88,6 +91,7 @@ const allNotifications = [
   },
   {
     id:"t2r", group:"recovery", label:"#2-R ライト返答あり", badge:"復旧", badgeColor:"#388E3C",
+    realEmail:"emails/緊急通知_04_ライト返答.html",
     trigger:"見守りライト点灯後、本体LEDボタン1回押しで消灯。",
     push:{ title:"◯名前さん◯から「見守りライト」へ返答がありました", body:"ソラリッチを操作できています", time:"15:03" },
     line:{ body:"◯苗字◯さん、あかりです😊\n\n◯名前さん◯から\nお返事がありました🌸\n\nご心配おかけしました\n今日もお元気な様子です✨" },
@@ -101,6 +105,7 @@ const allNotifications = [
   },
   {
     id:"t3", group:"urgent", label:"#3 バッテリー低下", badge:"緊急", badgeColor:"#D32F2F",
+    realEmail:"emails/緊急通知_05_バッテリー低下.html",
     trigger:"バッテリー残量 ≤ 20%。",
     push:{ title:"◯名前さん◯のバッテリーが低下しています", body:"コンセント充電をお知らせください", time:"16:30" },
     line:{ body:"◯苗字◯さん、あかりです😊\n\n◯名前さん◯のsolarich\nバッテリーが少なめになっています🔋\n\n次に訪問されるときに\nコンセントを差し直して\nいただけると安心です🙏" },
@@ -114,6 +119,7 @@ const allNotifications = [
   },
   {
     id:"t4", group:"urgent", label:"#4 オフライン", badge:"緊急", badgeColor:"#D32F2F", isNew:true,
+    realEmail:"emails/緊急通知_06_オフライン.html",
     trigger:"電源オフまたはWi-Fiドングル故障で接続不可。",
     push:{ title:"◯名前さん◯のsolarichがオフラインです", body:"電源またはWi-Fiが切れています\n今すぐご確認ください", time:"16:05" },
     line:{ body:"◯苗字◯さん、あかりです🙏\n\n◯名前さん◯のsolarichと\n通信が途切れているようです📡\n\nドングルが抜けていないか\n次のご訪問時に\nご確認いただけると安心です🙏" },
@@ -266,6 +272,12 @@ function HtmlTemplate({n}){
   const e = n.email;
   return(
     <div style={{background:"#FAF8F5",border:"1px solid #E8E4DE",borderRadius:12,overflow:"hidden"}}>
+      {n.realEmail && (
+        <div style={{background:"#EDF2F8",padding:"10px 20px",borderBottom:"1px solid #DCE3EC",fontSize:12.5}}>
+          <a href={n.realEmail} target="_blank" rel="noopener" style={{color:"#5A7EB5",fontWeight:700,textDecoration:"none"}}>📎 実物HTMLを開く ↗</a>
+          <span style={{color:"#8E8E93",marginLeft:8,fontSize:11}}>（那須さんへの送付データ）</span>
+        </div>
+      )}
       <div style={{background:"#F5F5F5",padding:"12px 20px",borderBottom:"1px solid #E0E0E0",fontSize:13,color:"#666"}}>
         <strong style={{color:"#333"}}>件名：</strong>{e.subject}
       </div>
