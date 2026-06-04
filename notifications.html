@@ -40,7 +40,38 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel" data-type="module">
-const { useState } = React;
+const { useState, useRef, useEffect } = React;
+
+// 実物メールHTMLを iframe で埋め込み、コンテンツ高さに自動リサイズ（same-origin）
+function EmailIframe({src}) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const iframe = ref.current;
+    if (!iframe) return;
+    const resize = () => {
+      try {
+        const h = iframe.contentDocument.body.scrollHeight + 24;
+        iframe.style.height = h + "px";
+      } catch (e) {}
+    };
+    iframe.addEventListener("load", resize);
+    // 念のため少し遅らせて再計測（webfont読込後）
+    const t1 = setTimeout(resize, 300);
+    const t2 = setTimeout(resize, 1200);
+    return () => {
+      iframe.removeEventListener("load", resize);
+      clearTimeout(t1); clearTimeout(t2);
+    };
+  }, [src]);
+  return (
+    <iframe
+      ref={ref}
+      src={src}
+      title="実物メールHTML"
+      style={{width:"100%",minHeight:600,border:"1px solid #E8E4DE",borderRadius:8,background:"#F1ECE4",display:"block"}}
+    />
+  );
+}
 
 /* ══════════════════════════════════════════
    全通知データ（緊急＋復旧＋見守り）
@@ -264,20 +295,27 @@ function Empty({label}){
 }
 
 function HtmlTemplate({n}){
-  if(!n.email) return(
+  if(!n.realEmail && !n.email) return(
     <div style={{background:"#F5F3EE",borderRadius:12,padding:40,textAlign:"center",color:"#999",fontSize:13}}>
       この通知にメールテンプレートはありません<br/>（プッシュ通知のみ）
     </div>
   );
+  // 実物HTMLがある場合は iframe で原物をそのまま表示（emails/ が単一の真実の源）
+  if (n.realEmail) {
+    return (
+      <div style={{background:"#FAF8F5",border:"1px solid #E8E4DE",borderRadius:12,overflow:"hidden"}}>
+        <div style={{background:"#EDF2F8",padding:"10px 20px",borderBottom:"1px solid #DCE3EC",fontSize:12.5,display:"flex",alignItems:"center",justifyContent:"space-between",gap:10,flexWrap:"wrap"}}>
+          <span style={{color:"#5A7EB5",fontWeight:700}}>📧 実物メールHTML プレビュー</span>
+          <a href={n.realEmail} target="_blank" rel="noopener" style={{color:"#5A7EB5",fontWeight:700,textDecoration:"none",fontSize:12}}>📎 別タブで開く ↗</a>
+        </div>
+        <EmailIframe src={n.realEmail} />
+      </div>
+    );
+  }
+  // フォールバック：realEmail がない通知はこれまでのモック表示
   const e = n.email;
   return(
     <div style={{background:"#FAF8F5",border:"1px solid #E8E4DE",borderRadius:12,overflow:"hidden"}}>
-      {n.realEmail && (
-        <div style={{background:"#EDF2F8",padding:"10px 20px",borderBottom:"1px solid #DCE3EC",fontSize:12.5}}>
-          <a href={n.realEmail} target="_blank" rel="noopener" style={{color:"#5A7EB5",fontWeight:700,textDecoration:"none"}}>📎 実物HTMLを開く ↗</a>
-          <span style={{color:"#8E8E93",marginLeft:8,fontSize:11}}>（那須さんへの送付データ）</span>
-        </div>
-      )}
       <div style={{background:"#F5F5F5",padding:"12px 20px",borderBottom:"1px solid #E0E0E0",fontSize:13,color:"#666"}}>
         <strong style={{color:"#333"}}>件名：</strong>{e.subject}
       </div>
