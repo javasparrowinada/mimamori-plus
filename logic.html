@@ -135,7 +135,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <a href="logic.html" class="active">AIレポート仕様</a>
 <a href="notifications.html">通知テンプレート</a>
 </nav>
-<a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit" target="_blank" rel="noopener" class="topbar-sheet">📊 スプレッドシート ↗</a>
+<a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit" target="_blank" rel="noopener" class="topbar-sheet">📊 レポートパターン一覧 ↗</a>
 </div>
 
 <div class="header">
@@ -302,7 +302,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <div class="section" id="examples">
 <div class="section-badge badge-example">レポート全体例</div>
 <h2>実際のメールはこうなる ─ 全81テンプレートから3例を抜粋</h2>
-<p class="desc">同じテンプレートエンジンから、安心なケースと心配なケースで<br>全く違うトーンのレポートが出力される。<br><span style="font-size:.78rem">残り78テンプレートは <a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit?gid=1669364860" target="_blank" rel="noopener" style="color:var(--purple);font-weight:700">📊 スプレッドシート ↗</a> で全文確認できます。</span></p>
+<p class="desc">同じテンプレートエンジンから、安心なケースと心配なケースで<br>全く違うトーンのレポートが出力される。<br><span style="font-size:.78rem">残り78テンプレートは <a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit?gid=1669364860" target="_blank" rel="noopener" style="color:var(--purple);font-weight:700">📊 レポートパターン一覧 ↗</a> で全文確認できます。</span></p>
 
 <!-- 安心ケース -->
 <div class="card">
@@ -452,7 +452,7 @@ document.querySelectorAll('.section').forEach(el=>{new IntersectionObserver(e=>{
     });
     render();
   } catch (e) {
-    meta.innerHTML = `<div class="tmpl-error"><strong>シート読込失敗：${escapeHtml(e.message)}</strong>シートが「リンクを知っている全員に閲覧可」になっているかご確認ください。直接開く: <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID}" target="_blank" rel="noopener" style="color:var(--purple);font-weight:700">📊 スプレッドシート ↗</a></div>`;
+    meta.innerHTML = `<div class="tmpl-error"><strong>シート読込失敗：${escapeHtml(e.message)}</strong>シートが「リンクを知っている全員に閲覧可」になっているかご確認ください。直接開く: <a href="https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit?gid=${GID}" target="_blank" rel="noopener" style="color:var(--purple);font-weight:700">📊 レポートパターン一覧 ↗</a></div>`;
   }
 })();
 </script>
