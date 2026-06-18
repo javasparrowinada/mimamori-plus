@@ -7,8 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;--green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;--text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;--shadow:0 4px 24px rgba(45,42,38,.06)}
-html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;line-height:1.85;font-size:15px}
+:root{
+  --cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;
+  --green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;
+  --text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;
+  --red:#D65050;--red-light:#FFF0F0;--blue:#5A7EB5;--blue-light:#EDF2F8;
+  --shadow:0 4px 24px rgba(45,42,38,.06);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;line-height:1.85;font-size:15px}
+
 .topbar{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);padding:14px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .topbar-brand{font-weight:900;font-size:.85rem;color:var(--green-dark)}
 .topbar-brand a{color:inherit;text-decoration:none}
@@ -16,9 +24,25 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 .topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
 .topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}
 @media(max-width:640px){.topbar-nav{display:none}}
-.placeholder{max-width:720px;margin:80px auto;padding:0 24px;text-align:center;color:#8E8E93}
-.placeholder h1{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:12px}
-.placeholder p{font-size:.85rem;line-height:1.9}
+
+.page-head{max-width:1200px;margin:0 auto;padding:48px 24px 24px}
+.page-head h1{font-size:1.4rem;font-weight:900;margin-bottom:8px}
+.page-head .lead{font-size:.85rem;color:var(--text-light);max-width:760px;line-height:1.8}
+
+.design-section{max-width:1200px;margin:0 auto;padding:32px 24px 56px}
+.design-section h2{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+.design-section .sub{font-size:.75rem;color:var(--text-light);margin-bottom:24px}
+
+.compare{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:flex-start}
+@media(max-width:980px){.compare{grid-template-columns:1fr}}
+
+.viewport-tag{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;color:var(--text-light);background:#fff;padding:5px 10px;border-radius:100px;border:1px solid #E8E4DE;margin-bottom:10px}
+
+.pc-frame{background:#fff;border:1px solid #E0DCD2;border-radius:12px;padding:16px;box-shadow:var(--shadow);max-width:720px}
+.sp-frame{background:#1C1C1E;border-radius:36px;padding:14px;width:380px;max-width:100%;box-shadow:0 12px 40px rgba(0,0,0,.18)}
+.sp-frame .screen{background:#fff;border-radius:24px;overflow:hidden;padding:8px}
+
+.email-iframe{width:100%;min-height:600px;border:1px solid #E8E4DE;border-radius:8px;background:#F1ECE4;display:block}
 </style>
 </head>
 <body>
@@ -33,10 +57,113 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
   </nav>
 </div>
 
-<div class="placeholder">
-  <h1>デザインB</h1>
-  <p>準備中</p>
+<div class="page-head">
+  <h1>デザインB（岩井さん確認用）</h1>
+  <p class="lead">
+    既存の実装メールデザイン。PC UI（幅広）と スマホ UI（幅狭・電話フレーム）で並列表示。<br>
+    デザインA（新案）との比較用。
+  </p>
 </div>
+
+<section class="design-section">
+  <h2>① みまもりレポート（月次）</h2>
+  <div class="sub">月に1回送られる定期レポート。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/AIレポート_01_anshin.html" title="みまもりレポート"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/AIレポート_01_anshin.html" title="みまもりレポート"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>② 【緊急】停電アラート</h2>
+  <div class="sub">コンセント外れ or 停電を検知。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/緊急通知_01_停電.html" title="停電アラート"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/緊急通知_01_停電.html" title="停電アラート"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>③ 【緊急】SOSボタン</h2>
+  <div class="sub">本人が SOS ボタンを押下。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/緊急通知_03_SOS.html" title="SOSボタン"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/緊急通知_03_SOS.html" title="SOSボタン"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>④ 【緊急】オフライン</h2>
+  <div class="sub">通信途絶。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/緊急通知_06_オフライン.html" title="オフライン"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/緊急通知_06_オフライン.html" title="オフライン"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>⑤ 【注意】バッテリー残量低下</h2>
+  <div class="sub">残量20%未満を検知。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/緊急通知_05_バッテリー低下.html" title="バッテリー残量低下"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/緊急通知_05_バッテリー低下.html" title="バッテリー残量低下"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>⑥ 【安心】返信を受け取りました（ライト返答）</h2>
+  <div class="sub">見守りライトへの返答 = 無事のサイン。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/緊急通知_04_ライト返答.html" title="ライト返答"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/緊急通知_04_ライト返答.html" title="ライト返答"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>⑦ 【安心】AC給電を確認</h2>
+  <div class="sub">コンセント給電を検知。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/通常見守り_01_AC給電.html" title="AC給電"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/通常見守り_01_AC給電.html" title="AC給電"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>⑧ 【安心】ライト点灯を確認</h2>
+  <div class="sub">本人がライト点灯。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/通常見守り_03_ライト点灯.html" title="ライト点灯"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/通常見守り_03_ライト点灯.html" title="ライト点灯"></iframe></div></div></div>
+  </div>
+</section>
+
+<section class="design-section">
+  <h2>⑨ 【安心】USB給電を確認</h2>
+  <div class="sub">USB ポート給電を検知。</div>
+  <div class="compare">
+    <div><div class="viewport-tag">🖥️ PC UI</div><div class="pc-frame"><iframe class="email-iframe" src="emails/通常見守り_02_USB給電.html" title="USB給電"></iframe></div></div>
+    <div><div class="viewport-tag">📱 スマホ UI</div><div class="sp-frame"><div class="screen"><iframe class="email-iframe" src="emails/通常見守り_02_USB給電.html" title="USB給電"></iframe></div></div></div>
+  </div>
+</section>
+
+<script>
+// 同一オリジンの iframe を中身の高さに合わせて自動リサイズ
+function resizeIframe(iframe){
+  try {
+    const h = iframe.contentDocument.body.scrollHeight + 24;
+    iframe.style.height = h + 'px';
+  } catch(e) {}
+}
+document.querySelectorAll('iframe.email-iframe').forEach(iframe => {
+  iframe.addEventListener('load', () => resizeIframe(iframe));
+  // webfont 読込後の再計測
+  setTimeout(() => resizeIframe(iframe), 400);
+  setTimeout(() => resizeIframe(iframe), 1500);
+});
+window.addEventListener('resize', () => {
+  document.querySelectorAll('iframe.email-iframe').forEach(resizeIframe);
+});
+</script>
 
 </body>
 </html>
