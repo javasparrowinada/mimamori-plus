@@ -11,7 +11,6 @@
   --cream:#FFF8F0;--warm:#F5E6D3;--orange:#E8834A;--orange-dark:#D06830;
   --green:#5B8C5A;--green-light:#E8F0E4;--green-dark:#3D6B3C;
   --text:#2D2A26;--text-light:#6B6560;--white:#FFFFFF;
-  --red:#D65050;--red-light:#FFF0F0;--blue:#5A7EB5;--blue-light:#EDF2F8;
   --shadow:0 4px 24px rgba(45,42,38,.06);
 }
 html{scroll-behavior:smooth}
@@ -23,38 +22,38 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
 .topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}
 
-.page-head{max-width:1400px;margin:0 auto;padding:32px 24px 12px}
+.page-head{max-width:1200px;margin:0 auto;padding:32px 24px 16px}
 .page-head h1{font-size:1.4rem;font-weight:900;margin-bottom:6px}
 .page-head .lead{font-size:.82rem;color:var(--text-light);line-height:1.7}
 .page-head .alpha{display:inline-block;background:#FFF3C4;color:#946800;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:100px;margin-left:10px;vertical-align:middle}
 
-/* ── editor toolbar ── */
+/* ── editor toolbar (sticky) ── */
 .toolbar{position:sticky;top:51px;z-index:90;background:#fff;border-bottom:1px solid #E0DCD2;padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.72rem;color:var(--text-light)}
 .toolbar select,.toolbar input[type=number],.toolbar input[type=color]{font-size:.72rem;padding:5px 8px;border:1px solid #D5D0C8;border-radius:6px;background:#fff;font-family:inherit}
 .toolbar input[type=color]{padding:2px;width:34px;height:28px;cursor:pointer}
 .toolbar button{font-size:.72rem;padding:5px 10px;border:1px solid #D5D0C8;border-radius:6px;background:#fff;cursor:pointer;font-family:inherit;font-weight:700;color:var(--text)}
-.toolbar button:hover{background:#F5F3EE}
+.toolbar button:hover:not(:disabled){background:#F5F3EE}
 .toolbar button.active{background:var(--green-dark);color:#fff;border-color:var(--green-dark)}
+.toolbar button:disabled,.toolbar select:disabled,.toolbar input:disabled{opacity:.4;cursor:not-allowed}
 .toolbar .group{display:flex;align-items:center;gap:5px;padding-right:10px;border-right:1px solid #E0DCD2}
-.toolbar .group:last-child{border-right:none}
+.toolbar .group:last-child{border-right:none;margin-left:auto}
 .toolbar .label{font-size:.65rem;color:#999;margin-right:2px}
 
-.template-picker{max-width:1400px;margin:0 auto;padding:16px 24px}
-.template-picker label{font-size:.72rem;color:var(--text-light);margin-right:8px;font-weight:700}
-.template-picker select{font-size:.85rem;padding:7px 12px;border:1px solid #D5D0C8;border-radius:8px;background:#fff;font-family:inherit;min-width:280px}
-.template-picker button{font-size:.72rem;padding:7px 14px;border:1px solid var(--green-dark);background:var(--green-dark);color:#fff;border-radius:8px;cursor:pointer;font-weight:700;margin-left:10px}
-.template-picker button.ghost{background:#fff;color:var(--green-dark)}
+.help-note{max-width:1200px;margin:0 auto;padding:14px 24px 0;font-size:.7rem;color:var(--text-light);line-height:1.7}
+.help-note kbd{background:#fff;border:1px solid #D5D0C8;border-radius:4px;padding:1px 6px;font-family:ui-monospace,monospace;font-size:.65rem}
 
-/* ── editor area ── */
-.editor-stage{max-width:1400px;margin:0 auto;padding:8px 24px 56px}
-.editor-grid{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:flex-start}
-@media(max-width:980px){.editor-grid{grid-template-columns:1fr}}
+.design-section{max-width:1200px;margin:0 auto;padding:24px 24px 40px}
+.design-section h2{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+.design-section .sub{font-size:.75rem;color:var(--text-light);margin-bottom:18px}
+
+.compare{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:flex-start}
+@media(max-width:980px){.compare{grid-template-columns:1fr}}
+
 .viewport-tag{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;color:var(--text-light);background:#fff;padding:5px 10px;border-radius:100px;border:1px solid #E8E4DE;margin-bottom:10px}
 
-.pc-frame,.sp-frame{position:relative}
 .pc-frame{background:#fff;border:1px solid #E0DCD2;border-radius:12px;padding:16px;box-shadow:var(--shadow);max-width:720px}
 .sp-frame{background:#1C1C1E;border-radius:36px;padding:14px;width:380px;max-width:100%;box-shadow:0 12px 40px rgba(0,0,0,.18)}
-.sp-frame .screen{background:#fff;border-radius:24px;overflow:hidden;padding:8px;position:relative}
+.sp-frame .screen{background:#fff;border-radius:24px;overflow:hidden;padding:8px}
 
 .email-iframe{width:100%;min-height:600px;border:1px solid #E8E4DE;border-radius:8px;background:#FFFFFF;display:block}
 
@@ -65,8 +64,9 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .status-bar{position:fixed;bottom:14px;right:14px;background:rgba(0,0,0,.78);color:#fff;font-size:.7rem;padding:8px 14px;border-radius:100px;opacity:0;transition:opacity .25s;z-index:200;font-weight:700}
 .status-bar.show{opacity:1}
 
-.help-note{margin:8px 0 18px;font-size:.7rem;color:var(--text-light);line-height:1.7}
-.help-note kbd{background:#fff;border:1px solid #D5D0C8;border-radius:4px;padding:1px 6px;font-family:ui-monospace,monospace;font-size:.65rem}
+.global-actions{max-width:1200px;margin:0 auto;padding:0 24px}
+.global-actions button{font-size:.7rem;padding:6px 14px;border:1px solid #D5D0C8;border-radius:100px;background:#fff;cursor:pointer;font-family:inherit;font-weight:700;color:var(--text)}
+.global-actions button:hover{background:#F5F3EE}
 </style>
 </head>
 <body>
@@ -85,25 +85,9 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 <div class="page-head">
   <h1>デザインB（編集モード）<span class="alpha">α / 開発中</span></h1>
   <p class="lead">
-    Canvaのように直接編集できる WYSIWYG エディタ。テキスト編集・フォント・色・サイズが調整可能。<br>
-    PC側 / スマホ側 をそれぞれ独立して編集できます。「別画面で開く」で編集結果を確認、「HTML 書き出し」で配布用ファイルとしてダウンロード可能。
+    デザインBの大枠そのまま、9通のメールテンプレートを並列表示。各カードの PC / スマホ それぞれに直接編集できます。<br>
+    テキストをクリック → 上部ツールバーでフォント・色・サイズ・装飾を変更。編集は自動でこのブラウザに保存されます。
   </p>
-</div>
-
-<div class="template-picker">
-  <label for="tplSelect">テンプレート:</label>
-  <select id="tplSelect">
-    <option value="emails-b/AIレポート_01_anshin.html">① みまもりレポート（月次）</option>
-    <option value="emails-b/緊急通知_01_停電.html">② 【緊急】停電アラート</option>
-    <option value="emails-b/緊急通知_03_SOS.html">③ 【緊急】SOSボタン</option>
-    <option value="emails-b/緊急通知_06_オフライン.html">④ 【緊急】オフライン</option>
-    <option value="emails-b/緊急通知_05_バッテリー低下.html">⑤ 【注意】バッテリー残量低下</option>
-    <option value="emails-b/緊急通知_04_ライト返答.html">⑥ 【安心】返信を受け取りました</option>
-    <option value="emails-b/通常見守り_01_AC給電.html">⑦ 【安心】AC給電を確認</option>
-    <option value="emails-b/通常見守り_03_ライト点灯.html">⑧ 【安心】ライト点灯を確認</option>
-    <option value="emails-b/通常見守り_02_USB給電.html">⑨ 【安心】USB給電を確認</option>
-  </select>
-  <button id="btnReset" class="ghost">編集をリセット</button>
 </div>
 
 <div class="toolbar" id="toolbar">
@@ -147,55 +131,178 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
     <button id="btnAlignC" disabled>中</button>
     <button id="btnAlignR" disabled>右</button>
   </div>
+  <div class="group">
+    <button id="btnResetAll" title="全テンプレの編集をリセット">全リセット</button>
+  </div>
 </div>
 
-<div class="help-note" style="max-width:1400px;margin:0 auto;padding:0 24px">
-  <strong>使い方:</strong>
-  プレビュー内のテキストを<kbd>クリック</kbd>すると選択されてツールバーで編集可能になります。
-  PC側とスマホ側はそれぞれ独立。
-  編集は自動でブラウザ内に保存されます（このPCでのみ復元）。
-  <br>
-  <strong>注意:</strong> α 版のため画像追加・自由配置・書き出しは未実装（今後追加予定）。
+<div class="help-note">
+  <strong>使い方:</strong> 各カードの PC / スマホ プレビュー内のテキストを<kbd>クリック</kbd>で選択 → 上部ツールバーで編集。
+  選択中は要素がオレンジで縁取り、編集中の要素は青で縁取り表示します。
+  <kbd>Esc</kbd>で選択解除。各カード横の「別画面で開く」で編集結果を確認できます。
+  <br><strong>α 版機能:</strong> テキスト編集（フォント / 色 / サイズ / 装飾 / 配置）+ 別画面で開く。
+  <em>画像追加 / 自由配置 / 書き出し（HTML+CSS+画像zip）は次フェーズで追加予定。</em>
 </div>
 
-<div class="editor-stage">
-  <div class="editor-grid">
+<!-- ───── 9 templates stacked, each independently editable ───── -->
+<section class="design-section" data-tpl="emails-b/AIレポート_01_anshin.html" data-tpl-id="t1">
+  <h2>① みまもりレポート（月次）</h2>
+  <div class="sub">月に1回送られる定期レポート。</div>
+  <div class="compare">
     <div>
       <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
-      <div class="pc-frame">
-        <iframe id="iframePc" class="email-iframe" src="emails-b/AIレポート_01_anshin.html?edit=1"></iframe>
-      </div>
-      <div class="frame-actions">
-        <span>クリックしてテキストを編集</span>
-        <span>
-          <button id="btnOpenPc">別画面で開く ↗</button>
-          <button id="btnExportPc" disabled title="フェーズ5で実装予定">HTML 書き出し (準備中)</button>
-        </span>
-      </div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/AIレポート_01_anshin.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
     </div>
     <div>
       <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
-      <div class="sp-frame"><div class="screen">
-        <iframe id="iframeSp" class="email-iframe" src="emails-b/AIレポート_01_anshin.html?edit=1"></iframe>
-      </div></div>
-      <div class="frame-actions">
-        <span>クリックしてテキストを編集</span>
-        <span>
-          <button id="btnOpenSp">別画面で開く ↗</button>
-          <button id="btnExportSp" disabled title="フェーズ5で実装予定">HTML 書き出し (準備中)</button>
-        </span>
-      </div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/AIレポート_01_anshin.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
     </div>
   </div>
-</div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/緊急通知_01_停電.html" data-tpl-id="t2">
+  <h2>② 【緊急】停電アラート</h2>
+  <div class="sub">コンセント外れ or 停電を検知。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/緊急通知_01_停電.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/緊急通知_01_停電.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/緊急通知_03_SOS.html" data-tpl-id="t3">
+  <h2>③ 【緊急】SOSボタン</h2>
+  <div class="sub">本人が SOS ボタンを押下。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/緊急通知_03_SOS.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/緊急通知_03_SOS.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/緊急通知_06_オフライン.html" data-tpl-id="t4">
+  <h2>④ 【緊急】オフライン</h2>
+  <div class="sub">通信途絶。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/緊急通知_06_オフライン.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/緊急通知_06_オフライン.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/緊急通知_05_バッテリー低下.html" data-tpl-id="t5">
+  <h2>⑤ 【注意】バッテリー残量低下</h2>
+  <div class="sub">残量20%未満を検知。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/緊急通知_05_バッテリー低下.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/緊急通知_05_バッテリー低下.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/緊急通知_04_ライト返答.html" data-tpl-id="t6">
+  <h2>⑥ 【安心】返信を受け取りました</h2>
+  <div class="sub">見守りライトへの返答 = 無事のサイン。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/緊急通知_04_ライト返答.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/緊急通知_04_ライト返答.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/通常見守り_01_AC給電.html" data-tpl-id="t7">
+  <h2>⑦ 【安心】AC給電を確認</h2>
+  <div class="sub">コンセント給電を検知。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/通常見守り_01_AC給電.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/通常見守り_01_AC給電.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/通常見守り_03_ライト点灯.html" data-tpl-id="t8">
+  <h2>⑧ 【安心】ライト点灯を確認</h2>
+  <div class="sub">本人がライト点灯。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/通常見守り_03_ライト点灯.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/通常見守り_03_ライト点灯.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="design-section" data-tpl="emails-b/通常見守り_02_USB給電.html" data-tpl-id="t9">
+  <h2>⑨ 【安心】USB給電を確認</h2>
+  <div class="sub">USB ポート給電を検知。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/通常見守り_02_USB給電.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/通常見守り_02_USB給電.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
 
 <div id="status" class="status-bar"></div>
 
 <script>
-// =============== shared state ===============
 const STORAGE_KEY = 'design-b-edit-state';
-let currentTpl = document.getElementById('tplSelect').value;
-let selectedEl = null;   // currently selected text element (in active iframe)
+let selectedEl = null;
 let selectedIframe = null;
 
 function showStatus(msg){
@@ -203,22 +310,21 @@ function showStatus(msg){
   el.textContent = msg;
   el.classList.add('show');
   clearTimeout(showStatus._t);
-  showStatus._t = setTimeout(()=>el.classList.remove('show'), 1800);
+  showStatus._t = setTimeout(()=>el.classList.remove('show'), 1500);
 }
 
-function loadState(){
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ return {}; }
-}
-function saveState(state){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+function loadState(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ return {}; } }
+function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+function getKey(iframe){
+  const section = iframe.closest('.design-section');
+  return section.dataset.tplId + '|' + iframe.dataset.role;
 }
 
-// =============== iframe edit setup ===============
-function makeEditable(iframe, role){  // role: 'pc' | 'sp'
+function makeEditable(iframe){
   const doc = iframe.contentDocument;
   if(!doc || !doc.body) return;
 
-  // Walk text-bearing elements and make contenteditable
   const selectors = ['p','div','span','td','a','strong','em','h1','h2','h3','h4'];
   const allTextEls = new Set();
   selectors.forEach(sel => {
@@ -229,17 +335,15 @@ function makeEditable(iframe, role){  // role: 'pc' | 'sp'
     });
   });
 
-  // Assign IDs for state persistence
   let i = 0;
   allTextEls.forEach(el => {
-    if(!el.dataset.editId) el.dataset.editId = role + '-' + (i++);
+    if(!el.dataset.editId) el.dataset.editId = 'e' + (i++);
   });
 
-  // Restore saved state
+  const key = getKey(iframe);
   const state = loadState();
-  const tplKey = currentTpl + '|' + role;
-  if(state[tplKey]){
-    Object.entries(state[tplKey]).forEach(([editId, props]) => {
+  if(state[key]){
+    Object.entries(state[key]).forEach(([editId, props]) => {
       const el = doc.querySelector(`[data-edit-id="${editId}"]`);
       if(!el) return;
       if(props.text !== undefined) el.textContent = props.text;
@@ -249,7 +353,6 @@ function makeEditable(iframe, role){  // role: 'pc' | 'sp'
     });
   }
 
-  // Attach click/edit handlers
   allTextEls.forEach(el => {
     el.contentEditable = 'true';
     el.style.outline = 'none';
@@ -258,16 +361,13 @@ function makeEditable(iframe, role){  // role: 'pc' | 'sp'
       e.stopPropagation();
       selectElement(el, iframe);
     });
-    el.addEventListener('input', () => persistChange(el, role));
-    el.addEventListener('mouseover', e => { if(el !== selectedEl) el.style.boxShadow = 'inset 0 0 0 1px #4DB8E4'; });
-    el.addEventListener('mouseout', e => { if(el !== selectedEl) el.style.boxShadow = 'none'; });
+    el.addEventListener('input', () => persistChange(el, iframe));
+    el.addEventListener('mouseover', () => { if(el !== selectedEl) el.style.boxShadow = 'inset 0 0 0 1px #4DB8E4'; });
+    el.addEventListener('mouseout', () => { if(el !== selectedEl) el.style.boxShadow = 'none'; });
   });
 
-  // click on background clears selection
   doc.body.addEventListener('click', e => {
-    if(e.target === doc.body || e.target.tagName === 'HTML'){
-      clearSelection();
-    }
+    if(e.target === doc.body || e.target.tagName === 'HTML') clearSelection();
   });
 }
 
@@ -278,17 +378,15 @@ function selectElement(el, iframe){
   el.style.boxShadow = 'inset 0 0 0 2px #E8943A';
 
   const cs = iframe.contentWindow.getComputedStyle(el);
+  const section = iframe.closest('.design-section');
   document.getElementById('targetLabel').textContent =
-    el.tagName.toLowerCase() + ' "' + (el.textContent || '').slice(0,18) + (el.textContent.length>18?'…':'') + '"';
+    section.querySelector('h2').textContent.split(' ')[0] + ' / ' + iframe.dataset.role.toUpperCase() + ' / ' +
+    el.tagName.toLowerCase() + ' "' + (el.textContent || '').slice(0,14) + (el.textContent.length>14?'…':'') + '"';
 
-  const ff = document.getElementById('fontFamily');
-  const fs = document.getElementById('fontSize');
-  const fc = document.getElementById('fontColor');
-  ff.value = el.style.fontFamily || '';
-  fs.value = parseInt(cs.fontSize, 10) || 14;
-  fc.value = rgbToHex(cs.color);
-  // Enable controls
-  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button').forEach(c => c.disabled = false);
+  document.getElementById('fontFamily').value = el.style.fontFamily || '';
+  document.getElementById('fontSize').value = parseInt(cs.fontSize, 10) || 14;
+  document.getElementById('fontColor').value = rgbToHex(cs.color);
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = false);
   updateButtonStates(cs);
 }
 
@@ -297,7 +395,7 @@ function clearSelection(){
   selectedEl = null;
   selectedIframe = null;
   document.getElementById('targetLabel').textContent = 'テキストをクリックして選択';
-  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button').forEach(c => c.disabled = true);
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = true);
   document.querySelectorAll('#toolbar button').forEach(b => b.classList.remove('active'));
 }
 
@@ -317,100 +415,83 @@ function rgbToHex(rgb){
   return '#' + m.slice(0,3).map(n => parseInt(n).toString(16).padStart(2,'0')).join('');
 }
 
-function persistChange(el, role){
+function persistChange(el, iframe){
   if(!el.dataset.editId) return;
   const state = loadState();
-  const tplKey = currentTpl + '|' + role;
-  state[tplKey] = state[tplKey] || {};
-  const entry = state[tplKey][el.dataset.editId] = state[tplKey][el.dataset.editId] || {};
+  const key = getKey(iframe);
+  state[key] = state[key] || {};
+  const entry = state[key][el.dataset.editId] = state[key][el.dataset.editId] || {};
   entry.text = el.textContent;
   ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => {
     if(el.style[p]) entry[p] = el.style[p];
   });
   saveState(state);
-  showStatus('編集を保存しました');
+  showStatus('保存しました');
 }
 
-// =============== toolbar handlers ===============
+// toolbar handlers
 document.getElementById('fontFamily').addEventListener('change', e => {
   if(!selectedEl) return;
   selectedEl.style.fontFamily = e.target.value;
-  persistChange(selectedEl, selectedIframe.id === 'iframePc' ? 'pc' : 'sp');
+  persistChange(selectedEl, selectedIframe);
 });
 document.getElementById('fontSize').addEventListener('input', e => {
   if(!selectedEl) return;
   selectedEl.style.fontSize = e.target.value + 'px';
-  persistChange(selectedEl, selectedIframe.id === 'iframePc' ? 'pc' : 'sp');
+  persistChange(selectedEl, selectedIframe);
 });
 document.getElementById('fontColor').addEventListener('input', e => {
   if(!selectedEl) return;
   selectedEl.style.color = e.target.value;
-  persistChange(selectedEl, selectedIframe.id === 'iframePc' ? 'pc' : 'sp');
+  persistChange(selectedEl, selectedIframe);
 });
 function toggleStyle(prop, on, off){
   if(!selectedEl) return;
   const cur = selectedEl.style[prop] || '';
   selectedEl.style[prop] = cur === on ? off : on;
-  persistChange(selectedEl, selectedIframe.id === 'iframePc' ? 'pc' : 'sp');
-  const cs = selectedIframe.contentWindow.getComputedStyle(selectedEl);
-  updateButtonStates(cs);
+  persistChange(selectedEl, selectedIframe);
+  updateButtonStates(selectedIframe.contentWindow.getComputedStyle(selectedEl));
 }
-document.getElementById('btnBold').addEventListener('click', () => toggleStyle('fontWeight', 'bold', 'normal'));
-document.getElementById('btnItalic').addEventListener('click', () => toggleStyle('fontStyle', 'italic', 'normal'));
-document.getElementById('btnUnderline').addEventListener('click', () => toggleStyle('textDecoration', 'underline', 'none'));
+document.getElementById('btnBold').addEventListener('click', () => toggleStyle('fontWeight','bold','normal'));
+document.getElementById('btnItalic').addEventListener('click', () => toggleStyle('fontStyle','italic','normal'));
+document.getElementById('btnUnderline').addEventListener('click', () => toggleStyle('textDecoration','underline','none'));
 ['L','C','R'].forEach(k => {
   const map = {L:'left',C:'center',R:'right'};
   document.getElementById('btnAlign'+k).addEventListener('click', () => {
     if(!selectedEl) return;
     selectedEl.style.textAlign = map[k];
-    persistChange(selectedEl, selectedIframe.id === 'iframePc' ? 'pc' : 'sp');
-    const cs = selectedIframe.contentWindow.getComputedStyle(selectedEl);
-    updateButtonStates(cs);
+    persistChange(selectedEl, selectedIframe);
+    updateButtonStates(selectedIframe.contentWindow.getComputedStyle(selectedEl));
   });
 });
 
-// =============== template switching ===============
-function loadTemplate(src){
-  currentTpl = src;
-  document.getElementById('iframePc').src = src + '?edit=1&_r=' + Math.random();
-  document.getElementById('iframeSp').src = src + '?edit=1&_r=' + Math.random();
-  clearSelection();
-}
-document.getElementById('tplSelect').addEventListener('change', e => loadTemplate(e.target.value));
-document.getElementById('btnReset').addEventListener('click', () => {
-  if(!confirm('この PC でのこのテンプレの編集をリセットします。よろしいですか？')) return;
-  const state = loadState();
-  delete state[currentTpl + '|pc'];
-  delete state[currentTpl + '|sp'];
-  saveState(state);
-  loadTemplate(currentTpl);
-  showStatus('リセットしました');
+document.getElementById('btnResetAll').addEventListener('click', () => {
+  if(!confirm('全テンプレ・全カードの編集を全部リセットします。よろしいですか？')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
 });
 
-// =============== open in new window ===============
-function openInNewWindow(iframe, label){
-  const doc = iframe.contentDocument;
-  const html = '<!DOCTYPE html>\n<html lang="ja">\n' + doc.documentElement.innerHTML + '\n</html>';
-  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  window.open(url, '_blank');
-  showStatus(label + ' を別画面で開きました');
-}
-document.getElementById('btnOpenPc').addEventListener('click', () => openInNewWindow(document.getElementById('iframePc'), 'PC版'));
-document.getElementById('btnOpenSp').addEventListener('click', () => openInNewWindow(document.getElementById('iframeSp'), 'スマホ版'));
+// open in new window
+document.querySelectorAll('.btn-open').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const section = btn.closest('.design-section');
+    const role = btn.dataset.role;
+    const iframe = section.querySelector(`iframe[data-role="${role}"]`);
+    const doc = iframe.contentDocument;
+    const html = '<!DOCTYPE html>\n<html lang="ja">\n' + doc.documentElement.innerHTML + '\n</html>';
+    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    window.open(URL.createObjectURL(blob), '_blank');
+    showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました');
+  });
+});
 
-// =============== iframe load wiring ===============
-['iframePc','iframeSp'].forEach(id => {
-  const iframe = document.getElementById(id);
+document.querySelectorAll('iframe.edit-iframe').forEach(iframe => {
   iframe.addEventListener('load', () => {
-    const role = id === 'iframePc' ? 'pc' : 'sp';
-    try { makeEditable(iframe, role); } catch(e){ console.error(e); }
+    try { makeEditable(iframe); } catch(e){ console.error(e); }
   });
 });
 
-window.addEventListener('keydown', e => {
-  if(e.key === 'Escape') clearSelection();
-});
+window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(); });
 </script>
 
 </body>
