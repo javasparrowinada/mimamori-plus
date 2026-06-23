@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>見守りプラス｜デザインA（岩井さん確認用）</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -51,6 +52,7 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 
 /* ────── shared email card styles ────── */
 .email-card{background:#fff;font-family:'Noto Sans JP',sans-serif;color:#2D2A26;overflow:hidden;border-radius:14px;border:1px solid #C8C2B6}
+.tpl-report{font-family:'BIZ UDPGothic','Hiragino Sans',sans-serif}
 
 /* solarich brand strip (cloud + logo) */
 .brand-strip{text-align:center;padding:14px 0 10px;font-size:.7rem;color:#6B6560}
@@ -68,6 +70,7 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .tpl-report .hero .brand{font-size:.7rem;color:#fff;font-weight:600;opacity:.95;position:relative;z-index:1}
 .tpl-report .hero h2{font-size:1.5rem;font-weight:700;color:#fff;letter-spacing:.15em;margin-top:8px;position:relative;z-index:1;text-shadow:0 1px 2px rgba(0,0,0,.05)}
 .tpl-report .body{padding:26px 22px 18px}
+.tpl-report .period{text-align:center;font-size:.82rem;color:#5BA8C8;font-weight:700;padding:14px 22px 0;letter-spacing:.05em}
 .tpl-report .greeting{font-size:1rem;font-weight:700;border-bottom:2px solid #3FB3D9;display:inline-block;padding:0 28px 4px;margin-bottom:14px}
 .tpl-report .intro{font-size:.85rem;line-height:1.95;color:#2D2A26}
 .tpl-report .akari-corner{text-align:right;margin-top:-30px;margin-bottom:6px}
@@ -104,8 +107,8 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .tpl-urgent .greeting{font-size:1rem;font-weight:700;border-bottom:2px solid #B2241F;display:inline-block;padding:0 28px 4px;margin-bottom:18px}
 .tpl-urgent .intro{font-size:.85rem;line-height:2.1;color:#2D2A26}
 .tpl-urgent .intro .em{color:#B2241F;font-weight:700}
-.tpl-urgent .causes{margin:18px auto 4px;background:#fff;border:1px solid #D5D0C8;border-radius:12px;overflow:hidden;max-width:340px}
-.tpl-urgent .causes .head{background:#8B8580;color:#fff;font-size:.85rem;font-weight:700;padding:8px 12px;text-align:center}
+.tpl-urgent .causes{margin:18px auto 4px;background:#F0F8FC;border:1px solid #4FB1DC;border-radius:12px;overflow:hidden;max-width:340px}
+.tpl-urgent .causes .head{background:#4FB1DC;color:#fff;font-size:.85rem;font-weight:700;padding:8px 12px;text-align:center}
 .tpl-urgent .causes ul{list-style:none;padding:14px 18px;text-align:center;font-size:.78rem;line-height:2}
 .tpl-urgent .cta{display:block;margin:22px auto 6px;max-width:340px;background:#B2241F;color:#fff;font-size:.95rem;font-weight:700;padding:16px;border-radius:10px;text-decoration:none;letter-spacing:.04em}
 .tpl-urgent .cta-sub{font-size:.65rem;color:#999;text-align:center}
@@ -167,6 +170,19 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .sp-frame .email-footer{padding:14px 14px 16px}
 .sp-frame .email-footer .btns a{font-size:.7rem;padding:9px 8px;min-width:0;flex:1}
 
+
+/* ────── PUSH NOTIFICATION ────── */
+.tpl-push{font-family:'BIZ UDPGothic','Hiragino Sans',sans-serif}
+.tpl-push .hero{background:linear-gradient(180deg,#3FB3D9 0%,#5BC0E0 60%,#7DD0EC 100%);padding:18px 22px;text-align:center;position:relative;overflow:hidden}
+.tpl-push .hero::before,.tpl-push .hero::after{content:'';position:absolute;background:#fff;border-radius:50%;opacity:.85}
+.tpl-push .hero::before{width:60px;height:24px;left:-16px;top:40px}
+.tpl-push .hero::after{width:48px;height:22px;right:-12px;top:18px}
+.tpl-push .hero .brand{font-size:.65rem;color:#fff;font-weight:600;opacity:.95;position:relative;z-index:1}
+.tpl-push .hero h2{font-size:1.15rem;font-weight:700;color:#fff;letter-spacing:.12em;margin-top:6px;position:relative;z-index:1;text-shadow:0 1px 2px rgba(0,0,0,.06)}
+.tpl-push .body{padding:18px 20px;font-size:.85rem;line-height:1.85;color:#2D2A26;text-align:center}
+.tpl-push .body strong{color:#3FB3D9}
+.tpl-push .meta{font-size:.7rem;color:#8E8E93;text-align:right;padding:0 20px 14px}
+
 /* ────── shared footer (LINE/Tel + akari) ────── */
 .email-footer{padding:18px 18px 20px;background:#fff}
 .email-footer .btns{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
@@ -211,14 +227,14 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
      1. みまもりレポート（月次）
      ═══════════════════════════════════════════════ -->
 <section class="design-section">
-  <h2>① みまもりレポート（月次）</h2>
+  <h2>① みまもりレポート（最近の様子）</h2>
   <div class="sub">月に1回送られる定期レポート。ソラリッチの稼働状況と1ヶ月のようすをまとめて報告。</div>
   <div class="compare">
     <div>
       <div class="viewport-tag">🖥️ PC UI</div>
       <div class="pc-frame">
         <div class="email-card tpl-report">
-          <img src="images/headers/01-report.png" alt="みまもりレポート" style="display:block;width:100%;height:auto;border-top-left-radius:14px;border-top-right-radius:14px;">
+          <img src="images/headers/01-report.png" alt="みまもりレポート" style="display:block;width:100%;height:auto;border-top-left-radius:14px;border-top-right-radius:14px;"><div class="period">📅 6月20日 〜 7月3日</div>
           <div class="body">
             <div class="greeting">田中 様</div>
             <div class="intro">
@@ -254,7 +270,7 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
       <div class="viewport-tag">📱 スマホ UI</div>
       <div class="sp-frame"><div class="screen">
         <div class="email-card tpl-report">
-          <img src="images/headers/01-report.png" alt="みまもりレポート" style="display:block;width:100%;height:auto;border-top-left-radius:14px;border-top-right-radius:14px;">
+          <img src="images/headers/01-report.png" alt="みまもりレポート" style="display:block;width:100%;height:auto;border-top-left-radius:14px;border-top-right-radius:14px;"><div class="period">📅 6月20日 〜 7月3日</div>
           <div class="body">
             <div class="greeting">田中 様</div>
             <div class="intro">
@@ -824,6 +840,50 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
     </div>
   </div>
 </section>
+
+
+<!-- ═══════════════════════════════════════════════
+     10. 通常通知（PUSH 想定）
+     ═══════════════════════════════════════════════ -->
+<section class="design-section">
+  <h2>⑩ 通常通知（PUSH 想定）</h2>
+  <div class="sub">スマホ標準のプッシュ通知を想定。みまもりレポートのヘッダー意匠を転用、文言は「見守りプラス通知」に。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI</div>
+      <div class="pc-frame">
+        <div class="email-card tpl-push">
+          <div class="hero">
+            <div class="brand">solarich<br><span style="font-size:.55rem">みまもりプラス</span></div>
+            <h2>見守りプラス通知</h2>
+          </div>
+          <div class="body">
+            お母さんの<strong>ソラリッチで AC給電</strong>が始まりました。<br>
+            お元気にお過ごしの様子が伝わってきます。
+          </div>
+          <div class="meta">2026年6月23日 08:12</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI</div>
+      <div class="sp-frame"><div class="screen">
+        <div class="email-card tpl-push">
+          <div class="hero">
+            <div class="brand">solarich<br><span style="font-size:.55rem">みまもりプラス</span></div>
+            <h2>見守りプラス通知</h2>
+          </div>
+          <div class="body">
+            お母さんの<strong>ソラリッチで AC給電</strong>が始まりました。<br>
+            お元気にお過ごしの様子が伝わってきます。
+          </div>
+          <div class="meta">2026年6月23日 08:12</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
 
 </body>
 </html>
