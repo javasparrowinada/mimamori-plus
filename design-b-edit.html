@@ -139,15 +139,19 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
     <input type="color" id="lineColor" value="#9FCAD9">
   </div>
   <div class="group">
-    <button id="btnResetAll" title="全テンプレの編集をリセット">全リセット</button>
+    <button id="btnSave" title="現在の編集状態を確定保存（自動保存もしています）">💾 保存</button>
+    <button id="btnUndo" title="直前の編集を1つ取り消す" disabled>↶ 戻る</button>
+    <button id="btnRedo" title="取り消した編集をやり直す" disabled>↷ 進む</button>
+    <button id="btnResetOrigin" title="編集を全て破棄して最初の状態へ（要確認）">⤺ 最初に戻す</button>
   </div>
 </div>
 
 <div class="help-note">
   <strong>使い方:</strong> 各カードの PC / スマホ プレビュー内のテキストを<kbd>クリック</kbd>で選択 → 上部ツールバーで編集。
-  選択中は要素がオレンジで縁取り、編集中の要素は青で縁取り表示します。
-  <kbd>Esc</kbd>で選択解除。各カード横の「別画面で開く」で編集結果を確認できます。
-  <br><strong>α 版機能:</strong> テキスト編集（フォント / 色 / サイズ / 装飾 / 配置）+ 別画面で開く。
+  選択中は要素がオレンジで縁取り、編集中の要素は青で縁取り表示します。<kbd>Esc</kbd>で選択解除。
+  <br><strong>履歴:</strong> <kbd>↶ 戻る</kbd> / <kbd>↷ 進む</kbd>で直近の編集を取り消し/やり直し（最後に編集したカード単位）。
+  <kbd>💾 保存</kbd>はいつでも押せます（編集は自動でも保存されます）。<kbd>⤺ 最初に戻す</kbd>は<strong>強制リセット</strong>で全ての編集を破棄します（要確認）。
+  <br><strong>α 版機能:</strong> テキスト編集（フォント / 色 / サイズ / 装飾 / 配置）+ 点線編集 + 別画面で開く。
   <em>画像追加 / 自由配置 / 書き出し（HTML+CSS+画像zip）は次フェーズで追加予定。</em>
 </div>
 
@@ -312,6 +316,11 @@ const STORAGE_KEY = 'design-b-edit-state';
 let selectedEl = null;
 let selectedIframe = null;
 
+// === undo/redo history (per iframe key) ===
+const history = {}; // key: tplId|role -> {stack: [{editId, before, after}], pointer: -1}
+let lastEditedIframe = null;
+const textSnapshot = new WeakMap(); // text element -> captured "before" state for blur-commit
+
 function showStatus(msg){
   const el = document.getElementById('status');
   el.textContent = msg;
@@ -378,6 +387,19 @@ function makeEditable(iframe){
       e.stopPropagation();
       selectElement(el, iframe);
     });
+    el.addEventListener('focus', () => {
+      if(!textSnapshot.has(el)) textSnapshot.set(el, captureState(el));
+    });
+    el.addEventListener('blur', () => {
+      const before = textSnapshot.get(el);
+      if(before){
+        const after = captureState(el);
+        if(before.text !== after.text){
+          pushHistory(iframe, el, before, after);
+        }
+        textSnapshot.delete(el);
+      }
+    });
     el.addEventListener('input', () => persistChange(el, iframe));
     el.addEventListener('mouseover', () => { if(el !== selectedEl) el.style.boxShadow = 'inset 0 0 0 1px #4DB8E4'; });
     el.addEventListener('mouseout', () => { if(el !== selectedEl) el.style.boxShadow = 'none'; });
@@ -414,7 +436,7 @@ function selectElement(el, iframe){
   document.getElementById('fontSize').value = parseInt(cs.fontSize, 10) || 14;
   document.getElementById('fontColor').value = rgbToHex(cs.color);
   // text controls enabled, line controls hidden
-  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = false);
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnSave):not(#btnUndo):not(#btnRedo):not(#btnResetOrigin)').forEach(c => c.disabled = false);
   document.getElementById('lineGroup').style.display = 'none';
   updateButtonStates(cs);
 }
@@ -432,7 +454,7 @@ function selectLine(el, iframe){
     section.querySelector('h2').textContent.split(' ')[0] + ' / ' + iframe.dataset.role.toUpperCase() + ' / 点線';
 
   // Text controls disabled
-  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = true);
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnSave):not(#btnUndo):not(#btnRedo):not(#btnResetOrigin)').forEach(c => c.disabled = true);
   // Line controls shown + enabled
   const lg = document.getElementById('lineGroup');
   lg.style.display = 'flex';
@@ -456,7 +478,7 @@ function clearSelection(){
   selectedEl = null;
   selectedIframe = null;
   document.getElementById('targetLabel').textContent = 'テキストをクリックして選択';
-  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = true);
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnSave):not(#btnUndo):not(#btnRedo):not(#btnResetOrigin)').forEach(c => c.disabled = true);
   document.querySelectorAll('#toolbar button').forEach(b => b.classList.remove('active'));
   document.getElementById('lineGroup').style.display = 'none';
 }
@@ -496,28 +518,75 @@ function persistChange(el, iframe){
   showStatus('保存しました');
 }
 
-// toolbar handlers
-document.getElementById('fontFamily').addEventListener('change', e => {
+// === history helpers ===
+function captureState(el){
+  if(el.tagName === 'HR'){
+    return {tag:'HR', width: el.style.width || '', borderTopColor: el.style.borderTopColor || ''};
+  }
+  return {
+    tag:'TXT',
+    text: el.textContent,
+    fontFamily: el.style.fontFamily || '',
+    fontSize: el.style.fontSize || '',
+    color: el.style.color || '',
+    fontWeight: el.style.fontWeight || '',
+    fontStyle: el.style.fontStyle || '',
+    textDecoration: el.style.textDecoration || '',
+    textAlign: el.style.textAlign || ''
+  };
+}
+function applyState(el, state){
+  if(state.tag === 'HR'){
+    el.style.width = state.width;
+    el.style.borderTopColor = state.borderTopColor;
+  } else {
+    el.textContent = state.text;
+    ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => {
+      el.style[p] = state[p];
+    });
+  }
+}
+function pushHistory(iframe, el, before, after){
+  const key = getKey(iframe);
+  if(!history[key]) history[key] = {stack:[], pointer:-1};
+  const h = history[key];
+  h.stack = h.stack.slice(0, h.pointer + 1);
+  h.stack.push({editId: el.dataset.editId, before, after});
+  h.pointer = h.stack.length - 1;
+  lastEditedIframe = iframe;
+  updateHistoryButtons();
+}
+function updateHistoryButtons(){
+  const u = document.getElementById('btnUndo');
+  const r = document.getElementById('btnRedo');
+  if(!lastEditedIframe){ u.disabled = r.disabled = true; return; }
+  const h = history[getKey(lastEditedIframe)];
+  if(!h){ u.disabled = r.disabled = true; return; }
+  u.disabled = h.pointer < 0;
+  r.disabled = h.pointer >= h.stack.length - 1;
+}
+function withHistory(actionFn){
   if(!selectedEl) return;
-  selectedEl.style.fontFamily = e.target.value;
+  const before = captureState(selectedEl);
+  actionFn();
+  const after = captureState(selectedEl);
+  if(JSON.stringify(before) !== JSON.stringify(after)){
+    pushHistory(selectedIframe, selectedEl, before, after);
+  }
   persistChange(selectedEl, selectedIframe);
-});
-document.getElementById('fontSize').addEventListener('input', e => {
-  if(!selectedEl) return;
-  selectedEl.style.fontSize = e.target.value + 'px';
-  persistChange(selectedEl, selectedIframe);
-});
-document.getElementById('fontColor').addEventListener('input', e => {
-  if(!selectedEl) return;
-  selectedEl.style.color = e.target.value;
-  persistChange(selectedEl, selectedIframe);
-});
+}
+
+// toolbar handlers (wrapped with history)
+document.getElementById('fontFamily').addEventListener('change', e => withHistory(() => selectedEl.style.fontFamily = e.target.value));
+document.getElementById('fontSize').addEventListener('change', e => withHistory(() => selectedEl.style.fontSize = e.target.value + 'px'));
+document.getElementById('fontColor').addEventListener('change', e => withHistory(() => selectedEl.style.color = e.target.value));
+
 function toggleStyle(prop, on, off){
-  if(!selectedEl) return;
-  const cur = selectedEl.style[prop] || '';
-  selectedEl.style[prop] = cur === on ? off : on;
-  persistChange(selectedEl, selectedIframe);
-  updateButtonStates(selectedIframe.contentWindow.getComputedStyle(selectedEl));
+  withHistory(() => {
+    const cur = selectedEl.style[prop] || '';
+    selectedEl.style[prop] = cur === on ? off : on;
+  });
+  if(selectedEl) updateButtonStates(selectedIframe.contentWindow.getComputedStyle(selectedEl));
 }
 document.getElementById('btnBold').addEventListener('click', () => toggleStyle('fontWeight','bold','normal'));
 document.getElementById('btnItalic').addEventListener('click', () => toggleStyle('fontStyle','italic','normal'));
@@ -525,29 +594,64 @@ document.getElementById('btnUnderline').addEventListener('click', () => toggleSt
 ['L','C','R'].forEach(k => {
   const map = {L:'left',C:'center',R:'right'};
   document.getElementById('btnAlign'+k).addEventListener('click', () => {
-    if(!selectedEl) return;
-    selectedEl.style.textAlign = map[k];
-    persistChange(selectedEl, selectedIframe);
-    updateButtonStates(selectedIframe.contentWindow.getComputedStyle(selectedEl));
+    withHistory(() => selectedEl.style.textAlign = map[k]);
+    if(selectedEl) updateButtonStates(selectedIframe.contentWindow.getComputedStyle(selectedEl));
   });
 });
 
-// line (hr) handlers
-document.getElementById('lineWidth').addEventListener('input', e => {
+// line (hr) handlers — use change event so history gets one entry per drag-commit
+document.getElementById('lineWidth').addEventListener('change', e => {
   if(!selectedEl || selectedEl.tagName !== 'HR') return;
-  selectedEl.style.width = e.target.value + 'px';
-  persistChange(selectedEl, selectedIframe);
+  withHistory(() => selectedEl.style.width = e.target.value + 'px');
 });
-document.getElementById('lineColor').addEventListener('input', e => {
+document.getElementById('lineColor').addEventListener('change', e => {
   if(!selectedEl || selectedEl.tagName !== 'HR') return;
-  selectedEl.style.borderTopColor = e.target.value;
-  persistChange(selectedEl, selectedIframe);
+  withHistory(() => selectedEl.style.borderTopColor = e.target.value);
 });
 
-document.getElementById('btnResetAll').addEventListener('click', () => {
-  if(!confirm('全テンプレ・全カードの編集を全部リセットします。よろしいですか？')) return;
+// === new history / save / reset buttons ===
+document.getElementById('btnSave').addEventListener('click', () => {
+  // Already auto-saving — this is the explicit "I saved" confirmation toast.
+  showStatus('保存されています ✓');
+});
+
+document.getElementById('btnUndo').addEventListener('click', () => {
+  if(!lastEditedIframe) return;
+  const h = history[getKey(lastEditedIframe)];
+  if(!h || h.pointer < 0) return;
+  const entry = h.stack[h.pointer];
+  const el = lastEditedIframe.contentDocument.querySelector(`[data-edit-id="${entry.editId}"]`);
+  if(el){ applyState(el, entry.before); persistChange(el, lastEditedIframe); }
+  h.pointer--;
+  updateHistoryButtons();
+  showStatus('戻しました');
+});
+
+document.getElementById('btnRedo').addEventListener('click', () => {
+  if(!lastEditedIframe) return;
+  const h = history[getKey(lastEditedIframe)];
+  if(!h || h.pointer >= h.stack.length - 1) return;
+  h.pointer++;
+  const entry = h.stack[h.pointer];
+  const el = lastEditedIframe.contentDocument.querySelector(`[data-edit-id="${entry.editId}"]`);
+  if(el){ applyState(el, entry.after); persistChange(el, lastEditedIframe); }
+  updateHistoryButtons();
+  showStatus('進めました');
+});
+
+document.getElementById('btnResetOrigin').addEventListener('click', () => {
+  const ok = confirm('⚠️ 最初の状態に戻します。\n\nこれまでの編集（自動保存含む）は全て破棄され、元のデザインBに戻ります。\n本当によろしいですか？');
+  if(!ok) return;
   localStorage.removeItem(STORAGE_KEY);
-  location.reload();
+  Object.keys(history).forEach(k => delete history[k]);
+  lastEditedIframe = null;
+  updateHistoryButtons();
+  showStatus('最初に戻しました');
+  // reload all iframes to drop in-memory state too
+  document.querySelectorAll('iframe.edit-iframe').forEach(f => {
+    const src = f.src.split('?')[0];
+    f.src = src + '?edit=1&_r=' + Math.random();
+  });
 });
 
 // open in new window
