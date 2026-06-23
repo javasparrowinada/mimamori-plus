@@ -286,6 +286,13 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
     <button id="btnAlignC" disabled>中</button>
     <button id="btnAlignR" disabled>右</button>
   </div>
+  <div class="group" id="lineGroup" style="display:none">
+    <span class="label">線の長さ</span>
+    <input type="number" id="lineWidth" min="20" max="600" step="10" value="220" style="width:70px">
+    <span style="color:#999">px</span>
+    <span class="label" style="margin-left:8px">線の色</span>
+    <input type="color" id="lineColor" value="#9FCAD9">
+  </div>
   <div class="group">
     <button id="btnSave" title="現在の編集状態を確定保存（自動保存もしています）">💾 保存</button>
     <button id="btnUndo" title="直前の編集を1つ取り消す" disabled>↶ 戻る</button>
