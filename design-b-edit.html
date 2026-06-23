@@ -131,6 +131,13 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
     <button id="btnAlignC" disabled>中</button>
     <button id="btnAlignR" disabled>右</button>
   </div>
+  <div class="group" id="lineGroup" style="display:none">
+    <span class="label">線の長さ</span>
+    <input type="number" id="lineWidth" min="20" max="600" step="10" value="220" style="width:70px">
+    <span style="color:#999">px</span>
+    <span class="label" style="margin-left:8px">線の色</span>
+    <input type="color" id="lineColor" value="#9FCAD9">
+  </div>
   <div class="group">
     <button id="btnResetAll" title="全テンプレの編集をリセット">全リセット</button>
   </div>
@@ -335,9 +342,14 @@ function makeEditable(iframe){
     });
   });
 
+  const allLines = [...doc.querySelectorAll('hr')];
+
   let i = 0;
   allTextEls.forEach(el => {
     if(!el.dataset.editId) el.dataset.editId = 'e' + (i++);
+  });
+  allLines.forEach(el => {
+    if(!el.dataset.editId) el.dataset.editId = 'h' + (i++);
   });
 
   const key = getKey(iframe);
@@ -346,10 +358,15 @@ function makeEditable(iframe){
     Object.entries(state[key]).forEach(([editId, props]) => {
       const el = doc.querySelector(`[data-edit-id="${editId}"]`);
       if(!el) return;
-      if(props.text !== undefined) el.textContent = props.text;
+      if(props.text !== undefined && el.tagName !== 'HR') el.textContent = props.text;
       ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => {
         if(props[p]) el.style[p] = props[p];
       });
+      // line props
+      if(props.width) el.style.width = props.width;
+      if(props.borderTopColor){
+        el.style.borderTopColor = props.borderTopColor;
+      }
     });
   }
 
@@ -364,6 +381,16 @@ function makeEditable(iframe){
     el.addEventListener('input', () => persistChange(el, iframe));
     el.addEventListener('mouseover', () => { if(el !== selectedEl) el.style.boxShadow = 'inset 0 0 0 1px #4DB8E4'; });
     el.addEventListener('mouseout', () => { if(el !== selectedEl) el.style.boxShadow = 'none'; });
+  });
+
+  allLines.forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      selectLine(el, iframe);
+    });
+    el.addEventListener('mouseover', () => { if(el !== selectedEl) el.style.outline = '1px dashed #4DB8E4'; el.style.outlineOffset='4px'; });
+    el.addEventListener('mouseout', () => { if(el !== selectedEl) el.style.outline = ''; });
   });
 
   doc.body.addEventListener('click', e => {
@@ -386,17 +413,52 @@ function selectElement(el, iframe){
   document.getElementById('fontFamily').value = el.style.fontFamily || '';
   document.getElementById('fontSize').value = parseInt(cs.fontSize, 10) || 14;
   document.getElementById('fontColor').value = rgbToHex(cs.color);
+  // text controls enabled, line controls hidden
   document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = false);
+  document.getElementById('lineGroup').style.display = 'none';
   updateButtonStates(cs);
 }
 
+function selectLine(el, iframe){
+  clearSelection();
+  selectedEl = el;
+  selectedIframe = iframe;
+  el.style.outline = '2px dashed #E8943A';
+  el.style.outlineOffset = '4px';
+
+  const cs = iframe.contentWindow.getComputedStyle(el);
+  const section = iframe.closest('.design-section');
+  document.getElementById('targetLabel').textContent =
+    section.querySelector('h2').textContent.split(' ')[0] + ' / ' + iframe.dataset.role.toUpperCase() + ' / 点線';
+
+  // Text controls disabled
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = true);
+  // Line controls shown + enabled
+  const lg = document.getElementById('lineGroup');
+  lg.style.display = 'flex';
+  const lw = document.getElementById('lineWidth');
+  const lc = document.getElementById('lineColor');
+  lw.disabled = false;
+  lc.disabled = false;
+  lw.value = parseInt(cs.width, 10) || 220;
+  lc.value = rgbToHex(cs.borderTopColor || cs.color);
+}
+
 function clearSelection(){
-  if(selectedEl) selectedEl.style.boxShadow = 'none';
+  if(selectedEl){
+    if(selectedEl.tagName === 'HR'){
+      selectedEl.style.outline = '';
+      selectedEl.style.outlineOffset = '';
+    } else {
+      selectedEl.style.boxShadow = 'none';
+    }
+  }
   selectedEl = null;
   selectedIframe = null;
   document.getElementById('targetLabel').textContent = 'テキストをクリックして選択';
   document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnResetAll)').forEach(c => c.disabled = true);
   document.querySelectorAll('#toolbar button').forEach(b => b.classList.remove('active'));
+  document.getElementById('lineGroup').style.display = 'none';
 }
 
 function updateButtonStates(cs){
@@ -421,10 +483,15 @@ function persistChange(el, iframe){
   const key = getKey(iframe);
   state[key] = state[key] || {};
   const entry = state[key][el.dataset.editId] = state[key][el.dataset.editId] || {};
-  entry.text = el.textContent;
-  ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => {
-    if(el.style[p]) entry[p] = el.style[p];
-  });
+  if(el.tagName === 'HR'){
+    if(el.style.width) entry.width = el.style.width;
+    if(el.style.borderTopColor) entry.borderTopColor = el.style.borderTopColor;
+  } else {
+    entry.text = el.textContent;
+    ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => {
+      if(el.style[p]) entry[p] = el.style[p];
+    });
+  }
   saveState(state);
   showStatus('保存しました');
 }
@@ -463,6 +530,18 @@ document.getElementById('btnUnderline').addEventListener('click', () => toggleSt
     persistChange(selectedEl, selectedIframe);
     updateButtonStates(selectedIframe.contentWindow.getComputedStyle(selectedEl));
   });
+});
+
+// line (hr) handlers
+document.getElementById('lineWidth').addEventListener('input', e => {
+  if(!selectedEl || selectedEl.tagName !== 'HR') return;
+  selectedEl.style.width = e.target.value + 'px';
+  persistChange(selectedEl, selectedIframe);
+});
+document.getElementById('lineColor').addEventListener('input', e => {
+  if(!selectedEl || selectedEl.tagName !== 'HR') return;
+  selectedEl.style.borderTopColor = e.target.value;
+  persistChange(selectedEl, selectedIframe);
 });
 
 document.getElementById('btnResetAll').addEventListener('click', () => {
