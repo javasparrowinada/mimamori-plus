@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>見守りプラス｜デザインA（岩井さん確認用）</title>
+<title>見守りプラス｜デザインA（編集モード）</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -30,6 +30,8 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .page-head{max-width:1200px;margin:0 auto;padding:48px 24px 24px}
 .page-head h1{font-size:1.4rem;font-weight:900;margin-bottom:8px}
 .page-head .lead{font-size:.85rem;color:var(--text-light);max-width:760px;line-height:1.8}
+.page-head .alpha{display:inline-block;background:#FFF3C4;color:#946800;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:100px;margin-left:10px;vertical-align:middle}
+
 .page-head .legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;font-size:.72rem;color:var(--text-light)}
 .page-head .legend span{display:inline-flex;align-items:center;gap:6px;background:#fff;padding:5px 10px;border-radius:100px;border:1px solid #E8E4DE}
 
@@ -194,6 +196,25 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .email-footer .signature .pic{width:42px;height:42px;border-radius:50%;background:#F5E6D3;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
 .email-footer .signature .name{font-size:.82rem;font-weight:700}
 .email-footer .signature .role{font-size:.65rem;color:#6B6560}
+
+/* ── editor toolbar (sticky) ── */
+.toolbar{position:sticky;top:51px;z-index:90;background:#fff;border-bottom:1px solid #E0DCD2;padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.72rem;color:var(--text-light)}
+.toolbar select,.toolbar input[type=number],.toolbar input[type=color]{font-size:.72rem;padding:5px 8px;border:1px solid #D5D0C8;border-radius:6px;background:#fff;font-family:inherit}
+.toolbar input[type=color]{padding:2px;width:34px;height:28px;cursor:pointer}
+.toolbar button{font-size:.72rem;padding:5px 10px;border:1px solid #D5D0C8;border-radius:6px;background:#fff;cursor:pointer;font-family:inherit;font-weight:700;color:var(--text)}
+.toolbar button:hover:not(:disabled){background:#F5F3EE}
+.toolbar button.active{background:var(--green-dark);color:#fff;border-color:var(--green-dark)}
+.toolbar button:disabled,.toolbar select:disabled,.toolbar input:disabled{opacity:.4;cursor:not-allowed}
+.toolbar .group{display:flex;align-items:center;gap:5px;padding-right:10px;border-right:1px solid #E0DCD2}
+.toolbar .group:last-child{border-right:none;margin-left:auto}
+.toolbar .label{font-size:.65rem;color:#999;margin-right:2px}
+.edit-help{max-width:1200px;margin:0 auto;padding:14px 24px 0;font-size:.7rem;color:var(--text-light);line-height:1.7}
+.edit-help kbd{background:#fff;border:1px solid #D5D0C8;border-radius:4px;padding:1px 6px;font-family:ui-monospace,monospace;font-size:.65rem}
+.status-bar{position:fixed;bottom:14px;right:14px;background:rgba(0,0,0,.78);color:#fff;font-size:.7rem;padding:8px 14px;border-radius:100px;opacity:0;transition:opacity .25s;z-index:200;font-weight:700}
+.status-bar.show{opacity:1}
+.frame-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:.7rem;color:var(--text-light)}
+.frame-actions button{font-size:.7rem;padding:5px 10px;border:1px solid #D5D0C8;border-radius:6px;background:#fff;cursor:pointer;font-family:inherit;font-weight:700;color:var(--text)}
+.frame-actions button:hover{background:#F5F3EE}
 </style>
 </head>
 <body>
@@ -203,18 +224,18 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
   <nav class="topbar-nav">
     <a href="logic.html">AIレポート仕様</a>
     <a href="notifications.html">通知テンプレート</a>
-    <a href="design.html" class="active">デザインA（岩井さん確認用）</a>
-    <a href="design-a-edit.html">デザインA（編集モード）</a>
+    <a href="design.html">デザインA（岩井さん確認用）</a>
+    <a href="design-a-edit.html" class="active">デザインA（編集モード）</a>
     <a href="design-b.html">デザインB（岩井さん確認用）</a>
     <a href="design-b-edit.html">デザインB（編集モード）</a>
   </nav>
 </div>
 
 <div class="page-head">
-  <h1>デザインA（岩井さん確認用）</h1>
+  <h1>デザインA（編集モード）<span class="alpha">α / 開発中</span></h1>
   <p class="lead">
-    AIレポート及び通知テンプレートのデザインを再考しています。<br>
-    各メールテンプレートを PC UI（広い）と スマホ UI（狭い）で並べています。
+    デザインAをそのまま並べた編集モード。テキストをクリック → 上部ツールバーでフォント/サイズ/色/装飾/配置/点線を変更可。<br>
+    PC / スマホ どちらも独立して編集できます。編集は自動でブラウザに保存されます。
   </p>
   <div class="legend">
     <span>🔵 みまもりレポート</span>
@@ -223,6 +244,66 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
     <span style="color:#2BA38C">🟢 安心</span>
   </div>
 </div>
+
+<div class="toolbar" id="toolbar">
+  <div class="group">
+    <span class="label">対象</span>
+    <span id="targetLabel" style="font-weight:700;color:var(--text)">テキストをクリックして選択</span>
+  </div>
+  <div class="group">
+    <span class="label">フォント</span>
+    <select id="fontFamily" disabled>
+      <option value="">— Web 標準 —</option>
+      <option value="'Noto Sans JP',sans-serif">Noto Sans JP</option>
+      <option value="'BIZ UDPGothic',sans-serif">BIZ UDPGothic</option>
+      <option value="Arial,sans-serif">Arial</option>
+      <option value="Helvetica,Arial,sans-serif">Helvetica</option>
+      <option value="'Hiragino Sans',sans-serif">ヒラギノ角ゴ</option>
+      <option value="'Hiragino Mincho ProN','Yu Mincho',serif">ヒラギノ明朝</option>
+      <option value="'Yu Gothic','YuGothic',sans-serif">游ゴシック</option>
+      <option value="Georgia,serif">Georgia</option>
+      <option value="'Times New Roman',serif">Times New Roman</option>
+      <option value="Verdana,sans-serif">Verdana</option>
+      <option value="'Courier New',monospace">Courier New</option>
+    </select>
+  </div>
+  <div class="group">
+    <span class="label">サイズ</span>
+    <input type="number" id="fontSize" min="8" max="48" step="1" value="14" style="width:60px" disabled>
+    <span style="color:#999">px</span>
+  </div>
+  <div class="group">
+    <span class="label">色</span>
+    <input type="color" id="fontColor" value="#2D2A26" disabled>
+  </div>
+  <div class="group">
+    <button id="btnBold" disabled><b>B</b></button>
+    <button id="btnItalic" disabled><i>I</i></button>
+    <button id="btnUnderline" disabled><u>U</u></button>
+  </div>
+  <div class="group">
+    <span class="label">配置</span>
+    <button id="btnAlignL" disabled>左</button>
+    <button id="btnAlignC" disabled>中</button>
+    <button id="btnAlignR" disabled>右</button>
+  </div>
+  <div class="group">
+    <button id="btnSave" title="現在の編集状態を確定保存（自動保存もしています）">💾 保存</button>
+    <button id="btnUndo" title="直前の編集を1つ取り消す" disabled>↶ 戻る</button>
+    <button id="btnRedo" title="取り消した編集をやり直す" disabled>↷ 進む</button>
+    <button id="btnResetOrigin" title="編集を全て破棄して最初の状態へ（要確認）">⤺ 最初に戻す</button>
+  </div>
+</div>
+
+<div class="edit-help">
+  <strong>使い方:</strong> 各カードのテキストを<kbd>クリック</kbd>で選択 → 上部ツールバーで編集。<kbd>Esc</kbd>で解除。
+  <br><strong>履歴:</strong> <kbd>↶ 戻る</kbd> / <kbd>↷ 進む</kbd>で直近の編集を取り消し/やり直し（カード単位）。
+  <kbd>💾 保存</kbd>はいつでも押せます（自動保存も常時稼働中）。
+  <kbd>⤺ 最初に戻す</kbd>は<strong>強制リセット</strong>で全ての編集を破棄します（要確認）。
+  <br><strong>制限:</strong> ヘッダー画像／コンテナ枠線／レイアウト変更は未対応。
+</div>
+
+<div id="status" class="status-bar"></div>
 
 <!-- ═══════════════════════════════════════════════
      1. みまもりレポート（月次）
@@ -885,6 +966,301 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
   </div>
 </section>
 
+
+<script>
+// === Design A Edit Mode editor ===
+const STORAGE_KEY = 'design-a-edit-state';
+let selectedEl = null;
+let selectedCard = null;
+const history = {};            // {cardKey: {stack: [{editId,before,after}], pointer: -1}}
+let lastEditedCard = null;
+const textSnapshot = new WeakMap();
+
+function showStatus(msg){
+  const el = document.getElementById('status');
+  if(!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(showStatus._t);
+  showStatus._t = setTimeout(()=>el.classList.remove('show'), 1500);
+}
+
+function loadState(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ return {}; } }
+function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+// Each .email-card belongs to a section, with a role (PC or SP). Key = sectionIdx|role
+function getCardKey(card){ return card.dataset.cardKey; }
+
+function captureState(el){
+  if(el.tagName === 'HR'){
+    return {tag:'HR', width: el.style.width || '', borderTopColor: el.style.borderTopColor || ''};
+  }
+  return {
+    tag:'TXT', text: el.textContent,
+    fontFamily: el.style.fontFamily || '',
+    fontSize: el.style.fontSize || '',
+    color: el.style.color || '',
+    fontWeight: el.style.fontWeight || '',
+    fontStyle: el.style.fontStyle || '',
+    textDecoration: el.style.textDecoration || '',
+    textAlign: el.style.textAlign || ''
+  };
+}
+function applyState(el, state){
+  if(state.tag === 'HR'){
+    el.style.width = state.width;
+    el.style.borderTopColor = state.borderTopColor;
+  } else {
+    el.textContent = state.text;
+    ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => el.style[p] = state[p]);
+  }
+}
+function pushHistory(card, el, before, after){
+  const key = getCardKey(card);
+  if(!history[key]) history[key] = {stack:[], pointer:-1};
+  const h = history[key];
+  h.stack = h.stack.slice(0, h.pointer + 1);
+  h.stack.push({editId: el.dataset.editId, before, after});
+  h.pointer = h.stack.length - 1;
+  lastEditedCard = card;
+  updateHistoryButtons();
+}
+function updateHistoryButtons(){
+  const u = document.getElementById('btnUndo');
+  const r = document.getElementById('btnRedo');
+  if(!lastEditedCard){ u.disabled = r.disabled = true; return; }
+  const h = history[getCardKey(lastEditedCard)];
+  if(!h){ u.disabled = r.disabled = true; return; }
+  u.disabled = h.pointer < 0;
+  r.disabled = h.pointer >= h.stack.length - 1;
+}
+function withHistory(actionFn){
+  if(!selectedEl) return;
+  const before = captureState(selectedEl);
+  actionFn();
+  const after = captureState(selectedEl);
+  if(JSON.stringify(before) !== JSON.stringify(after)){
+    pushHistory(selectedCard, selectedEl, before, after);
+  }
+  persistChange(selectedEl, selectedCard);
+}
+
+function persistChange(el, card){
+  if(!el.dataset.editId) return;
+  const state = loadState();
+  const key = getCardKey(card);
+  state[key] = state[key] || {};
+  const entry = state[key][el.dataset.editId] = state[key][el.dataset.editId] || {};
+  if(el.tagName === 'HR'){
+    if(el.style.width) entry.width = el.style.width;
+    if(el.style.borderTopColor) entry.borderTopColor = el.style.borderTopColor;
+  } else {
+    entry.text = el.textContent;
+    ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => {
+      if(el.style[p]) entry[p] = el.style[p];
+    });
+  }
+  saveState(state);
+  showStatus('保存しました');
+}
+
+function selectElement(el, card){
+  clearSelection();
+  selectedEl = el; selectedCard = card;
+  el.style.boxShadow = 'inset 0 0 0 2px #E8943A';
+  const cs = getComputedStyle(el);
+  const section = card.closest('section');
+  const role = card.dataset.role;
+  document.getElementById('targetLabel').textContent =
+    section.querySelector('h2').textContent.split(' ')[0] + ' / ' + role.toUpperCase() + ' / ' +
+    el.tagName.toLowerCase() + ' "' + (el.textContent || '').slice(0,14) + (el.textContent.length>14?'…':'') + '"';
+  document.getElementById('fontFamily').value = el.style.fontFamily || '';
+  document.getElementById('fontSize').value = parseInt(cs.fontSize,10) || 14;
+  document.getElementById('fontColor').value = rgbToHex(cs.color);
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnSave):not(#btnUndo):not(#btnRedo):not(#btnResetOrigin)').forEach(c => c.disabled = false);
+  document.getElementById('lineGroup').style.display = 'none';
+  updateButtonStates(cs);
+}
+function selectLine(el, card){
+  clearSelection();
+  selectedEl = el; selectedCard = card;
+  el.style.outline = '2px dashed #E8943A';
+  el.style.outlineOffset = '4px';
+  const cs = getComputedStyle(el);
+  const section = card.closest('section');
+  document.getElementById('targetLabel').textContent =
+    section.querySelector('h2').textContent.split(' ')[0] + ' / ' + card.dataset.role.toUpperCase() + ' / 点線';
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnSave):not(#btnUndo):not(#btnRedo):not(#btnResetOrigin)').forEach(c => c.disabled = true);
+  const lg = document.getElementById('lineGroup');
+  lg.style.display = 'flex';
+  document.getElementById('lineWidth').disabled = false;
+  document.getElementById('lineColor').disabled = false;
+  document.getElementById('lineWidth').value = parseInt(cs.width,10) || 220;
+  document.getElementById('lineColor').value = rgbToHex(cs.borderTopColor || cs.color);
+}
+function clearSelection(){
+  if(selectedEl){
+    if(selectedEl.tagName === 'HR'){ selectedEl.style.outline=''; selectedEl.style.outlineOffset=''; }
+    else { selectedEl.style.boxShadow='none'; }
+  }
+  selectedEl = null; selectedCard = null;
+  document.getElementById('targetLabel').textContent = 'テキストをクリックして選択';
+  document.querySelectorAll('#toolbar select,#toolbar input,#toolbar button:not(#btnSave):not(#btnUndo):not(#btnRedo):not(#btnResetOrigin)').forEach(c => c.disabled = true);
+  document.querySelectorAll('#toolbar button').forEach(b => b.classList.remove('active'));
+  document.getElementById('lineGroup').style.display = 'none';
+}
+function updateButtonStates(cs){
+  document.getElementById('btnBold').classList.toggle('active', parseInt(cs.fontWeight,10) >= 600);
+  document.getElementById('btnItalic').classList.toggle('active', cs.fontStyle === 'italic');
+  document.getElementById('btnUnderline').classList.toggle('active', cs.textDecoration.includes('underline'));
+  ['L','C','R'].forEach(k => {
+    const map = {L:'left',C:'center',R:'right'};
+    document.getElementById('btnAlign'+k).classList.toggle('active', cs.textAlign === map[k]);
+  });
+}
+function rgbToHex(rgb){
+  const m = (rgb||'').match(/\d+/g);
+  if(!m || m.length<3) return '#000000';
+  return '#' + m.slice(0,3).map(n => parseInt(n).toString(16).padStart(2,'0')).join('');
+}
+
+// Wire each .email-card
+function wireCard(card, sectionIdx, role){
+  card.dataset.cardKey = 's' + sectionIdx + '|' + role;
+  card.dataset.role = role;
+
+  const selectors = ['p','div','span','td','a','strong','em','h1','h2','h3','h4'];
+  const textEls = new Set();
+  selectors.forEach(sel => {
+    card.querySelectorAll(sel).forEach(el => {
+      if(el.childNodes.length && [...el.childNodes].some(n => n.nodeType===3 && n.textContent.trim())){
+        textEls.add(el);
+      }
+    });
+  });
+  const lines = [...card.querySelectorAll('hr')];
+
+  let i = 0;
+  textEls.forEach(el => { if(!el.dataset.editId) el.dataset.editId = 'e' + (i++); });
+  lines.forEach(el => { if(!el.dataset.editId) el.dataset.editId = 'h' + (i++); });
+
+  // Restore saved state
+  const key = card.dataset.cardKey;
+  const state = loadState();
+  if(state[key]){
+    Object.entries(state[key]).forEach(([editId, props]) => {
+      const el = card.querySelector(`[data-edit-id="${editId}"]`);
+      if(!el) return;
+      if(props.text !== undefined && el.tagName !== 'HR') el.textContent = props.text;
+      ['fontFamily','fontSize','color','fontWeight','fontStyle','textDecoration','textAlign'].forEach(p => {
+        if(props[p]) el.style[p] = props[p];
+      });
+      if(props.width) el.style.width = props.width;
+      if(props.borderTopColor) el.style.borderTopColor = props.borderTopColor;
+    });
+  }
+
+  textEls.forEach(el => {
+    el.contentEditable = 'true';
+    el.style.outline = 'none';
+    el.style.cursor = 'text';
+    el.addEventListener('click', e => { e.stopPropagation(); selectElement(el, card); });
+    el.addEventListener('focus', () => { if(!textSnapshot.has(el)) textSnapshot.set(el, captureState(el)); });
+    el.addEventListener('blur', () => {
+      const before = textSnapshot.get(el);
+      if(before){
+        const after = captureState(el);
+        if(before.text !== after.text) pushHistory(card, el, before, after);
+        textSnapshot.delete(el);
+      }
+    });
+    el.addEventListener('input', () => persistChange(el, card));
+    el.addEventListener('mouseover', () => { if(el !== selectedEl) el.style.boxShadow = 'inset 0 0 0 1px #4DB8E4'; });
+    el.addEventListener('mouseout', () => { if(el !== selectedEl) el.style.boxShadow = 'none'; });
+  });
+  lines.forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', e => { e.stopPropagation(); selectLine(el, card); });
+    el.addEventListener('mouseover', () => { if(el !== selectedEl){ el.style.outline='1px dashed #4DB8E4'; el.style.outlineOffset='4px'; } });
+    el.addEventListener('mouseout', () => { if(el !== selectedEl) el.style.outline=''; });
+  });
+}
+
+// Toolbar handlers
+document.getElementById('fontFamily').addEventListener('change', e => withHistory(() => selectedEl.style.fontFamily = e.target.value));
+document.getElementById('fontSize').addEventListener('change', e => withHistory(() => selectedEl.style.fontSize = e.target.value + 'px'));
+document.getElementById('fontColor').addEventListener('change', e => withHistory(() => selectedEl.style.color = e.target.value));
+function toggleStyle(prop, on, off){
+  withHistory(() => {
+    const cur = selectedEl.style[prop] || '';
+    selectedEl.style[prop] = cur === on ? off : on;
+  });
+  if(selectedEl) updateButtonStates(getComputedStyle(selectedEl));
+}
+document.getElementById('btnBold').addEventListener('click', () => toggleStyle('fontWeight','bold','normal'));
+document.getElementById('btnItalic').addEventListener('click', () => toggleStyle('fontStyle','italic','normal'));
+document.getElementById('btnUnderline').addEventListener('click', () => toggleStyle('textDecoration','underline','none'));
+['L','C','R'].forEach(k => {
+  const map = {L:'left',C:'center',R:'right'};
+  document.getElementById('btnAlign'+k).addEventListener('click', () => {
+    withHistory(() => selectedEl.style.textAlign = map[k]);
+    if(selectedEl) updateButtonStates(getComputedStyle(selectedEl));
+  });
+});
+document.getElementById('lineWidth').addEventListener('change', e => {
+  if(!selectedEl || selectedEl.tagName !== 'HR') return;
+  withHistory(() => selectedEl.style.width = e.target.value + 'px');
+});
+document.getElementById('lineColor').addEventListener('change', e => {
+  if(!selectedEl || selectedEl.tagName !== 'HR') return;
+  withHistory(() => selectedEl.style.borderTopColor = e.target.value);
+});
+
+document.getElementById('btnSave').addEventListener('click', () => showStatus('保存されています ✓'));
+document.getElementById('btnUndo').addEventListener('click', () => {
+  if(!lastEditedCard) return;
+  const h = history[getCardKey(lastEditedCard)];
+  if(!h || h.pointer < 0) return;
+  const entry = h.stack[h.pointer];
+  const el = lastEditedCard.querySelector(`[data-edit-id="${entry.editId}"]`);
+  if(el){ applyState(el, entry.before); persistChange(el, lastEditedCard); }
+  h.pointer--; updateHistoryButtons(); showStatus('戻しました');
+});
+document.getElementById('btnRedo').addEventListener('click', () => {
+  if(!lastEditedCard) return;
+  const h = history[getCardKey(lastEditedCard)];
+  if(!h || h.pointer >= h.stack.length - 1) return;
+  h.pointer++;
+  const entry = h.stack[h.pointer];
+  const el = lastEditedCard.querySelector(`[data-edit-id="${entry.editId}"]`);
+  if(el){ applyState(el, entry.after); persistChange(el, lastEditedCard); }
+  updateHistoryButtons(); showStatus('進めました');
+});
+document.getElementById('btnResetOrigin').addEventListener('click', () => {
+  const ok = confirm('⚠️ 最初の状態に戻します。\n\nこれまでの編集（自動保存含む）は全て破棄され、元のデザインAに戻ります。\n本当によろしいですか？');
+  if(!ok) return;
+  localStorage.removeItem(STORAGE_KEY);
+  Object.keys(history).forEach(k => delete history[k]);
+  lastEditedCard = null;
+  updateHistoryButtons();
+  showStatus('最初に戻しました');
+  location.reload();
+});
+
+// Wire all cards on load
+window.addEventListener('DOMContentLoaded', () => {
+  const sections = document.querySelectorAll('section.design-section');
+  sections.forEach((sec, idx) => {
+    const sectionIdx = idx + 1;
+    const cards = sec.querySelectorAll('.email-card');
+    cards.forEach((card, ci) => {
+      const role = ci === 0 ? 'pc' : 'sp';
+      wireCard(card, sectionIdx, role);
+    });
+  });
+});
+window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(); });
+</script>
 
 </body>
 </html>
