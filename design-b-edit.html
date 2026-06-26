@@ -657,17 +657,29 @@ document.getElementById('btnResetOrigin').addEventListener('click', () => {
 
 // open in new window
 document.querySelectorAll('.btn-open').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', async () => {
     const section = btn.closest('.design-section');
     const role = btn.dataset.role;
     const iframe = section.querySelector(`iframe[data-role="${role}"]`);
     const doc = iframe.contentDocument;
     const baseUrl = new URL('./', iframe.src).href;
     let inner = doc.documentElement.innerHTML;
-    // 相対URLを絶対URLに変換（Gmail貼り付け時に画像が切れないようにするため）
-    inner = inner.replace(/\s(src|href)="((?!data:|https?:|\/\/)([^"]+))"/g, (m, attr, rel) => {
-      try { return ` ${attr}="${new URL(rel, baseUrl).href}"`; } catch(e) { return m; }
-    });
+
+    // ヘッダー画像をbase64に変換（Gmail貼り付け時に外部URL参照が切れないようにするため）
+    const imgEls = [...doc.querySelectorAll('img:not([src^="data:"])')];
+    for (const img of imgEls) {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        if (!canvas.width || !canvas.height) continue;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        const b64 = canvas.toDataURL('image/png');
+        const escaped = img.getAttribute('src').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        inner = inner.replace(new RegExp(`src="${escaped}"`, 'g'), `src="${b64}"`);
+      } catch(e) { /* CORS等でスキップ */ }
+    }
+
     const html = '<!DOCTYPE html>\n<html lang="ja">\n' + inner + '\n</html>';
     const blob = new Blob([html], {type:'text/html;charset=utf-8'});
     window.open(URL.createObjectURL(blob), '_blank');
