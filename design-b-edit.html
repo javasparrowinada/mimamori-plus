@@ -655,25 +655,61 @@ document.getElementById('btnResetOrigin').addEventListener('click', () => {
   });
 });
 
-// open in new window
+// 画像をbase64に変換するヘルパー
+function imgToBase64(img) {
+  const canvas = document.createElement('canvas');
+  canvas.width = img.naturalWidth;
+  canvas.height = img.naturalHeight;
+  if (!canvas.width || !canvas.height) return null;
+  canvas.getContext('2d').drawImage(img, 0, 0);
+  return canvas.toDataURL('image/png');
+}
+
+// メール用HTML生成（画像をbase64で埋め込み、Gmail等のメーラーで確実に表示されるようにする）
+function buildMailHtml(iframe) {
+  const doc = iframe.contentDocument;
+  const imgEls = [...doc.querySelectorAll('img:not([src^="data:"])')];
+  const origSrcs = imgEls.map(img => img.getAttribute('src'));
+
+  // 各imgをbase64に変換
+  imgEls.forEach(img => {
+    const b64 = imgToBase64(img);
+    if (b64) img.setAttribute('src', b64);
+  });
+
+  const inner = doc.documentElement.innerHTML;
+
+  // DOM復元
+  imgEls.forEach((img, i) => img.setAttribute('src', origSrcs[i]));
+
+  return '<!DOCTYPE html>\n<html lang="ja">\n' + inner + '\n</html>';
+}
+
+// open in new window + auto copy to clipboard
 document.querySelectorAll('.btn-open').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', async () => {
     const section = btn.closest('.design-section');
     const role = btn.dataset.role;
     const iframe = section.querySelector(`iframe[data-role="${role}"]`);
-    const doc = iframe.contentDocument;
 
-    // img.src（ブラウザ解決済みの絶対URL）をDOMに書き込んでからinnerHTMLを取得
-    const imgEls = [...doc.querySelectorAll('img:not([src^="data:"])')];
-    const origSrcs = imgEls.map(img => img.getAttribute('src'));
-    imgEls.forEach(img => img.setAttribute('src', img.src));
-    const inner = doc.documentElement.innerHTML;
-    imgEls.forEach((img, i) => img.setAttribute('src', origSrcs[i])); // DOM復元
+    const html = buildMailHtml(iframe);
 
-    const html = '<!DOCTYPE html>\n<html lang="ja">\n' + inner + '\n</html>';
+    // 別画面で開く（プレビュー用）
     const blob = new Blob([html], {type:'text/html;charset=utf-8'});
     window.open(URL.createObjectURL(blob), '_blank');
-    showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました');
+
+    // クリップボードにHTMLとして直接コピー（GmailにそのままCmd+Vで貼り付け可能）
+    try {
+      const htmlBlob = new Blob([html], {type: 'text/html'});
+      const textBlob = new Blob([iframe.contentDocument.body.innerText], {type: 'text/plain'});
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': htmlBlob,
+        'text/plain': textBlob
+      })]);
+      showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開き、クリップボードにコピーしました（Gmailで Cmd+V で貼り付け）');
+    } catch(e) {
+      showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました（クリップボードコピー失敗: ' + e.message + '）');
+    }
   });
 });
 
