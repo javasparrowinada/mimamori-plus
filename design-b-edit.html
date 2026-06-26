@@ -677,10 +677,20 @@ function buildMailHtml(iframe) {
     if (b64) img.setAttribute('src', b64);
   });
 
-  const inner = doc.documentElement.innerHTML;
+  let inner = doc.documentElement.innerHTML;
 
   // DOM復元
   imgEls.forEach((img, i) => img.setAttribute('src', origSrcs[i]));
+
+  // Gmail等のダークモード自動変換を防ぐためのメタタグを <head> に注入
+  const metaTags = '<meta name="color-scheme" content="light only">'
+                 + '<meta name="supported-color-schemes" content="light only">'
+                 + '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
+  if (inner.includes('<head>')) {
+    inner = inner.replace('<head>', '<head>' + metaTags);
+  } else {
+    inner = '<head>' + metaTags + '</head>' + inner;
+  }
 
   return '<!DOCTYPE html>\n<html lang="ja">\n' + inner + '\n</html>';
 }
