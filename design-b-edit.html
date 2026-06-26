@@ -662,7 +662,11 @@ document.querySelectorAll('.btn-open').forEach(btn => {
     const role = btn.dataset.role;
     const iframe = section.querySelector(`iframe[data-role="${role}"]`);
     const doc = iframe.contentDocument;
-    const html = '<!DOCTYPE html>\n<html lang="ja">\n' + doc.documentElement.innerHTML + '\n</html>';
+    const baseUrl = new URL('./', iframe.src).href;
+    const baseTag = `<base href="${baseUrl}">`;
+    let inner = doc.documentElement.innerHTML;
+    inner = inner.includes('<head>') ? inner.replace('<head>', '<head>' + baseTag) : baseTag + inner;
+    const html = '<!DOCTYPE html>\n<html lang="ja">\n' + inner + '\n</html>';
     const blob = new Blob([html], {type:'text/html;charset=utf-8'});
     window.open(URL.createObjectURL(blob), '_blank');
     showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました');
