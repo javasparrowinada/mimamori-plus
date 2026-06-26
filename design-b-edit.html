@@ -663,9 +663,11 @@ document.querySelectorAll('.btn-open').forEach(btn => {
     const iframe = section.querySelector(`iframe[data-role="${role}"]`);
     const doc = iframe.contentDocument;
     const baseUrl = new URL('./', iframe.src).href;
-    const baseTag = `<base href="${baseUrl}">`;
     let inner = doc.documentElement.innerHTML;
-    inner = inner.includes('<head>') ? inner.replace('<head>', '<head>' + baseTag) : baseTag + inner;
+    // 相対URLを絶対URLに変換（Gmail貼り付け時に画像が切れないようにするため）
+    inner = inner.replace(/\s(src|href)="((?!data:|https?:|\/\/)([^"]+))"/g, (m, attr, rel) => {
+      try { return ` ${attr}="${new URL(rel, baseUrl).href}"`; } catch(e) { return m; }
+    });
     const html = '<!DOCTYPE html>\n<html lang="ja">\n' + inner + '\n</html>';
     const blob = new Blob([html], {type:'text/html;charset=utf-8'});
     window.open(URL.createObjectURL(blob), '_blank');
