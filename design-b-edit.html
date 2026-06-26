@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>見守りプラス｜デザインB（編集モード）</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -696,57 +695,30 @@ function buildMailHtml(iframe) {
   return '<!DOCTYPE html>\n<html lang="ja">\n' + inner + '\n</html>';
 }
 
-// メールの最も外側のメインコンテンツ要素を取得（白いカード）
-function findMailContainer(doc) {
-  // 600px幅のカードテーブルが最も理想的なキャプチャ対象
-  const card = doc.querySelector('table[width="600"]');
-  if (card) return card;
-  // フォールバック：body直下のdiv
-  return doc.body.firstElementChild || doc.body;
-}
-
-// open in new window + auto copy as IMAGE to clipboard
+// open in new window + auto copy to clipboard
 document.querySelectorAll('.btn-open').forEach(btn => {
   btn.addEventListener('click', async () => {
     const section = btn.closest('.design-section');
     const role = btn.dataset.role;
     const iframe = section.querySelector(`iframe[data-role="${role}"]`);
-    const doc = iframe.contentDocument;
 
-    showStatus('画像生成中...');
+    const html = buildMailHtml(iframe);
 
+    // 別画面で開く（プレビュー用）
+    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    window.open(URL.createObjectURL(blob), '_blank');
+
+    // クリップボードにHTMLとして直接コピー（GmailにそのままCmd+Vで貼り付け可能）
     try {
-      const target = findMailContainer(doc);
-      // html2canvas で iframe 内の要素をPNG化（高解像度で2倍スケール）
-      const canvas = await html2canvas(target, {
-        backgroundColor: '#ffffff',
-        useCORS: true,
-        allowTaint: false,
-        scale: 2,
-        logging: false,
-        windowWidth: iframe.contentWindow.innerWidth,
-        windowHeight: iframe.contentWindow.innerHeight
-      });
-
-      // canvas → Blob
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-
-      // 別画面で画像を表示
-      const url = URL.createObjectURL(blob);
-      window.open(url, '_blank');
-
-      // クリップボードに画像としてコピー（Gmail にそのまま Cmd+V で貼り付け可能）
-      try {
-        await navigator.clipboard.write([new ClipboardItem({
-          'image/png': blob
-        })]);
-        showStatus((role==='pc'?'PC':'スマホ') + '版を画像化してクリップボードにコピー（Gmailで Cmd+V）｜サイズ: ' + Math.round(blob.size/1024) + 'KB');
-      } catch(e) {
-        showStatus((role==='pc'?'PC':'スマホ') + '版を画像化（クリップボードコピー失敗: ' + e.message + '）');
-      }
-    } catch(err) {
-      showStatus('画像生成エラー: ' + err.message);
-      console.error(err);
+      const htmlBlob = new Blob([html], {type: 'text/html'});
+      const textBlob = new Blob([iframe.contentDocument.body.innerText], {type: 'text/plain'});
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': htmlBlob,
+        'text/plain': textBlob
+      })]);
+      showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開き、クリップボードにコピーしました（Gmailで Cmd+V で貼り付け）');
+    } catch(e) {
+      showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました（クリップボードコピー失敗: ' + e.message + '）');
     }
   });
 });
