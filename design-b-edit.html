@@ -21,6 +21,8 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .topbar-nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
 .topbar-nav a{font-size:.72rem;font-weight:700;color:var(--text-light);text-decoration:none;padding:6px 12px;border-radius:100px;transition:all .2s}
 .topbar-nav a:hover,.topbar-nav a.active{background:var(--green-light);color:var(--green-dark)}
+.topbar-sheet{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--white)!important;background:#1D9E75;padding:6px 14px!important;border-radius:100px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.topbar-sheet:hover{background:#157d5c!important}
 
 .page-head{max-width:1200px;margin:0 auto;padding:32px 24px 16px}
 .page-head h1{font-size:1.4rem;font-weight:900;margin-bottom:6px}
@@ -84,12 +86,13 @@ body:not(.edit-locked) #editGate{display:none}
   <div class="topbar-brand">solarich 見守りプラス</div>
   <nav class="topbar-nav">
     <a href="logic.html">AIレポート仕様</a>
-    <a href="notifications.html">通知テンプレート</a>
+    <a href="notifications.html">通知テンプレート（旧）</a>
     <!-- HIDDEN(2026-06-23) <a href="design.html">デザインA（岩井さん確認用）</a> -->
     <!-- HIDDEN(2026-06-26) <a href="design-a-edit.html">デザインA（編集モード）</a> -->
     <!-- HIDDEN(2026-06-23) <a href="design-b.html">デザインB（岩井さん確認用）</a> -->
     <a href="design-b-edit.html" class="active">AIレポート / 通知テンプレート</a>
   </nav>
+  <a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit" target="_blank" rel="noopener" class="topbar-sheet">📊 スプレッドシート ↗</a>
 </div>
 
 <div class="page-head">
