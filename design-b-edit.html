@@ -67,6 +67,15 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 .global-actions{max-width:1200px;margin:0 auto;padding:0 24px}
 .global-actions button{font-size:.7rem;padding:6px 14px;border:1px solid #D5D0C8;border-radius:100px;background:#fff;cursor:pointer;font-family:inherit;font-weight:700;color:var(--text)}
 .global-actions button:hover{background:#F5F3EE}
+
+/* 編集モードゲート */
+#editGate{max-width:1200px;margin:0 auto;padding:8px 24px 0;display:flex;align-items:center;gap:14px}
+#btnEnableEdit{font-size:.78rem;font-weight:700;padding:8px 22px;border:1px solid var(--green-dark);background:var(--green-dark);color:#fff;border-radius:100px;cursor:pointer;font-family:inherit}
+#btnEnableEdit:hover{background:#2D5A2C;border-color:#2D5A2C}
+#editGate .hint{font-size:.72rem;color:var(--text-light)}
+body.edit-locked .toolbar,
+body.edit-locked .help-note{display:none}
+body:not(.edit-locked) #editGate{display:none}
 </style>
 </head>
 <body>
@@ -89,6 +98,11 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
     デザインBの大枠そのまま、9通のメールテンプレートを並列表示。各カードの PC / スマホ それぞれに直接編集できます。<br>
     テキストをクリック → 上部ツールバーでフォント・色・サイズ・装飾を変更。編集は自動でこのブラウザに保存されます。
   </p>
+</div>
+
+<div id="editGate">
+  <button id="btnEnableEdit" type="button">✏️ 編集する</button>
+  <span class="hint">編集モードを有効化すると上部ツールバーとテキスト編集が利用できます</span>
 </div>
 
 <div class="toolbar" id="toolbar">
@@ -757,10 +771,23 @@ document.querySelectorAll('.btn-copy').forEach(btn => {
   });
 });
 
+// 編集モードゲート（初期は非編集モード）
+document.body.classList.add('edit-locked');
+
 document.querySelectorAll('iframe.edit-iframe').forEach(iframe => {
   iframe.addEventListener('load', () => {
+    if (document.body.classList.contains('edit-locked')) return;
     try { makeEditable(iframe); } catch(e){ console.error(e); }
   });
+});
+
+document.getElementById('btnEnableEdit').addEventListener('click', () => {
+  document.body.classList.remove('edit-locked');
+  // 既にロード済みの全iframeに編集機能を有効化
+  document.querySelectorAll('iframe.edit-iframe').forEach(iframe => {
+    try { if (iframe.contentDocument) makeEditable(iframe); } catch(e){ console.error(e); }
+  });
+  showStatus('編集モードを有効化しました');
 });
 
 window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(); });
