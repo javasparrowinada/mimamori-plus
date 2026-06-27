@@ -158,6 +158,7 @@ body:not(.edit-locked) #editGate{display:none}
     <button id="btnUndo" title="直前の編集を1つ取り消す" disabled>↶ 戻る</button>
     <button id="btnRedo" title="取り消した編集をやり直す" disabled>↷ 進む</button>
     <button id="btnResetOrigin" title="編集を全て破棄して最初の状態へ（要確認）">⤺ 最初に戻す</button>
+    <button id="btnExitEdit" title="編集モードを終了して閲覧モードに戻す">✕ 編集を終了</button>
   </div>
 </div>
 
@@ -788,6 +789,20 @@ document.getElementById('btnEnableEdit').addEventListener('click', () => {
     try { if (iframe.contentDocument) makeEditable(iframe); } catch(e){ console.error(e); }
   });
   showStatus('編集モードを有効化しました');
+});
+
+document.getElementById('btnExitEdit').addEventListener('click', () => {
+  document.body.classList.add('edit-locked');
+  // 全iframeの編集機能を解除（contentEditable=false）
+  document.querySelectorAll('iframe.edit-iframe').forEach(iframe => {
+    try {
+      const doc = iframe.contentDocument;
+      if (!doc) return;
+      doc.querySelectorAll('[contenteditable="true"]').forEach(el => el.setAttribute('contenteditable', 'false'));
+    } catch(e){ console.error(e); }
+  });
+  clearSelection();
+  showStatus('閲覧モードに戻しました');
 });
 
 window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(); });
