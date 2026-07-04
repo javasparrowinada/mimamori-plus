@@ -122,6 +122,8 @@ body.edit-locked #spacingPanel{display:none}
   <div class="sp-row"><span class="sp-label">☀️ 下</span><button data-t="h1b" data-d="-1">−1</button><span class="sp-value" id="sp-h1b">?</span><button data-t="h1b" data-d="1">+1</button></div>
   <div class="sp-row"><span class="sp-label">📊 上</span><button data-t="h2t" data-d="-1">−1</button><span class="sp-value" id="sp-h2t">?</span><button data-t="h2t" data-d="1">+1</button></div>
   <div class="sp-row"><span class="sp-label">📊 下</span><button data-t="h2b" data-d="-1">−1</button><span class="sp-value" id="sp-h2b">?</span><button data-t="h2b" data-d="1">+1</button></div>
+  <div class="sp-row"><span class="sp-label">締め 上</span><button data-t="ct" data-d="-1">−1</button><span class="sp-value" id="sp-ct">?</span><button data-t="ct" data-d="1">+1</button></div>
+  <div class="sp-row"><span class="sp-label">締め 下</span><button data-t="cb" data-d="-1">−1</button><span class="sp-value" id="sp-cb">?</span><button data-t="cb" data-d="1">+1</button></div>
   <div class="sp-actions">
     <button id="sp-copy">値をコピー</button>
     <button id="sp-reset">リセット</button>
@@ -847,7 +849,9 @@ window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(
     h1t: { sel: '☀️ 最近のようす', prop: 'marginTop' },
     h1b: { sel: '☀️ 最近のようす', prop: 'marginBottom' },
     h2t: { sel: '📊 最近の使用データ', prop: 'marginTop' },
-    h2b: { sel: '📊 最近の使用データ', prop: 'marginBottom' }
+    h2b: { sel: '📊 最近の使用データ', prop: 'marginBottom' },
+    ct:  { closing: true, prop: 'marginTop' },
+    cb:  { closing: true, prop: 'marginBottom' }
   };
 
   function targetIframes(){
@@ -858,13 +862,23 @@ window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(
     return [...doc.querySelectorAll('div')].find(d => d.textContent.trim() === sel);
   }
 
+  // 締めdivは「最近の使用データ」テーブルの次の兄弟div
+  function findClosing(doc){
+    const dataTable = [...doc.querySelectorAll('table')].find(t => t.getAttribute('style')?.includes('#F0F8FC'));
+    return dataTable?.nextElementSibling;
+  }
+
+  function findTarget(doc, t){
+    return t.closing ? findClosing(doc) : findHeading(doc, t.sel);
+  }
+
   function currentValue(key){
     const t = TARGETS[key];
     for (const iframe of targetIframes()){
       try {
         const doc = iframe.contentDocument;
         if (!doc) continue;
-        const el = findHeading(doc, t.sel);
+        const el = findTarget(doc, t);
         if (!el) continue;
         return parseInt(getComputedStyle(el)[t.prop]) || 0;
       } catch(e){}
@@ -887,7 +901,7 @@ window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(
       try {
         const doc = iframe.contentDocument;
         if (!doc) continue;
-        const el = findHeading(doc, t.sel);
+        const el = findTarget(doc, t);
         if (!el) continue;
         const cur = parseInt(getComputedStyle(el)[t.prop]) || 0;
         newVal = Math.max(0, cur + delta);
@@ -904,7 +918,7 @@ window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(
 
   document.getElementById('sp-copy')?.addEventListener('click', async () => {
     const vals = Object.fromEntries(Object.keys(TARGETS).map(k => [k, currentValue(k)]));
-    const text = `☀️上=${vals.h1t}px ☀️下=${vals.h1b}px 📊上=${vals.h2t}px 📊下=${vals.h2b}px`;
+    const text = `☀️上=${vals.h1t}px ☀️下=${vals.h1b}px 📊上=${vals.h2t}px 📊下=${vals.h2b}px 締上=${vals.ct}px 締下=${vals.cb}px`;
     try {
       await navigator.clipboard.writeText(text);
       showStatus('コピー: ' + text);
@@ -920,7 +934,7 @@ window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(
         const doc = iframe.contentDocument;
         if (!doc) continue;
         for (const t of Object.values(TARGETS)){
-          const el = findHeading(doc, t.sel);
+          const el = findTarget(doc, t);
           if (el) el.style[t.prop] = '';
         }
       } catch(e){}
