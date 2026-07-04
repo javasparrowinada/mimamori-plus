@@ -733,7 +733,9 @@ document.querySelectorAll('.btn-open').forEach(btn => {
     const iframe = section.querySelector(`iframe[data-role="${role}"]`);
     const html = buildMailHtml(iframe);
     const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-    window.open(URL.createObjectURL(blob), '_blank');
+    // SP版はスマホ相当の幅（400×850）で新ウィンドウを開く、PC版はデフォルト（新タブ）
+    const winFeatures = role === 'sp' ? 'width=400,height=850' : '';
+    window.open(URL.createObjectURL(blob), '_blank', winFeatures);
     showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました');
   });
 });
