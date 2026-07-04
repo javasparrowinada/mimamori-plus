@@ -78,6 +78,18 @@ body{font-family:'Noto Sans JP',sans-serif;color:var(--text);background:#EDEBE6;
 body.edit-locked .toolbar,
 body.edit-locked .help-note{display:none}
 body:not(.edit-locked) #editGate{display:none}
+
+/* 余白調整パネル */
+#spacingPanel{position:fixed;bottom:14px;left:14px;background:#fff;padding:14px 16px;border:1px solid #D5D0C8;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.12);z-index:180;font-size:.72rem;font-family:'Noto Sans JP',sans-serif;min-width:260px}
+#spacingPanel .sp-title{font-weight:700;color:var(--text);margin-bottom:8px;font-size:.75rem}
+#spacingPanel .sp-row{display:flex;align-items:center;gap:6px;margin:4px 0}
+#spacingPanel .sp-label{width:76px;color:var(--text-light);font-weight:700}
+#spacingPanel .sp-value{min-width:44px;text-align:center;font-weight:700;color:var(--green-dark);font-family:ui-monospace,monospace}
+#spacingPanel button{font-size:.72rem;padding:3px 9px;border:1px solid #D5D0C8;border-radius:5px;background:#fff;cursor:pointer;font-family:inherit;font-weight:700;color:var(--text);min-width:32px}
+#spacingPanel button:hover{background:#F5F3EE}
+#spacingPanel .sp-actions{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid #E0DCD2}
+#spacingPanel .sp-actions button{flex:1}
+body.edit-locked #spacingPanel{display:none}
 </style>
 </head>
 <body>
@@ -101,6 +113,19 @@ body:not(.edit-locked) #editGate{display:none}
     デザインBの大枠そのまま、9通のメールテンプレートを並列表示。各カードの PC / スマホ それぞれに直接編集できます。<br>
     テキストをクリック → 上部ツールバーでフォント・色・サイズ・装飾を変更。編集は自動でこのブラウザに保存されます。
   </p>
+</div>
+
+<!-- 余白調整パネル（見出しdivのmarginをiframe内で1pxずつ動かす、編集モード時のみ表示） -->
+<div id="spacingPanel">
+  <div class="sp-title">🎛️ 見出し余白（AIレポート）</div>
+  <div class="sp-row"><span class="sp-label">☀️ 上</span><button data-t="h1t" data-d="-1">−1</button><span class="sp-value" id="sp-h1t">?</span><button data-t="h1t" data-d="1">+1</button></div>
+  <div class="sp-row"><span class="sp-label">☀️ 下</span><button data-t="h1b" data-d="-1">−1</button><span class="sp-value" id="sp-h1b">?</span><button data-t="h1b" data-d="1">+1</button></div>
+  <div class="sp-row"><span class="sp-label">📊 上</span><button data-t="h2t" data-d="-1">−1</button><span class="sp-value" id="sp-h2t">?</span><button data-t="h2t" data-d="1">+1</button></div>
+  <div class="sp-row"><span class="sp-label">📊 下</span><button data-t="h2b" data-d="-1">−1</button><span class="sp-value" id="sp-h2b">?</span><button data-t="h2b" data-d="1">+1</button></div>
+  <div class="sp-actions">
+    <button id="sp-copy">値をコピー</button>
+    <button id="sp-reset">リセット</button>
+  </div>
 </div>
 
 <div id="editGate">
@@ -811,6 +836,106 @@ document.getElementById('btnExitEdit').addEventListener('click', () => {
 });
 
 window.addEventListener('keydown', e => { if(e.key === 'Escape') clearSelection(); });
+
+/* ─────────────  余白調整パネル（見出しのmarginを1pxずつ動かす） ─────────────
+ * AIレポート系 iframe 内の「☀️ 最近のようす」「📊 最近の使用データ」の
+ * marginTop / marginBottom を各パネル内で操作。全ての AIレポート iframe
+ * に同時に反映する。値は iframe 内の style を直接書き換える（プレビュー用）。
+ */
+(function initSpacingPanel(){
+  const TARGETS = {
+    h1t: { sel: '☀️ 最近のようす', prop: 'marginTop' },
+    h1b: { sel: '☀️ 最近のようす', prop: 'marginBottom' },
+    h2t: { sel: '📊 最近の使用データ', prop: 'marginTop' },
+    h2b: { sel: '📊 最近の使用データ', prop: 'marginBottom' }
+  };
+
+  function targetIframes(){
+    return [...document.querySelectorAll('iframe.edit-iframe')].filter(f => f.src.includes('AI%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88') || f.src.includes('AIレポート'));
+  }
+
+  function findHeading(doc, sel){
+    return [...doc.querySelectorAll('div')].find(d => d.textContent.trim() === sel);
+  }
+
+  function currentValue(key){
+    const t = TARGETS[key];
+    for (const iframe of targetIframes()){
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) continue;
+        const el = findHeading(doc, t.sel);
+        if (!el) continue;
+        return parseInt(getComputedStyle(el)[t.prop]) || 0;
+      } catch(e){}
+    }
+    return null;
+  }
+
+  function refresh(){
+    for (const key of Object.keys(TARGETS)){
+      const v = currentValue(key);
+      const el = document.getElementById('sp-' + key);
+      if (el) el.textContent = (v == null ? '?' : v + 'px');
+    }
+  }
+
+  function apply(key, delta){
+    const t = TARGETS[key];
+    let newVal = null;
+    for (const iframe of targetIframes()){
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) continue;
+        const el = findHeading(doc, t.sel);
+        if (!el) continue;
+        const cur = parseInt(getComputedStyle(el)[t.prop]) || 0;
+        newVal = Math.max(0, cur + delta);
+        el.style[t.prop] = newVal + 'px';
+      } catch(e){}
+    }
+    refresh();
+    if (newVal != null) showStatus(`${key}: ${newVal}px`);
+  }
+
+  document.querySelectorAll('#spacingPanel button[data-t]').forEach(btn => {
+    btn.addEventListener('click', () => apply(btn.dataset.t, parseInt(btn.dataset.d)));
+  });
+
+  document.getElementById('sp-copy')?.addEventListener('click', async () => {
+    const vals = Object.fromEntries(Object.keys(TARGETS).map(k => [k, currentValue(k)]));
+    const text = `☀️上=${vals.h1t}px ☀️下=${vals.h1b}px 📊上=${vals.h2t}px 📊下=${vals.h2b}px`;
+    try {
+      await navigator.clipboard.writeText(text);
+      showStatus('コピー: ' + text);
+    } catch(e){
+      showStatus('コピー失敗: ' + text);
+    }
+  });
+
+  document.getElementById('sp-reset')?.addEventListener('click', () => {
+    // iframeの style を消してファイルの初期値に戻す
+    for (const iframe of targetIframes()){
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) continue;
+        for (const t of Object.values(TARGETS)){
+          const el = findHeading(doc, t.sel);
+          if (el) el.style[t.prop] = '';
+        }
+      } catch(e){}
+    }
+    refresh();
+    showStatus('リセットしました（ファイル初期値）');
+  });
+
+  // iframe が load するたびに現在値を再取得
+  document.querySelectorAll('iframe.edit-iframe').forEach(iframe => {
+    iframe.addEventListener('load', () => setTimeout(refresh, 500));
+  });
+  // 初回
+  setTimeout(refresh, 2500);
+})();
 </script>
 
 <footer style="max-width:1200px;margin:48px auto 16px;padding:0 24px;font-size:.62rem;color:#B8B3A8;text-align:right;font-family:'Noto Sans JP',sans-serif;">
