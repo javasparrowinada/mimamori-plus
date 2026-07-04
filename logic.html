@@ -192,7 +192,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 {{ユーザー名}} 様<br><br>
 ソラリッチ店長の森川あかりです。<br>
 いつも見守りプラスをご利用いただき、ありがとうございます！<br><br>
-今回の見守りレポートをお届けします😊
+見守りレポートをお届けします😊
 </div>
 </div>
 </div>
@@ -217,10 +217,10 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <div class="d-note">注記：ここで言う<strong>「通知ログ」「通知#4〜#6」</strong>は、デバイスの動作イベントを記録した<strong>集計用の内部データ</strong>を指します。ご家族のLINEに届く「通知」そのものではなく、その<strong>素材となる記録</strong>です（AIレポートはこれを集計して文章化します）。以降のセクションの「通知」も同じ意味で使っています。</div>
 <table class="tbl">
 <tr><th>項目</th><th>データ元</th><th>表示例</th></tr>
-<tr><td>コンセント接続</td><td>常時接続が前提</td><td>接続中 ✅</td></tr>
-<tr><td>LEDライト</td><td>通知#LED（LEDライト通知）のCOUNT<br>※SOSとは別で照明としてのLEDライト使用</td><td>5回</td></tr>
-<tr><td>AC給電</td><td>通知#5（AC給電通知）のCOUNT</td><td>8回</td></tr>
-<tr><td>USB給電</td><td>通知#4（USB給電通知）のCOUNT</td><td>12回</td></tr>
+<tr><td>コンセント接続</td><td>常時接続が前提</td><td><code style="font-family:monospace">コンセント接続 ｜ 接続中 ✅</code></td></tr>
+<tr><td>LEDライト</td><td>通知#LED（LEDライト通知）のCOUNT<br>※SOSとは別で照明としてのLEDライト使用</td><td><code style="font-family:monospace">LEDライト　　 ｜ 5回</code></td></tr>
+<tr><td>AC給電</td><td>通知#5（AC給電通知）のCOUNT</td><td><code style="font-family:monospace">AC給電　　　　｜ 8回</code></td></tr>
+<tr><td>USB給電</td><td>通知#4（USB給電通知）のCOUNT</td><td><code style="font-family:monospace">USB給電　　　 ｜ 12回</code></td></tr>
 </table>
 <p style="font-size:.78rem;color:var(--text-light);margin-top:8px">※ 0回の項目は行ごと非表示。「あるものだけ書く。ないものを書くと寂しくなる」の方針。全部0回ならコンセント接続だけ残る。</p>
 </div>
@@ -258,7 +258,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 
 <!-- 軸1 -->
 <div class="card">
-<h3><span class="icon">🔌</span> 軸1：USB/AC/LEDライトの使用頻度</h3>
+<h3><span class="icon">🔌</span> 軸1: USB/AC / LEDライト使用頻度</h3>
 <p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">通知が送信された回数で判定。通知#4 (USB給電) + #5 (AC給電) + #LED (LEDライト) の合計を集計。</p>
 <div class="axis-levels">
 <div class="axis-level"><strong>よく使っている</strong><p>通知#4 + #5 + LED の<br>合計 ≧ 10回</p></div>
@@ -290,7 +290,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <tr><td><code>S-2-V2</code></td><td style="white-space:pre-line">ソラリッチの定期的なご利用が見られました☀️
 {{ニックネーム}}様の生活の様子に大きな変化は無く、
 穏やかにお過ごしかと思います☺️</td><td><span style="display:inline-block;font-size:.72rem;font-weight:700;color:#5A7EB5;background:#EDF2F8;padding:2px 10px;border-radius:100px">穏やか</span></td></tr>
-<tr><td><code>S-2-V3</code></td><td style="white-space:pre-line">日常の中で時々ソラリッチのご利用されているのを確認できました💪
+<tr><td><code>S-2-V3</code></td><td style="white-space:pre-line">日常の中で時々ソラリッチをご利用いただいているのを確認できました💪
 気になるご様子は見られず、いつもどおりの生活を送られているものと思います😊</td><td><span style="display:inline-block;font-size:.72rem;font-weight:700;color:#5A7EB5;background:#EDF2F8;padding:2px 10px;border-radius:100px">穏やか</span></td></tr>
 
 <tr><td><code>S-3-V1</code></td><td rowspan="3"><strong>使っていない</strong></td><td style="white-space:pre-line">今回はソラリッチのご利用が確認できませんでした😔
@@ -298,7 +298,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <tr><td><code>S-3-V2</code></td><td style="white-space:pre-line">今回はソラリッチのご利用が確認されませんでした😔
 異常を示す情報は確認されていませんが、万が一に備え、
 ご本人のご様子を一度ご確認いただくことをおすすめします🙇‍♀️</td><td><span style="display:inline-block;font-size:.72rem;font-weight:700;color:#D06830;background:#FFF3E8;padding:2px 10px;border-radius:100px">やさしい注意喚起</span></td></tr>
-<tr><td><code>S-3-V3</code></td><td style="white-space:pre-line">今回はポータブル電源のご利用が確認されませんでした😔
+<tr><td><code>S-3-V3</code></td><td style="white-space:pre-line">今回はソラリッチのご利用が確認されませんでした😔
 ご利用がない日もありますが、いつもと様子が異なると感じられる場合は、
 ご本人のご様子をご確認いただくと安心です👍</td><td><span style="display:inline-block;font-size:.72rem;font-weight:700;color:#D06830;background:#FFF3E8;padding:2px 10px;border-radius:100px">やさしい注意喚起</span></td></tr>
 </tbody>
