@@ -753,17 +753,19 @@ function getMailNameFromIframe(iframe) {
 }
 
 // 別画面で開く（プレビュー用）
+// 本番URLを開くことで、URLをコピーしてスマホ等で共有可能にする。
+// ローカル編集内容は反映されないが、共有・URLコピー用途を優先。
 document.querySelectorAll('.btn-open').forEach(btn => {
   btn.addEventListener('click', () => {
     const section = btn.closest('.design-section');
     const role = btn.dataset.role;
     const iframe = section.querySelector(`iframe[data-role="${role}"]`);
-    const html = buildMailHtml(iframe);
-    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    // iframe.src から ?edit=1 等のクエリを除去して本番相当のURLにする
+    const shareUrl = iframe.src.split('?')[0];
     // SP版はスマホ相当の幅（400×850）で新ウィンドウを開く、PC版はデフォルト（新タブ）
     const winFeatures = role === 'sp' ? 'width=400,height=850' : '';
-    window.open(URL.createObjectURL(blob), '_blank', winFeatures);
-    showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました');
+    window.open(shareUrl, '_blank', winFeatures);
+    showStatus((role==='pc'?'PC':'スマホ') + '版を別画面で開きました（URLコピー可）');
   });
 });
 
