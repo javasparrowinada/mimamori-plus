@@ -29,7 +29,7 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 .block-item{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid rgba(0,0,0,.04)}
 .block-item:last-child{border-bottom:none}
 .block-num{width:48px;height:48px;min-width:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:900;color:var(--white)}
-.bn-1{background:var(--green)}.bn-2{background:var(--purple)}.bn-3{background:var(--orange)}.bn-4{background:var(--blue)}
+.bn-1{background:var(--green)}.bn-2{background:var(--purple)}.bn-3{background:var(--orange)}.bn-4{background:var(--blue)}.bn-5{background:var(--red)}
 .block-body{flex:1;min-width:0}
 .block-body h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
 .block-body .meta{font-size:.78rem;color:var(--text-light);margin-bottom:8px}
@@ -134,21 +134,21 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <tr><td>頻度</td><td><strong>隔週1回</strong>（隔週月曜 朝10時）</td></tr>
 <tr><td>文面方式</td><td><strong>テンプレートエンジン</strong>（AI APIは使わない。テンプレートの組み合わせで実現）</td></tr>
 <tr><td>語り手</td><td><div style="display:flex;align-items:center;gap:12px"><img src="akari.png" alt="森川あかり" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #F5E6D3"><div><strong>森川あかり</strong>（サポート担当店長。「あかりからの手紙」の温度感）</div></div></td></tr>
-<tr><td>構成</td><td>4ブロック：①挨拶 → ②総評 → ③使用データ → ④締め</td></tr>
+<tr><td>構成</td><td>5ブロック：①挨拶 → ⑤緊急イベント追記（条件付き）→ ②総評 → ③使用データ → ④締め</td></tr>
 <tr><td>LINE相談リンク先</td><td>全メール共通の「LINEで相談する」ボタンのリンク先URLは以下で固定：<br><code style="display:inline-block;background:#F5F1E8;padding:4px 8px;border-radius:4px;font-size:.78rem;word-break:break-all;margin-top:4px">https://liff.line.me/2006093695-yWKodwlG/landing?follow=%40741gbrqo&amp;lp=MbOxbS&amp;liff_id=2006093695-yWKodwlG</code></td></tr>
 </table>
 </div>
 
-<div class="total">理論組み合わせ総数: 1（挨拶＝全月共通の固定文）× 9（総評＝3条件×V1/V2/V3）× 36（締め＝12月×V1/V2/V3）= <span>324通り</span>（情緒メッセージ）＋ 使用データは実数値で自動表示</div>
+<div class="total">理論組み合わせ総数: 1（挨拶＝全月共通の固定文）× 9（総評＝3条件×V1/V2/V3）× 36（締め＝12月×V1/V2/V3）= <span>324通り</span>（情緒メッセージ）＋ 使用データは実数値で自動表示<br>※⑤緊急イベント追記は該当期間内に発生時のみ①挨拶直後に固定文が挿入されるため、324通りは不変</div>
 </div>
 
 <div class="divider"></div>
 
-<!-- ===== 4ブロック構成 ===== -->
+<!-- ===== 5ブロック構成 ===== -->
 <div class="section" id="blocks">
-<div class="section-badge badge-block">4ブロック構成</div>
+<div class="section-badge badge-block">5ブロック構成</div>
 <h2>メールの中身はどうなっているか</h2>
-<p class="desc">4つのブロックを順に並べてメールを構成する。<br>②総評だけがユーザーの活動データで変わり、残りは季節で変わる。</p>
+<p class="desc">5つのブロックを順に並べてメールを構成する。<br>②総評だけがユーザーの活動データで変わり、⑤緊急イベント追記は該当期間内に緊急イベントが発生した場合のみ挿入される。残りは季節で変わる。</p>
 
 <div class="card">
 <div class="block-flow">
@@ -166,6 +166,21 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 ソラリッチ店長の森川あかりです。<br>
 いつも見守りプラスをご利用いただき、ありがとうございます！<br><br>
 見守りレポートをお届けします😊
+</div>
+</div>
+</div>
+
+<!-- Block 5 (⑤緊急イベント追記) -->
+<div class="block-item">
+<div class="block-num bn-5">⑤</div>
+<div class="block-body">
+<h4>緊急イベント追記 ─ 期間内に緊急事象があったときのフォロー（条件付き）</h4>
+<div class="meta">固定文 <span>1テンプレート</span>　<span style="background:var(--red-light);color:var(--red)">条件付き</span></div>
+<p style="font-size:.84rem;color:var(--text-light)">レポート期間内に <strong>SOS / オフライン / バッテリー低下 / 停電</strong> のいずれかが1件以上発生した場合のみ、①挨拶の直後・②総評の直前に自動挿入される。複数発生時は <code>{{発生イベント}}</code> を読点（、）でつないで列挙。詳細は下の「⑤緊急イベント判定」セクションへ。</p>
+<div class="sample" style="margin-top:12px;background:#FFF5F5;border-color:#F5C6C6">
+<span class="sample-label" style="color:var(--red)">E-01</span>
+先日、{{発生イベント}}がありました。<br>
+その後のご様子はいかがでしょうか？念のため、一度お声がけや機器の状態もご確認いただけると安心です☎️
 </div>
 </div>
 </div>
@@ -280,6 +295,38 @@ html{scroll-behavior:smooth}body{font-family:'Noto Sans JP',sans-serif;color:var
 <p style="font-size:.78rem;color:var(--text-light);margin-top:10px">全文の最新版は <a href="https://docs.google.com/spreadsheets/d/1RLGT9ZY-PBugpu6qZ6HqEc8-WzNtUqbgHbVa2fey3WY/edit?gid=1669364860" target="_blank" rel="noopener" style="color:var(--purple);font-weight:700">📊 20260526_見守りプラス_AIレポート_レポート作成パターン設計書 ↗</a> でご確認ください。</p>
 
 <p style="font-size:.78rem;color:var(--text-light);margin-top:10px">変数：<code>{{ユーザー名}}</code>=見守る側（子）の氏名（例：田中）／<code>{{ニックネーム}}</code>=見守られる側の呼び名（例：お母さん、おばあちゃん）。</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===== ⑤緊急イベント判定 ===== -->
+<div class="section" id="emergency">
+<div class="section-badge badge-axis" style="background:var(--red-light);color:var(--red)">緊急イベント判定</div>
+<h2>⑤緊急イベント追記はどう挿入されるか</h2>
+<p class="desc">レポート期間内に発生した緊急イベントを検知し、<strong>①挨拶の直後・②総評の直前</strong>に固定文で追記する。テキストは1パターン（E-01）のみ、可変部は <code>{{発生イベント}}</code>。</p>
+
+<div class="card">
+<h3><span class="icon">🚨</span> 発動条件と表示位置</h3>
+<p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">レポート期間内に <strong>SOS / オフライン / バッテリー低下 / 停電</strong> のいずれかが1件以上発生していれば発動。挿入位置は <strong>①挨拶の直後・②総評の直前</strong> で固定。デザインは薄ピンク背景のボックス（<code>#FFF5F5</code> / border <code>#F5C6C6</code>）。</p>
+<div class="sample" style="background:#FFF5F5;border-color:#F5C6C6">
+<span class="sample-label" style="color:var(--red)">E-01（固定文）</span>
+先日、{{発生イベント}}がありました。<br>
+その後のご様子はいかがでしょうか？念のため、一度お声がけや機器の状態もご確認いただけると安心です☎️
+</div>
+</div>
+
+<div class="card">
+<h3><span class="icon">🔀</span> <code>{{発生イベント}}</code> の展開マッピング</h3>
+<p style="font-size:.84rem;color:var(--text-light);margin-bottom:12px">通知種別ごとに以下の文言で展開する。<strong>複数発生時は読点（、）でつないで列挙</strong>（例：「SOSボタンが押されたこと、オフラインになったこと」）。</p>
+<table class="tbl">
+<tr><th>通知種別</th><th>判定条件</th><th>展開後テキスト</th></tr>
+<tr><td>SOS</td><td>通知#SOSの送信回数 ≧ 1回</td><td>SOSボタンが押されたこと</td></tr>
+<tr><td>オフライン</td><td>通知#オフラインの送信回数 ≧ 1回</td><td>オフラインになったこと</td></tr>
+<tr><td>バッテリー低下</td><td>通知#バッテリー低下の送信回数 ≧ 1回</td><td>バッテリーが低下したこと</td></tr>
+<tr><td>停電</td><td>通知#1の送信回数 ≧ 1回</td><td>停電またはコンセントが外れたこと</td></tr>
+</table>
+<p style="font-size:.78rem;color:var(--text-light);margin-top:10px">※ 各緊急イベントはリアルタイム通知（LINE / メール）済み。AIレポートでは <strong>フォローアップ</strong> として再度触れることで見落としを防ぐ。</p>
 </div>
 </div>
 
