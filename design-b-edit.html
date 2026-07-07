@@ -113,7 +113,7 @@ body.edit-locked #spacingPanel{display:none}
 <div class="page-head">
   <h1>AIレポート / 通知テンプレート</h1>
   <p class="lead">
-    デザインBの大枠そのまま、9通のメールテンプレートを並列表示。各カードの PC / スマホ それぞれに直接編集できます。<br>
+    デザインBの大枠そのまま、10通のメールテンプレートを並列表示。各カードの PC / スマホ それぞれに直接編集できます。<br>
     テキストをクリック → 上部ツールバーでフォント・色・サイズ・装飾を変更。編集は自動でこのブラウザに保存されます。
   </p>
 </div>
@@ -222,8 +222,25 @@ body.edit-locked #spacingPanel{display:none}
   </div>
 </section>
 
+<section class="design-section" data-tpl="emails-b/AIレポート_04_kinkyu.html" data-tpl-id="t1b">
+  <h2>② みまもりレポート（緊急通知あり）</h2>
+  <div class="sub">レポート期間内にSOS/オフライン/バッテリー低下/停電のいずれかが発生した場合、①挨拶の直後に薄ピンクの追記ボックスが挿入される。</div>
+  <div class="compare">
+    <div>
+      <div class="viewport-tag">🖥️ PC UI（編集可能）</div>
+      <div class="pc-frame"><iframe class="email-iframe edit-iframe" data-role="pc" src="emails-b/AIレポート_04_kinkyu.html?edit=1"></iframe></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-download" data-role="pc">HTMLダウンロード ↓</button> <button class="btn-copy" data-role="pc">ソースをコピー</button> <button class="btn-open" data-role="pc">別画面で開く ↗</button></div>
+    </div>
+    <div>
+      <div class="viewport-tag">📱 スマホ UI（編集可能）</div>
+      <div class="sp-frame"><div class="screen"><iframe class="email-iframe edit-iframe" data-role="sp" src="emails-b/AIレポート_04_kinkyu.html?edit=1"></iframe></div></div>
+      <div class="frame-actions"><span>テキストをクリックして編集</span><button class="btn-download" data-role="sp">HTMLダウンロード ↓</button> <button class="btn-copy" data-role="sp">ソースをコピー</button> <button class="btn-open" data-role="sp">別画面で開く ↗</button></div>
+    </div>
+  </div>
+</section>
+
 <section class="design-section" data-tpl="emails-b/緊急通知_01_停電.html" data-tpl-id="t2">
-  <h2>② 【緊急】停電アラート</h2>
+  <h2>③ 【緊急】停電アラート</h2>
   <div class="sub">コンセント外れ or 停電を検知。</div>
   <div class="compare">
     <div>
@@ -240,7 +257,7 @@ body.edit-locked #spacingPanel{display:none}
 </section>
 
 <section class="design-section" data-tpl="emails-b/緊急通知_03_SOS.html" data-tpl-id="t3">
-  <h2>③ 【緊急】SOSボタン</h2>
+  <h2>④ 【緊急】SOSボタン</h2>
   <div class="sub">本人が SOS ボタンを押下。</div>
   <div class="compare">
     <div>
@@ -257,7 +274,7 @@ body.edit-locked #spacingPanel{display:none}
 </section>
 
 <section class="design-section" data-tpl="emails-b/緊急通知_06_オフライン.html" data-tpl-id="t4">
-  <h2>④ 【緊急】オフライン</h2>
+  <h2>⑤ 【緊急】オフライン</h2>
   <div class="sub">通信途絶。</div>
   <div class="compare">
     <div>
@@ -274,7 +291,7 @@ body.edit-locked #spacingPanel{display:none}
 </section>
 
 <section class="design-section" data-tpl="emails-b/緊急通知_05_バッテリー低下.html" data-tpl-id="t5">
-  <h2>⑤ 【緊急】バッテリー低下</h2>
+  <h2>⑥ 【緊急】バッテリー低下</h2>
   <div class="sub">残量20%未満を検知。</div>
   <div class="compare">
     <div>
@@ -291,7 +308,7 @@ body.edit-locked #spacingPanel{display:none}
 </section>
 
 <section class="design-section" data-tpl="emails-b/通常見守り_04_ライト返答.html" data-tpl-id="t6">
-  <h2>⑥ 【復旧】ライト返答あり</h2>
+  <h2>⑦ 【復旧】ライト返答あり</h2>
   <div class="sub">見守りライトへの返答 = 無事のサイン。</div>
   <div class="compare">
     <div>
@@ -308,7 +325,7 @@ body.edit-locked #spacingPanel{display:none}
 </section>
 
 <section class="design-section" data-tpl="emails-b/通常見守り_01_AC給電.html" data-tpl-id="t7">
-  <h2>⑦ 【通常見守り】AC給電</h2>
+  <h2>⑧ 【通常見守り】AC給電</h2>
   <div class="sub">コンセント給電を検知。</div>
   <div class="compare">
     <div>
@@ -325,7 +342,7 @@ body.edit-locked #spacingPanel{display:none}
 </section>
 
 <section class="design-section" data-tpl="emails-b/通常見守り_03_ライト点灯.html" data-tpl-id="t8">
-  <h2>⑧ 【通常見守り】ライト点灯</h2>
+  <h2>⑨ 【通常見守り】ライト点灯</h2>
   <div class="sub">本人がライト点灯。</div>
   <div class="compare">
     <div>
@@ -342,7 +359,7 @@ body.edit-locked #spacingPanel{display:none}
 </section>
 
 <section class="design-section" data-tpl="emails-b/通常見守り_02_USB給電.html" data-tpl-id="t9">
-  <h2>⑨ 【通常見守り】USB給電</h2>
+  <h2>⑩ 【通常見守り】USB給電</h2>
   <div class="sub">USB ポート給電を検知。</div>
   <div class="compare">
     <div>
